@@ -26,9 +26,9 @@
                             R
                         </div>
 
-                        <h1 class="font-hearty text-7xl">
+                        <span class="font-semibold tracking-widest">
                             RACIWON
-                        </h1>
+                        </span>
 
                     </div>
 
