@@ -4,7 +4,6 @@
 
     <div class="min-h-screen grid lg:grid-cols-2">
 
-        ```
         {{-- Left Branding --}}
         <div class="hidden lg:flex relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500">
 
@@ -299,7 +298,6 @@
             </div>
 
         </div>
-        ```
 
     </div>
 
