@@ -12,7 +12,7 @@
     <style>
         @font-face {
             font-family: 'Hearty Sacred';
-            src: url('/fonts/HeartySacred.otf') format('opentype');
+            src: url('/HeartySacred.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
