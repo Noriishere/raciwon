@@ -90,7 +90,7 @@
             @include('layouts.partials.navbar')
 
             {{-- Content --}}
-            <main class="pt-24 p-6 lg:p-8">
+            <main class="px-6 pb-6 pt-28 lg:px-8">
 
                 @isset($header)
                     <div class="mb-6">
