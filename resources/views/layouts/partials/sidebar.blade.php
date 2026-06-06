@@ -1,5 +1,5 @@
 <aside :class="sidebarOpen ? 'w-72' : 'w-20'"
-    class="hidden lg:flex bg-brand-700 text-white flex-col transition-all duration-300">
+    class="hidden lg:flex fixed left-0 top-0 h-screen z-40 bg-brand-700 text-white flex-col transition-all duration-300">
 
     <div class="h-20 px-4 flex items-center border-b border-white/10"
         :class="sidebarOpen ? 'justify-between' : 'justify-center'">
