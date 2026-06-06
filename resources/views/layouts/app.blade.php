@@ -12,12 +12,16 @@
     <style>
         @font-face {
             font-family: 'Hearty Sacred';
-            src: url('/HeartySacred.otf') format('opentype');
+            src: url('/fonts/HeartySacred.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
+            font-display: swap;
         }
     </style>
+
+    {{-- Alpine --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -74,19 +78,19 @@
 
 <body class="font-sans bg-amber-50 text-slate-800 antialiased">
 
-    <div :class="sidebarOpen ? 'ml-72' : 'ml-20'" class="flex-1 flex flex-col transition-all duration-300">
+    <div x-data="{ sidebarOpen: true }" class="min-h-screen">
 
         {{-- Sidebar --}}
         @include('layouts.partials.sidebar')
 
-        {{-- Main Area --}}
-        <div class="flex-1 flex flex-col">
+        {{-- Main Wrapper --}}
+        <div :class="sidebarOpen ? 'ml-72' : 'ml-20'" class="transition-all duration-300 min-h-screen">
 
             {{-- Navbar --}}
             @include('layouts.partials.navbar')
 
-            {{-- Page Content --}}
-            <main class="pt-24 p-6 lg:p-8">>
+            {{-- Content --}}
+            <main class="pt-24 p-6 lg:p-8">
 
                 @isset($header)
                     <div class="mb-6">
