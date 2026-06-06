@@ -175,20 +175,16 @@
 
             </div>
 
-            <form method="POST" action="{{ route('logout') }}" class="mt-4">
+            <form x-show="sidebarOpen" x-transition method="POST" action="{{ route('logout') }}" class="mt-4">
 
                 @csrf
 
-                <button type="submit" :class="sidebarOpen ? '' : 'flex justify-center'"
+                <button type="submit"
                     class="w-full py-2 rounded-xl bg-white text-brand-700 font-medium hover:bg-orange-50 transition">
 
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
 
-                    <span x-show="sidebarOpen" x-transition class="ml-2">
-
-                        Logout
-
-                    </span>
+                    Logout
 
                 </button>
 
