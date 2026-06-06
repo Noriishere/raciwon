@@ -74,7 +74,7 @@
 
 <body class="font-sans bg-amber-50 text-slate-800 antialiased">
 
-    <div x-data="{ sidebarOpen: true }" class="flex min-h-screen">
+    <div :class="sidebarOpen ? 'ml-72' : 'ml-20'" class="flex-1 flex flex-col transition-all duration-300">
 
         {{-- Sidebar --}}
         @include('layouts.partials.sidebar')
@@ -86,7 +86,7 @@
             @include('layouts.partials.navbar')
 
             {{-- Page Content --}}
-            <main class="flex-1 p-6 lg:p-8">
+            <main class="pt-24 p-6 lg:p-8">>
 
                 @isset($header)
                     <div class="mb-6">
