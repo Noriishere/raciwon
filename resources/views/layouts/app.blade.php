@@ -17,6 +17,10 @@
             font-style: normal;
             font-display: swap;
         }
+
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 
     {{-- Alpine --}}
@@ -33,8 +37,8 @@
             theme: {
                 extend: {
 
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                   fontFamily: {
+                        sans: ['Hearty Sacred', 'cursive'],
                         brand: ['Hearty Sacred', 'cursive'],
                     },
 
@@ -78,13 +82,19 @@
 
 <body class="font-sans bg-amber-50 text-slate-800 antialiased">
 
-    <div x-data="{ sidebarOpen: true }" class="min-h-screen">
+    <div x-data="{
+    sidebarOpen: true,
+    mobileMenuOpen: false
+}" class="min-h-screen">
 
         {{-- Sidebar --}}
         @include('layouts.partials.sidebar')
 
         {{-- Main Wrapper --}}
-        <div :class="sidebarOpen ? 'ml-72' : 'ml-20'" class="transition-all duration-300 min-h-screen">
+        <div :class="{
+        'lg:ml-72': sidebarOpen,
+        'lg:ml-20': !sidebarOpen
+    }" class="transition-all duration-300 min-h-screen">
 
             {{-- Navbar --}}
             @include('layouts.partials.navbar')
