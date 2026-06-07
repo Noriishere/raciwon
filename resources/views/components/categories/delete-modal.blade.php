@@ -1,13 +1,13 @@
-{{-- Delete Category Modal --}}
+{{-- Delete Inventory Modal --}}
 <template x-teleport="body">
 
-    <div x-show="openDeleteCategory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4"
+    <div x-show="openDeleteInventory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4"
         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
         {{-- Backdrop --}}
-        <div @click="openDeleteCategory = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md">
+        <div @click="openDeleteInventory = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md">
         </div>
 
         {{-- Modal --}}
@@ -26,18 +26,18 @@
                 </div>
 
                 <h3 class="mt-6 font-brand text-4xl text-slate-800">
-                    Hapus Kategori
+                    Hapus Bahan
                 </h3>
 
                 <p class="mt-4 text-slate-500 leading-relaxed">
 
-                    Kategori
+                    Bahan baku
 
                     <span class="font-semibold text-slate-700">
-                        Makanan
+                        Beras Premium
                     </span>
 
-                    akan dihapus secara permanen dari sistem.
+                    akan dihapus dari sistem inventaris.
 
                 </p>
 
@@ -60,7 +60,7 @@
 
                 <div class="grid grid-cols-2 gap-3">
 
-                    <button type="button" @click="openDeleteCategory = false"
+                    <button type="button" @click="openDeleteInventory = false"
                         class="py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
 
                         Batal
