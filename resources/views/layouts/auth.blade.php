@@ -43,8 +43,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Hearty Sacred', 'cursive'],
-                        brand: ['Chunky Playful', 'cursive'],
+                        brand: ['Hearty Sacred', 'cursive'],
+                        sans: ['Chunky Playful', 'cursive'],
                     },
 
                     colors: {
