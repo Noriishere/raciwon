@@ -17,14 +17,6 @@
             font-display: swap;
         }
 
-        @font-face {
-            font-family: 'Chunky Playful';
-            src: url('/ChunkyPlayful.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
         [x-cloak] {
             display: none !important;
         }
@@ -39,7 +31,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Hearty Sacred', 'cursive'],
-                        brand: ['Chunky Playful', 'cursive'],
+                        brand: ['Hearty Sacred', 'cursive'],
                     },
                     colors: {
                         orange: {

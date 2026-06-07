@@ -18,14 +18,6 @@
             font-display: swap;
         }
 
-        @font-face {
-            font-family: 'Chunky Playful';
-            src: url('/ChunkyPlayful.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
         [x-cloak] {
             display: none !important;
         }
@@ -45,9 +37,9 @@
             theme: {
                 extend: {
 
-                    fontFamily: {
+                   fontFamily: {
                         sans: ['Hearty Sacred', 'cursive'],
-                        brand: ['Chunky Playful', 'cursive'],
+                        brand: ['Hearty Sacred', 'cursive'],
                     },
 
                     colors: {
@@ -91,19 +83,18 @@
 <body class="font-sans bg-amber-50 text-slate-800 antialiased">
 
     <div x-data="{
-        sidebarOpen: true,
-        mobileMenuOpen: false
-    }" class="min-h-screen">
+    sidebarOpen: true,
+    mobileMenuOpen: false
+}" class="min-h-screen">
 
         {{-- Sidebar --}}
         @include('layouts.partials.sidebar')
 
         {{-- Main Wrapper --}}
         <div :class="{
-            'lg:ml-72': sidebarOpen,
-            'lg:ml-20': !sidebarOpen
-        }"
-            class="transition-all duration-300 min-h-screen">
+        'lg:ml-72': sidebarOpen,
+        'lg:ml-20': !sidebarOpen
+    }" class="transition-all duration-300 min-h-screen">
 
             {{-- Navbar --}}
             @include('layouts.partials.navbar')
