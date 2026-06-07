@@ -11,11 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('icon');
-            $table->string('name', 100);
+
+            $table->foreignId('category_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('name', 150);
+            $table->string('image')->nullable();
             $table->text('description')->nullable();
+
+            $table->decimal('price', 15, 2);
+
+            $table->enum('status', [
+                'available',
+                'unavailable',
+            ])->default('available');
+
             $table->timestamps();
         });
     }
