@@ -16,14 +16,15 @@
                    max-w-sm
                    sm:max-w-2xl
                    lg:max-w-5xl
-                   max-h-[95vh]
-                   bg-white rounded-3xl shadow-2xl overflow-hidden"
+                   bg-white rounded-3xl shadow-2xl overflow-hidden
+                   flex flex-col
+                   max-h-[90vh]"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Header --}}
-            <div class="bg-gradient-to-r from-brand-600 to-brand-500 px-6 sm:px-8 py-6 text-white">
+            <div class="shrink-0 bg-gradient-to-r from-brand-600 to-brand-500 px-6 sm:px-8 py-6 text-white">
 
                 <div class="flex items-center justify-between">
 
@@ -51,7 +52,7 @@
             </div>
 
             {{-- Body --}}
-            <div class="p-6 sm:p-8 overflow-y-auto max-h-[calc(95vh-150px)]">
+            <div class="flex-1 overflow-y-auto p-6 sm:p-8">
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
@@ -70,75 +71,35 @@
                                 <div class="grid md:grid-cols-2 gap-5">
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Nama Bahan
-                                        </p>
-
-                                        <p class="font-semibold mt-1">
-                                            Beras Premium
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Nama Bahan</p>
+                                        <p class="font-semibold mt-1">Beras Premium</p>
                                     </div>
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Satuan
-                                        </p>
-
-                                        <p class="font-semibold mt-1">
-                                            Kg
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Satuan</p>
+                                        <p class="font-semibold mt-1">Kg</p>
                                     </div>
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Stok Saat Ini
-                                        </p>
-
-                                        <p class="font-semibold mt-1">
-                                            50 Kg
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Stok Saat Ini</p>
+                                        <p class="font-semibold mt-1">50 Kg</p>
                                     </div>
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Minimum Stok
-                                        </p>
-
-                                        <p class="font-semibold mt-1">
-                                            10 Kg
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Minimum Stok</p>
+                                        <p class="font-semibold mt-1">10 Kg</p>
                                     </div>
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Harga / Unit
-                                        </p>
-
-                                        <p class="font-semibold mt-1">
-                                            Rp 15.000
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Harga / Unit</p>
+                                        <p class="font-semibold mt-1">Rp 15.000</p>
                                     </div>
 
                                     <div>
-
-                                        <p class="text-sm text-slate-500">
-                                            Nilai Inventaris
-                                        </p>
-
+                                        <p class="text-sm text-slate-500">Nilai Inventaris</p>
                                         <p class="font-semibold text-green-600 mt-1">
                                             Rp 750.000
                                         </p>
-
                                     </div>
 
                                 </div>
@@ -154,9 +115,9 @@
 
                                 <p class="text-slate-600 leading-relaxed">
 
-                                    Bahan utama yang digunakan untuk berbagai
-                                    menu makanan seperti nasi goreng, ayam
-                                    geprek, dan menu paket.
+                                    Bahan utama yang digunakan untuk berbagai menu
+                                    makanan seperti nasi goreng, ayam geprek,
+                                    dan menu paket.
 
                                 </p>
 
@@ -292,39 +253,18 @@
                                     <div class="mt-5 space-y-3">
 
                                         <div class="flex justify-between">
-
-                                            <span class="text-slate-500 text-sm">
-                                                Current Stock
-                                            </span>
-
-                                            <span class="font-semibold">
-                                                50 Kg
-                                            </span>
-
+                                            <span class="text-sm text-slate-500">Current Stock</span>
+                                            <span class="font-semibold">50 Kg</span>
                                         </div>
 
                                         <div class="flex justify-between">
-
-                                            <span class="text-slate-500 text-sm">
-                                                Minimum
-                                            </span>
-
-                                            <span class="font-semibold">
-                                                10 Kg
-                                            </span>
-
+                                            <span class="text-sm text-slate-500">Minimum</span>
+                                            <span class="font-semibold">10 Kg</span>
                                         </div>
 
                                         <div class="flex justify-between">
-
-                                            <span class="text-slate-500 text-sm">
-                                                Cost / Unit
-                                            </span>
-
-                                            <span class="font-semibold">
-                                                Rp 15.000
-                                            </span>
-
+                                            <span class="text-sm text-slate-500">Cost / Unit</span>
+                                            <span class="font-semibold">Rp 15.000</span>
                                         </div>
 
                                     </div>
@@ -337,8 +277,8 @@
 
                                             <p class="text-xs text-green-700">
 
-                                                Stok masih berada di atas batas
-                                                minimum dan aman untuk operasional.
+                                                Stok masih berada di atas batas minimum
+                                                dan aman untuk operasional.
 
                                             </p>
 
@@ -359,7 +299,7 @@
             </div>
 
             {{-- Footer --}}
-            <div class="px-6 sm:px-8 py-4 bg-slate-50 border-t flex flex-col-reverse sm:flex-row justify-end gap-3">
+            <div class="shrink-0 px-6 sm:px-8 py-4 bg-slate-50 border-t flex justify-end">
 
                 <button @click="openShowInventory = false"
                     class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
