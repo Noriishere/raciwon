@@ -13,6 +13,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::view('/menu', 'menu.index')->name('admin.menu');
     Route::view('/categories', 'categories.index')->name('admin.categories');
     Route::view('/inventory', 'inventory.index')->name('admin.inventory');
+    Route::view('/stock-movements', 'stock-movements.index')->name('admin.stock-movements');
     // Rute admin lainnya tinggal dimasukkan di bawah sini
 });
 
