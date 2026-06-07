@@ -39,14 +39,17 @@ return [
     */
 
     'guards' => [
+
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'auth' => [
+
+        'customer' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'customers',
         ],
+
     ],
 
     /*
