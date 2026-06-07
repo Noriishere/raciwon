@@ -1,11 +1,11 @@
 <x-app-layout>
 
     <div x-data="{
-    openCreateMenu:false,
-    openEditMenu:false,
-    openShowMenu:false,
-    openDeleteMenu:false
-}">
+        openCreateMenu: false,
+        openEditMenu: false,
+        openShowMenu: false,
+        openDeleteMenu: false
+    }">
 
         <div class="space-y-8">
 
@@ -209,12 +209,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
                 {{-- Card --}}
-                @for($i = 0; $i < 8; $i++)
-
+                @for ($i = 0; $i < 8; $i++)
                     <div
                         class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
 
-                        <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                        <div
+                            class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
 
                             <i class="fa-solid fa-bowl-food text-6xl text-brand-400">
                             </i>
@@ -279,7 +279,6 @@
                         </div>
 
                     </div>
-
                 @endfor
 
             </div>
@@ -322,12 +321,12 @@
                 </div>
 
             </div>
-           
-        <x-menu.create-modal />
-        <x-menu.edit-modal />
-        <x-menu.delete-modal />
-        <x-menu.show-modal />
-            
+
+            <x-menu.create-modal />
+            <x-menu.edit-modal />
+            <x-menu.delete-modal />
+            <x-menu.show-modal />
+
         </div>
 
 </x-app-layout>
