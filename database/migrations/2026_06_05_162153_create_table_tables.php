@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_tables', function (Blueprint $table) {
+        Schema::create('tables', function (Blueprint $table) {
             $table->id();
+            $table->string('number', 20)->unique();
+            $table->integer('capacity')->default(1);
+            $table->string('qr_code')->unique();
+
+            $table->enum('status', [
+                'available',
+                'occupied',
+                'maintenance',
+            ])->default('available');
+
             $table->timestamps();
         });
     }
