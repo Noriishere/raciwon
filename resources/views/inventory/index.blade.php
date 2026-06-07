@@ -18,24 +18,16 @@
                     <div>
 
                         <h1 class="text-3xl font-bold">
-                            Manajemen Inventaris
+                            Manajemen Bahan Baku
                         </h1>
 
                         <p class="mt-2 text-orange-100">
-                            Kelola stok bahan baku dan pantau kondisi inventaris bisnis Anda.
+                            Kelola seluruh bahan baku yang digunakan dalam operasional bisnis.
                         </p>
 
                     </div>
 
-                    <div class="flex flex-wrap gap-3">
-
-                        <button @click="openStockModal = true"
-                            class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition">
-
-                            <i class="fa-solid fa-arrow-right-arrow-left mr-2"></i>
-                            Stock Adjustment
-
-                        </button>
+                    <div>
 
                         <button @click="openCreateInventory = true"
                             class="px-5 py-3 rounded-xl bg-white text-brand-700 font-semibold hover:bg-orange-50 transition">
@@ -51,10 +43,10 @@
 
             </div>
 
-            {{-- Statistik --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {{-- Statistics --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                {{-- Total Bahan --}}
+                {{-- Total --}}
                 <div class="bg-white rounded-3xl shadow-card p-6">
 
                     <div class="flex items-center justify-between">
@@ -62,7 +54,7 @@
                         <div>
 
                             <p class="text-sm text-slate-500">
-                                Total Bahan Baku
+                                Total Bahan
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
@@ -109,7 +101,7 @@
 
                 </div>
 
-                {{-- Out Of Stock --}}
+                {{-- Empty --}}
                 <div class="bg-white rounded-3xl shadow-card p-6">
 
                     <div class="flex items-center justify-between">
@@ -136,33 +128,6 @@
 
                 </div>
 
-                {{-- Inventory Value --}}
-                <div class="bg-white rounded-3xl shadow-card p-6">
-
-                    <div class="flex items-center justify-between">
-
-                        <div>
-
-                            <p class="text-sm text-slate-500">
-                                Nilai Inventaris
-                            </p>
-
-                            <h3 class="text-2xl font-bold mt-2">
-                                Rp 15.250.000
-                            </h3>
-
-                        </div>
-
-                        <div class="w-14 h-14 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center">
-
-                            <i class="fa-solid fa-sack-dollar text-xl"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
             {{-- Filter --}}
@@ -170,32 +135,42 @@
 
                 <div class="flex flex-col lg:flex-row gap-4">
 
+                    {{-- Search --}}
                     <div class="flex-1 relative">
 
-                        <i
-                            class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        </i>
 
                         <input type="text" placeholder="Cari bahan baku..."
                             class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
                     </div>
 
+                    {{-- Filter --}}
                     <div class="flex flex-wrap gap-2">
 
                         <button class="px-4 py-3 rounded-xl bg-brand-600 text-white font-medium">
+
                             Semua
+
                         </button>
 
                         <button class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200">
+
                             Aman
+
                         </button>
 
                         <button class="px-4 py-3 rounded-xl bg-yellow-100 text-yellow-700">
+
                             Low Stock
+
                         </button>
 
                         <button class="px-4 py-3 rounded-xl bg-red-100 text-red-700">
+
                             Habis
+
                         </button>
 
                     </div>
@@ -204,7 +179,7 @@
 
             </div>
 
-            {{-- Inventory Table --}}
+            {{-- Table --}}
             <div class="bg-white rounded-3xl shadow-card overflow-hidden">
 
                 <div class="overflow-x-auto">
@@ -261,7 +236,7 @@
                                             </p>
 
                                             <p class="text-xs text-slate-500">
-                                                ID: INV-001
+                                                Inventory Item
                                             </p>
 
                                         </div>
@@ -307,14 +282,14 @@
                                             </button>
 
                                             <button @click="openEditInventory = true"
-                                                class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 hover:bg-brand-200">
+                                                class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200">
 
                                                 <i class="fa-solid fa-pen"></i>
 
                                             </button>
 
                                             <button @click="openStockModal = true"
-                                                class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-700 hover:bg-yellow-200">
+                                                class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 hover:bg-brand-200">
 
                                                 <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
@@ -348,33 +323,43 @@
                 <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
 
                     <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
+
                         <i class="fa-solid fa-chevron-left"></i>
+
                     </button>
 
                     <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
+
                         1
+
                     </button>
 
                     <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
+
                         2
+
                     </button>
 
                     <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
+
                         3
+
                     </button>
 
                     <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
+
                         <i class="fa-solid fa-chevron-right"></i>
+
                     </button>
 
                 </div>
 
             </div>
 
-            {{-- Components --}}
+            {{-- Modals --}}
             <x-inventory.create-modal />
-            <x-inventory.edit-modal />
             <x-inventory.show-modal />
+            <x-inventory.edit-modal />
             <x-inventory.stock-modal />
             <x-inventory.delete-modal />
 
