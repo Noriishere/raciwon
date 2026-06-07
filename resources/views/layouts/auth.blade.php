@@ -9,12 +9,26 @@
 
     <title>{{ config('app.name', 'RACIWON') }}</title>
 
+    {{-- Hearty Sacred --}}
     <style>
         @font-face {
             font-family: 'Hearty Sacred';
-            src: url('/fonts/HeartySacred.otf') format('opentype');
+            src: url('/HeartySacred.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Chunky Playful';
+            src: url('/ChunkyPlayful.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        [x-cloak] {
+            display: none !important;
         }
     </style>
 
@@ -29,8 +43,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        brand: ['Hearty Sacred', 'cursive'],
+                        sans: ['Hearty Sacred', 'cursive'],
+                        brand: ['Chunky Playful', 'cursive'],
                     },
 
                     colors: {

@@ -8,9 +8,27 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <style>
+        @font-face {
+            font-family: 'Hearty Sacred';
+            src: url('/HeartySacred.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Chunky Playful';
+            src: url('/ChunkyPlayful.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,6 +37,10 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Hearty Sacred', 'cursive'],
+                        brand: ['Chunky Playful', 'cursive'],
+                    },
                     colors: {
                         orange: {
                             200: '#FED7AA',
