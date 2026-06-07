@@ -80,10 +80,13 @@
 
         </a>
 
-        <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
+        <a href="{{ route('admin.inventory') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+            class="flex items-center px-4 py-3 rounded-xl transition
+            {{ request()->routeIs('admin.inventory')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
-            <i class="fa-solid fa-boxes-stacked w-5 text-center"></i>
+            <i class="fa-solid fa-layer-group w-5 text-center"></i>
 
             <span x-show="sidebarOpen" x-transition>
                 Inventory
