@@ -11,25 +11,25 @@
         </div>
 
         {{-- Modal --}}
-        <div @click.stop class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+        <div @click.stop class="relative w-full max-w-[420px] bg-white rounded-3xl shadow-2xl overflow-hidden"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Body --}}
-            <div class="p-8 text-center">
+            <div class="p-6 text-center">
 
-                <div class="mx-auto w-20 h-20 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                <div class="mx-auto w-16 h-16 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
 
-                    <i class="fa-solid fa-trash text-3xl"></i>
+                    <i class="fa-solid fa-trash text-2xl"></i>
 
                 </div>
 
-                <h3 class="mt-6 font-brand text-4xl text-slate-800">
+                <h3 class="mt-5 font-brand text-3xl text-slate-800">
                     Hapus Bahan
                 </h3>
 
-                <p class="mt-4 text-slate-500 leading-relaxed">
+                <p class="mt-3 text-sm text-slate-500 leading-relaxed">
 
                     Bahan baku
 
@@ -41,7 +41,7 @@
 
                 </p>
 
-                <div class="mt-5 p-4 rounded-2xl bg-red-50 border border-red-100">
+                <div class="mt-4 p-3 rounded-2xl bg-red-50 border border-red-100">
 
                     <p class="text-sm text-red-600">
 
@@ -56,7 +56,7 @@
             </div>
 
             {{-- Footer --}}
-            <div class="px-6 pb-6">
+            <div class="px-5 pb-5">
 
                 <div class="grid grid-cols-2 gap-3">
 
