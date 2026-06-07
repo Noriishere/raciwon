@@ -1,6 +1,6 @@
-{{-- Create Inventory Modal --}} <template x-teleport="body">
+{{-- Create Inventory Modal --}}
+<template x-teleport="body">
 
-    
     <div x-show="openCreateInventory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
@@ -12,16 +12,13 @@
 
         {{-- Modal --}}
         <div @click.stop
-            class="relative w-full max-w-5xl
-               bg-white rounded-3xl shadow-2xl
-               flex flex-col
-               max-h-[90vh]"
+            class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Header --}}
-            <div class="shrink-0 bg-gradient-to-r from-brand-600 to-brand-500 px-8 py-6 text-white">
+            <div class="shrink-0 bg-gradient-to-r from-brand-600 to-brand-500 px-6 lg:px-8 py-6 text-white">
 
                 <div class="flex items-center justify-between">
 
@@ -31,7 +28,7 @@
                             Tambah Bahan Baku
                         </h2>
 
-                        <p class="text-orange-100 mt-1">
+                        <p class="mt-1 text-orange-100">
                             Tambahkan bahan baku baru ke inventaris RACIWON.
                         </p>
 
@@ -61,7 +58,7 @@
                             {{-- Nama --}}
                             <div>
 
-                                <label class="block mb-2 text-sm font-medium">
+                                <label class="block mb-2 text-sm font-medium text-slate-700">
                                     Nama Bahan
                                 </label>
 
@@ -70,19 +67,22 @@
 
                             </div>
 
-                            {{-- Unit + Cost --}}
+                            {{-- Unit + Harga --}}
                             <div class="grid md:grid-cols-2 gap-4">
 
                                 <div>
 
-                                    <label class="block mb-2 text-sm font-medium">
+                                    <label class="block mb-2 text-sm font-medium text-slate-700">
                                         Satuan
                                     </label>
 
                                     <select
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
-                                        <option>Pilih Satuan</option>
+                                        <option value="">
+                                            Pilih Satuan
+                                        </option>
+
                                         <option>Kg</option>
                                         <option>Gram</option>
                                         <option>Liter</option>
@@ -96,12 +96,12 @@
 
                                 <div>
 
-                                    <label class="block mb-2 text-sm font-medium">
+                                    <label class="block mb-2 text-sm font-medium text-slate-700">
                                         Harga / Unit
                                     </label>
 
                                     <input type="number" placeholder="15000"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
                                 </div>
 
@@ -112,37 +112,49 @@
 
                                 <div>
 
-                                    <label class="block mb-2 text-sm font-medium">
+                                    <label class="block mb-2 text-sm font-medium text-slate-700">
                                         Stok Awal
                                     </label>
 
                                     <input type="number" step="0.01" placeholder="0"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
                                 </div>
 
                                 <div>
 
-                                    <label class="block mb-2 text-sm font-medium">
+                                    <label class="block mb-2 text-sm font-medium text-slate-700">
                                         Minimum Stok
                                     </label>
 
                                     <input type="number" step="0.01" placeholder="10"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
                                 </div>
+
+                            </div>
+
+                            {{-- Supplier --}}
+                            <div>
+
+                                <label class="block mb-2 text-sm font-medium text-slate-700">
+                                    Supplier
+                                </label>
+
+                                <input type="text" placeholder="Nama supplier"
+                                    class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
 
                             </div>
 
                             {{-- Notes --}}
                             <div>
 
-                                <label class="block mb-2 text-sm font-medium">
+                                <label class="block mb-2 text-sm font-medium text-slate-700">
                                     Catatan
                                 </label>
 
-                                <textarea rows="6" placeholder="Catatan tambahan..."
-                                    class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500"></textarea>
+                                <textarea rows="5" placeholder="Catatan tambahan..."
+                                    class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500"></textarea>
 
                             </div>
 
@@ -158,27 +170,32 @@
                             <div class="border border-slate-200 rounded-3xl overflow-hidden">
 
                                 <div
-                                    class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                                    class="h-56 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
 
-                                    <i class="fa-solid fa-boxes-stacked text-6xl text-brand-300"></i>
+                                    <i class="fa-solid fa-boxes-stacked text-6xl text-brand-300">
+                                    </i>
 
                                 </div>
 
                                 <div class="p-5">
 
                                     <span
-                                        class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                        class="inline-flex px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
 
                                         Inventaris Baru
 
                                     </span>
 
                                     <h4 class="font-bold text-lg mt-4">
+
                                         Preview Bahan
+
                                     </h4>
 
                                     <p class="text-slate-500 text-sm mt-1">
-                                        Informasi bahan baku akan tampil di sini.
+
+                                        Informasi bahan akan ditampilkan di sini.
+
                                     </p>
 
                                     <div class="mt-5 space-y-3">
@@ -221,17 +238,19 @@
 
                                     </div>
 
-                                    <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                                    <div class="mt-5 p-4 rounded-2xl border border-amber-200 bg-amber-50">
 
                                         <div class="flex gap-3">
 
-                                            <i class="fa-solid fa-circle-info text-amber-500 mt-0.5"></i>
+                                            <i class="fa-solid fa-circle-info text-amber-500 mt-0.5">
+                                            </i>
 
                                             <p class="text-xs text-amber-700">
 
-                                                Data ini digunakan untuk monitoring stok,
-                                                recipe builder, food costing,
-                                                dan analitik inventaris.
+                                                Data inventaris digunakan untuk
+                                                stock monitoring, recipe
+                                                builder, food costing, dan
+                                                laporan inventaris.
 
                                             </p>
 
@@ -276,6 +295,5 @@
         </div>
 
     </div>
-    
 
 </template>
