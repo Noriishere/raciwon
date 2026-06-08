@@ -46,7 +46,7 @@
 
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-utensils"></i>
-                    <span x-show="sidebarOpen">Operations</span>
+                    <span x-transition x-show="sidebarOpen">Operations</span>
                 </div>
 
                 <i x-show="sidebarOpen" class="fa-solid fa-chevron-down text-xs transition-transform"
