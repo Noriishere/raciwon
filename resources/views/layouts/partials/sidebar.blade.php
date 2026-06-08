@@ -39,7 +39,13 @@
             </span>
 
         </a>
-        <div x-data="{ operationsOpen: false }">
+        <div x-data="{
+        operationsOpen: {{ request()->routeIs('admin.orders*') ||
+    request()->routeIs('admin.menu*') ||
+    request()->routeIs('admin.categories*')
+    ? 'true'
+    : 'false' }}
+    }">
 
             <button @click="operationsOpen = !operationsOpen"
                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
@@ -57,45 +63,48 @@
 
             <div x-show="operationsOpen" x-collapse class="ml-6 mt-1 space-y-1">
 
-                
 
-                <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+
+                <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                    class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.orders')
-            ? 'bg-white text-brand-700 font-semibold shadow-md'
-            : 'hover:bg-brand-600 text-orange-50' }}">
-        
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
+
                     <i class="fa-solid fa-receipt w-5 text-center"></i>
-        
+
                     <span x-show="sidebarOpen" x-transition>
                         Orders
                     </span>
-        
+
                 </a>
-        
-                <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+
+                <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                    class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.menu')
-            ? 'bg-white text-brand-700 font-semibold shadow-md'
-            : 'hover:bg-brand-600 text-orange-50' }}">
-        
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
+
                     <i class="fa-solid fa-utensils w-5 text-center"></i>
-        
+
                     <span x-show="sidebarOpen" x-transition>
                         Menu
                     </span>
-        
+
                 </a>
-        
-                <a href="{{ route('admin.categories') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+
+                <a href="{{ route('admin.categories') }}"
+                    :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.categories')
-            ? 'bg-white text-brand-700 font-semibold shadow-md'
-            : 'hover:bg-brand-600 text-orange-50' }}">
-        
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
+
                     <i class="fa-solid fa-layer-group w-5 text-center"></i>
-        
+
                     <span x-show="sidebarOpen" x-transition>
                         Categories
                     </span>
-        
+
                 </a>
             </div>
 
