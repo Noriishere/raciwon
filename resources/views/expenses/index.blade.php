@@ -309,7 +309,7 @@
 
                                             </button>
 
-                                            <button class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
+                                            <button @click="openDeleteExpense = true" class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
 
                                                 <i class="fa-solid fa-trash"></i>
 
