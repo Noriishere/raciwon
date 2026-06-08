@@ -1,7 +1,7 @@
 <aside :class="sidebarOpen ? 'w-72' : 'w-20'"
     class="hidden lg:flex fixed left-0 top-0 h-screen z-40 bg-brand-700 text-white flex-col transition-all duration-300">
 
-    <div class="h-20 px-4 flex items-center border-b border-white/10"
+    <div class="h-20 px-4 flex items-center justify-center border-b border-white/10 relative"
         :class="sidebarOpen ? 'justify-between' : 'justify-center'">
 
         <div x-show="sidebarOpen" x-transition.opacity class="overflow-hidden">
