@@ -4,7 +4,7 @@
     <div class="h-20 px-4 flex items-center justify-center border-b border-white/10 relative"
         :class="sidebarOpen ? 'justify-between' : 'justify-center'">
 
-        <div x-show="sidebarOpen" x-transition.opacity class="overflow-hidden">
+        <div x-show="sidebarOpen" x-transition.opacity class="overflow-hidden text-center">
 
             <h1 class="font-brand text-4xl leading-none text-white">
                 RACIWON
@@ -17,7 +17,7 @@
         </div>
 
         <button @click="sidebarOpen = !sidebarOpen"
-            class="w-10 h-10 rounded-lg hover:bg-brand-600 transition flex items-center justify-center">
+            class="absolute right-4 w-10 h-10 rounded-lg hover:bg-brand-600 transition flex items-center justify-center">
 
             <i class="fa-solid fa-bars"></i>
 
@@ -39,13 +39,7 @@
             </span>
 
         </a>
-        <div x-data="{
-        operationsOpen: {{ request()->routeIs('admin.orders*') ||
-    request()->routeIs('admin.menu*') ||
-    request()->routeIs('admin.categories*')
-    ? 'true'
-    : 'false' }}
-    }">
+        <div x-show="operationsOpen" x-collapse class="mt-1 space-y-1">
 
             <button @click="operationsOpen = !operationsOpen"
                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
@@ -66,7 +60,7 @@
 
 
                 <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-                    class="flex items-center px-4 py-3 rounded-xl transition
+                    class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
                     {{ request()->routeIs('admin.orders')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
@@ -80,7 +74,7 @@
                 </a>
 
                 <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-                    class="flex items-center px-4 py-3 rounded-xl transition
+                    class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
                     {{ request()->routeIs('admin.menu')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
@@ -94,7 +88,7 @@
                 </a>
 
                 <a href="{{ route('admin.categories') }}"
-                    :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+                    :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
                     {{ request()->routeIs('admin.categories')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
