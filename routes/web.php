@@ -14,6 +14,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::view('/categories', 'categories.index')->name('admin.categories');
     Route::view('/inventory', 'inventory.index')->name('admin.inventory');
     Route::view('/stock-movements', 'stock-movements.index')->name('admin.stock-movements');
+    Route::view('/expenses', 'expenses.index')->name('admin.expenses');
     // Rute admin lainnya tinggal dimasukkan di bawah sini
 });
 
