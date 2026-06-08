@@ -4,16 +4,13 @@
     <div class="h-20 px-4 flex items-center justify-center border-b border-white/10 relative"
         :class="sidebarOpen ? 'justify-between' : 'justify-center'">
 
-        <div x-show="sidebarOpen" x-transition.opacity class="overflow-hidden text-center">
-
-            <h1 class="font-brand text-4xl leading-none text-white">
+        <div x-show="sidebarOpen" x-transition.opacity class="flex-1 min-w-0 pr-12">
+            <h1 class="font-brand text-3xl leading-none text-white truncate">
                 RACIWON
             </h1>
-
-            <p class="text-xs text-orange-100 tracking-wide mt-1">
+            <p class="text-[10px] text-orange-100 tracking-wide mt-1 truncate">
                 Smart Culinary Management
             </p>
-
         </div>
 
         <button @click="sidebarOpen = !sidebarOpen"
