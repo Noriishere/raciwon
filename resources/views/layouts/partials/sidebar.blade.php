@@ -93,7 +93,7 @@
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
 
-                    <i class="fa-solid fa-layer-group w-5 text-center"></i>
+                    <i class="fa-solid fa-list-alt w-5 text-center"></i>
 
                     <span x-show="sidebarOpen" x-transition>
                         Categories
@@ -109,7 +109,7 @@
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
 
-            <i class="fa-solid fa-layer-group w-5 text-center"></i>
+            <i class="fa-solid fa-box w-5 text-center"></i>
 
             <span x-show="sidebarOpen" x-transition>
                 Inventory
