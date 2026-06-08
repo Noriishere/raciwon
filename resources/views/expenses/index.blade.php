@@ -300,7 +300,7 @@
 
                                             </button>
 
-                                            <button
+                                            <button @click="openEditExpense = true"
                                                 class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200">
 
                                                 <i class="fa-solid fa-pen"></i>
@@ -365,6 +365,7 @@
         </div>
         <x-expenses.create-modal />
         <x-expenses.show-modal />
+        <x-expenses.edit-modal />
     </div>
 
 </x-app-layout>
