@@ -55,7 +55,7 @@
 
             </button>
 
-            <div x-show="operationsOpen" x-collapse class="ml-6 mt-1 space-y-1">
+            <div x-cloak x-show="operationsOpen" x-collapse class="ml-6 mt-1 space-y-1">
 
 
 
