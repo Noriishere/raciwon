@@ -27,11 +27,10 @@
 
     <nav class="flex-1 p-4 space-y-1">
 
-        <a href="{{ route('admin.dashboard') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl transition
+        <a href="{{ route('admin.dashboard') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
             {{ request()->routeIs('admin.dashboard')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
             <i class="fa-solid fa-chart-pie w-5 text-center"></i>
 
@@ -40,54 +39,73 @@
             </span>
 
         </a>
+        <div x-data="{ operationsOpen: true }">
 
-        <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl transition
-            {{ request()->routeIs('admin.orders')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+            <button @click="operationsOpen = !operationsOpen"
+                class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
 
-            <i class="fa-solid fa-receipt w-5 text-center"></i>
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span x-show="sidebarOpen">Operations</span>
+                </div>
 
-            <span x-show="sidebarOpen" x-transition>
-                Orders
-            </span>
+                <i x-show="sidebarOpen" class="fa-solid fa-chevron-down text-xs transition-transform"
+                    :class="operationsOpen ? 'rotate-180' : ''">
+                </i>
 
-        </a>
+            </button>
 
-        <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl transition
-            {{ request()->routeIs('admin.menu')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+            <div x-show="operationsOpen" x-collapse class="ml-6 mt-1 space-y-1">
 
-            <i class="fa-solid fa-utensils w-5 text-center"></i>
 
-            <span x-show="sidebarOpen" x-transition>
-                Menu
-            </span>
 
-        </a>
+            </div>
+            <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+                {{ request()->routeIs('admin.orders')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
-        <a href="{{ route('admin.categories') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl transition
-            {{ request()->routeIs('admin.categories')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+                <i class="fa-solid fa-receipt w-5 text-center"></i>
 
-            <i class="fa-solid fa-layer-group w-5 text-center"></i>
+                <span x-show="sidebarOpen" x-transition>
+                    Orders
+                </span>
 
-            <span x-show="sidebarOpen" x-transition>
-                Categories
-            </span>
+            </a>
 
-        </a>
+            <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+                {{ request()->routeIs('admin.menu')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
-        <a href="{{ route('admin.inventory') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl transition
+                <i class="fa-solid fa-utensils w-5 text-center"></i>
+
+                <span x-show="sidebarOpen" x-transition>
+                    Menu
+                </span>
+
+            </a>
+
+            <a href="{{ route('admin.categories') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                class="flex items-center px-4 py-3 rounded-xl transition
+                {{ request()->routeIs('admin.categories')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
+
+                <i class="fa-solid fa-layer-group w-5 text-center"></i>
+
+                <span x-show="sidebarOpen" x-transition>
+                    Categories
+                </span>
+
+            </a>
+
+        </div>
+
+        <a href="{{ route('admin.inventory') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
             {{ request()->routeIs('admin.inventory')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
             <i class="fa-solid fa-layer-group w-5 text-center"></i>
 
@@ -100,8 +118,8 @@
         <a href="{{ route('admin.stock-movements') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
             class="flex items-center px-4 py-3 rounded-xl transition
             {{ request()->routeIs('admin.stock-movements')
-                ? 'bg-white text-brand-700 font-semibold shadow-md'
-                : 'hover:bg-brand-600 text-orange-50' }}">
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
             <i class="fa-solid fa-layer-group w-5 text-center"></i>
 
@@ -253,11 +271,10 @@
             {{-- Navigation --}}
             <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
 
-                <a href="{{ route('admin.dashboard') }}" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
+                <a href="{{ route('admin.dashboard') }}" @click="mobileMenuOpen = false" class="flex items-center gap-3 px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.dashboard')
-                        ? 'bg-white text-brand-700 font-semibold shadow-md'
-                        : 'hover:bg-brand-600 text-orange-50' }}">
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
                     <i class="fa-solid fa-chart-pie w-5 text-center"></i>
 
@@ -265,10 +282,9 @@
 
                 </a>
 
-                <a href="{{ route('admin.orders') }}" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.orders')
-                        ? 'bg-white text-brand-700 font-semibold shadow-md'
-                        : 'hover:bg-brand-600 text-orange-50' }}">
+                <a href="{{ route('admin.orders') }}" @click="mobileMenuOpen = false" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.orders')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
                     <i class="fa-solid fa-receipt w-5 text-center"></i>
 
@@ -276,10 +292,9 @@
 
                 </a>
 
-                <a href="{{ route('admin.menu') }}" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.menu')
-                        ? 'bg-white text-brand-700 font-semibold shadow-md'
-                        : 'hover:bg-brand-600 text-orange-50' }}">
+                <a href="{{ route('admin.menu') }}" @click="mobileMenuOpen = false" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.menu')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
                     <i class="fa-solid fa-utensils w-5 text-center"></i>
 
@@ -287,10 +302,9 @@
 
                 </a>
 
-                <a href="{{ route('admin.categories') }}" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.categories')
-                        ? 'bg-white text-brand-700 font-semibold shadow-md'
-                        : 'hover:bg-brand-600 text-orange-50' }}">
+                <a href="{{ route('admin.categories') }}" @click="mobileMenuOpen = false" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-600 transition {{ request()->routeIs('admin.categories')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
                     <i class="fa-solid fa-layer-group w-5 text-center"></i>
 
