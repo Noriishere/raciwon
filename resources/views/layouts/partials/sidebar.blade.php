@@ -39,13 +39,7 @@
             </span>
 
         </a>
-        <div x-data="{
-        operationsOpen: {{ request()->routeIs('admin.orders*') ||
-    request()->routeIs('admin.menu*') ||
-    request()->routeIs('admin.categories*')
-    ? 'true'
-    : 'false' }}
-    }">
+        <div x-data="{ operationsOpen: $persist(false) }">
 
             <button @click="operationsOpen = !operationsOpen"
                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
