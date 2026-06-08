@@ -1,7 +1,8 @@
 <x-app-layout>
 
     <div x-data="{
-        openCreateExpense: false
+        openCreateExpense: false,
+        openShowExpense: false
     }">
 
         <div class="space-y-8">
@@ -363,6 +364,7 @@
 
         </div>
         <x-expenses.create-modal />
+        <x-expenses.show-modal />
     </div>
 
 </x-app-layout>
