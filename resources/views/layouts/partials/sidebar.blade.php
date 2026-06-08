@@ -39,7 +39,7 @@
             </span>
 
         </a>
-        <div x-data="{ operationsOpen: true }">
+        <div x-data="{ operationsOpen: false }">
 
             <button @click="operationsOpen = !operationsOpen"
                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
