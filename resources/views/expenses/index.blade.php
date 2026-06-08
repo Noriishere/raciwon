@@ -293,7 +293,7 @@
 
                                         <div class="flex justify-center items-center gap-2">
 
-                                            <button
+                                            <button @click="openShowExpense = true"
                                                 class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200">
 
                                                 <i class="fa-solid fa-eye"></i>
