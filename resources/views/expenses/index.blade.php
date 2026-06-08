@@ -362,7 +362,7 @@
             </div>
 
         </div>
-        <x-expenses.create-modal>
+        <x-expenses.create-modal />
     </div>
 
 </x-app-layout>
