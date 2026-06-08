@@ -134,54 +134,52 @@
         <a href="{{ route('admin.expenses') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
             {{ request()->routeIs('admin.expenses')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
-    : 'hover:bg-brand-600 text-orange-50' }}"></a>
+    : 'hover:bg-brand-600 text-orange-50' }}">
 
-        <i class="fa-solid fa-wallet w-5 text-center"></i>
-
-        <span x-show="sidebarOpen" x-transition>
-            Expenses
-        </span>
-
-        </a>
-
-        <div class="my-4 border-t border-white/10"></div>
-
-        <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
-
-            <i class="fa-solid fa-file-lines w-5 text-center"></i>
+            <i class="fa-solid fa-wallet w-5 text-center"></i>
 
             <span x-show="sidebarOpen" x-transition>
-                Reports
+                Expenses
             </span>
 
-        </a>
-
-        <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
-
-            <i class="fa-solid fa-chart-line w-5 text-center"></i>
-
-            <span x-show="sidebarOpen" x-transition>
-                Analytics
-            </span>
-
-        </a>
-
-        @if (auth()->user()?->role === 'owner')
             <div class="my-4 border-t border-white/10"></div>
 
             <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
                 class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
 
-                <i class="fa-solid fa-users w-5 text-center"></i>
+                <i class="fa-solid fa-file-lines w-5 text-center"></i>
 
                 <span x-show="sidebarOpen" x-transition>
-                    Users
+                    Reports
                 </span>
 
             </a>
-        @endif
+
+            <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
+
+                <i class="fa-solid fa-chart-line w-5 text-center"></i>
+
+                <span x-show="sidebarOpen" x-transition>
+                    Analytics
+                </span>
+
+            </a>
+
+            @if (auth()->user()?->role === 'owner')
+                <div class="my-4 border-t border-white/10"></div>
+
+                <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                    class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
+
+                    <i class="fa-solid fa-users w-5 text-center"></i>
+
+                    <span x-show="sidebarOpen" x-transition>
+                        Users
+                    </span>
+
+                </a>
+            @endif
 
     </nav>
 
