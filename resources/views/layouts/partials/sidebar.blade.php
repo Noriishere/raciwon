@@ -39,7 +39,13 @@
             </span>
 
         </a>
-        <div x-show="operationsOpen" x-collapse class="mt-1 space-y-1">
+        <div x-data="{
+        operationsOpen: {{ request()->routeIs('admin.orders*') ||
+    request()->routeIs('admin.menu*') ||
+    request()->routeIs('admin.categories*')
+    ? 'true'
+    : 'false' }}
+    }">
 
             <button @click="operationsOpen = !operationsOpen"
                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-brand-600 transition">
@@ -60,7 +66,7 @@
 
 
                 <a href="{{ route('admin.orders') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-                    class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
+                    class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.orders')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
@@ -74,7 +80,7 @@
                 </a>
 
                 <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-                    class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
+                    class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.menu')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
@@ -88,7 +94,7 @@
                 </a>
 
                 <a href="{{ route('admin.categories') }}"
-                    :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center gap-3 pl-12 pr-4 py-2 rounded-xl transition
+                    :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
                     {{ request()->routeIs('admin.categories')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
