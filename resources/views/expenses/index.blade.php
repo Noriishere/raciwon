@@ -2,7 +2,8 @@
 
     <div x-data="{
         openCreateExpense: false,
-        openShowExpense: false
+        openShowExpense: false,
+        openEditExpense: false
     }">
 
         <div class="space-y-8">
