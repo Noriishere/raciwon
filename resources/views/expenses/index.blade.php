@@ -3,7 +3,8 @@
     <div x-data="{
         openCreateExpense: false,
         openShowExpense: false,
-        openEditExpense: false
+        openEditExpense: false,
+        openDeleteExpense: false
     }">
 
         <div class="space-y-8">
@@ -367,6 +368,7 @@
         <x-expenses.create-modal />
         <x-expenses.show-modal />
         <x-expenses.edit-modal />
+        <x-expenses.delete-modal />
     </div>
 
 </x-app-layout>
