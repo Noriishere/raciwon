@@ -131,14 +131,16 @@
 
         </a>
 
-        <a href="#" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
-            class="flex items-center px-4 py-3 rounded-xl hover:bg-brand-600 transition">
+        <a href="{{ route('admin.expenses') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'" class="flex items-center px-4 py-3 rounded-xl transition
+            {{ request()->routeIs('admin.expenses')
+    ? 'bg-white text-brand-700 font-semibold shadow-md'
+    : 'hover:bg-brand-600 text-orange-50' }}"></a>
 
-            <i class="fa-solid fa-wallet w-5 text-center"></i>
+        <i class="fa-solid fa-wallet w-5 text-center"></i>
 
-            <span x-show="sidebarOpen" x-transition>
-                Expenses
-            </span>
+        <span x-show="sidebarOpen" x-transition>
+            Expenses
+        </span>
 
         </a>
 
