@@ -17,7 +17,7 @@ class CategoryController extends Controller
     {
         $search = $request->search;
 
-        $categories = Category::withCount('menu')
+        $categories = Category::withCount('menus')
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
 
@@ -32,8 +32,8 @@ class CategoryController extends Controller
 
         $stats = [
             'total_categories' => Category::count(),
-            'used_categories' => Category::has('menu')->count(),
-            'empty_categories' => Category::doesntHave('menu')->count(),
+            'used_categories' => Category::has('menus')->count(),
+            'empty_categories' => Category::doesntHave('menus')->count(),
             'total_menu' => Menu::count(),
         ];
 
@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $category->loadCount('menu');
+        $category->loadCount('menus');
 
         return response()->json($category);
     }
