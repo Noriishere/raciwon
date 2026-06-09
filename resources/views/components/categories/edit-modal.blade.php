@@ -45,7 +45,7 @@
                 </div>
 
                 {{-- Form --}}
-                <form :action="'admin/categories/' + selectedCategory.id" method="POST">
+                <form :action="'/categories/' + selectedCategory.id" method="POST">
 
                     @csrf
                     @method('PUT')
