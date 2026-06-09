@@ -1,10 +1,20 @@
 <x-app-layout>
 
     <div x-data="{
-        openCreateMenu: false,
-        openEditMenu: false,
-        openShowMenu: false,
-        openDeleteMenu: false,
+        openCreateMenu:false,
+        openEditMenu:false,
+        openShowMenu:false,
+        openDeleteMenu:false,
+
+        selectedMenu:{
+            id:null,
+            category_id:null,
+            name:'',
+            image:null,
+            description:'',
+            price:'',
+            status:''
+        }
     }">
 
         <div class="space-y-8">
@@ -63,7 +73,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                48
+                                {{ $stats['total_menu'] }}
                             </h3>
 
                         </div>
@@ -89,7 +99,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                42
+                                {{ $stats['active_menu'] }}
                             </h3>
 
                         </div>
@@ -115,7 +125,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                6
+                                {{ $stats['inactive_menu'] }}
                             </h3>
 
                         </div>
@@ -141,7 +151,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                8
+                                {{ $stats['total_category'] }}
                             </h3>
 
                         </div>
@@ -159,174 +169,262 @@
             </div>
 
             {{-- Filter --}}
+
             <div class="bg-white rounded-3xl shadow-card p-5">
 
-                <div class="flex flex-col lg:flex-row gap-4">
 
-                    <div class="flex-1 relative">
+                <form method="GET">
 
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        </i>
+                    <div class="flex flex-col lg:flex-row gap-4">
 
-                        <input type="text" placeholder="Cari nama menu..."
-                            class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        {{-- Search --}}
+                        <div class="flex-1 relative">
+
+                            <i
+                                class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            </i>
+
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Cari nama menu..."
+                                class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+
+                        </div>
+
+                        {{-- Submit --}}
+                        <button type="submit"
+                            class="px-5 py-3 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
+
+                            <i class="fa-solid fa-magnifying-glass mr-2"></i>
+
+                            Cari
+
+                        </button>
 
                     </div>
 
-                    <div class="flex flex-wrap gap-2">
+                    {{-- Category Filter --}}
+                    <div class="flex flex-wrap gap-2 mt-4">
 
-                        <button class="px-4 py-3 rounded-xl bg-brand-600 text-white font-medium">
+                        <a href="{{ route('admin.menu.index') }}" class="px-4 py-3 rounded-xl font-medium transition
+            {{ request('category')
+    ? 'bg-slate-100 hover:bg-slate-200'
+    : 'bg-brand-600 text-white' }}">
 
                             Semua
 
-                        </button>
+                        </a>
 
-                        <button class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200">
+                        @foreach ($categories as $category)
 
-                            Makanan
+                                                <a href="{{ route('admin.menu.index', [
+                                'category' => $category->id,
+                                'search' => request('search')
+                            ]) }}" class="px-4 py-3 rounded-xl font-medium transition
+                                        {{ request('category') == $category->id
+                                ? 'bg-brand-600 text-white'
+                                : 'bg-slate-100 hover:bg-slate-200' }}">
 
-                        </button>
+                                                    {{ $category->name }}
 
-                        <button class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200">
+                                                </a>
 
-                            Minuman
-
-                        </button>
-
-                        <button class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                            Snack
-
-                        </button>
+                        @endforeach
 
                     </div>
 
-                </div>
+                </form>
+
 
             </div>
+
 
             {{-- Grid Menu --}}
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-                {{-- Card --}}
-                @for ($i = 0; $i < 8; $i++)
-                    <div
-                        class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+                @forelse ($menus as $menu)
 
-                        <div
-                            class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                            <div
+                                class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
 
-                            <i class="fa-solid fa-bowl-food text-6xl text-brand-400">
-                            </i>
+                                @if ($menu->image)
 
-                        </div>
+                                    <img src="{{ Storage::url($menu->image) }}" alt="{{ $menu->name }}"
+                                        class="w-full h-48 object-cover">
 
-                        <div class="p-5">
+                                @else
 
-                            <div class="flex justify-between items-start">
+                                    <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
 
-                                <div>
+                                        <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
 
-                                    <h3 class="font-bold text-lg text-slate-800">
-                                        Nasi Goreng Spesial
-                                    </h3>
+                                    </div>
 
-                                    <p class="text-sm text-slate-500">
-                                        Makanan
+                                @endif
+
+                                <div class="p-5">
+
+                                    <div class="flex justify-between items-start">
+
+                                        <div>
+
+                                            <h3 class="font-bold text-lg text-slate-800">
+                                                {{ $menu->name }}
+                                            </h3>
+
+                                            <p class="text-sm text-slate-500">
+                                                {{ $menu->category->name }}
+                                            </p>
+
+                                        </div>
+
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium
+                                    {{ $menu->status === 'available'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700' }}">
+
+                                            {{ $menu->status === 'available' ? 'Aktif' : 'Nonaktif' }}
+
+                                        </span>
+
+                                    </div>
+
+                                    <p class="mt-4 text-2xl font-bold text-brand-600">
+
+                                        Rp {{ number_format($menu->price, 0, ',', '.') }}
+
                                     </p>
+
+                                    <p class="mt-2 text-sm text-slate-500 line-clamp-2">
+
+                                        {{ $menu->description ?: 'Tidak ada deskripsi.' }}
+
+                                    </p>
+
+                                    <div class="mt-5 flex gap-2">
+
+                                        <button @click="
+                                        selectedMenu = @js($menu);
+                                        openEditMenu = true;
+                                    " class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
+
+                                            <i class="fa-solid fa-pen-to-square mr-2"></i>
+
+                                            Edit
+
+                                        </button>
+
+                                        <button @click="
+                                        selectedMenu = @js($menu);
+                                        openShowMenu = true;
+                                    " class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
+
+                                            <i class="fa-solid fa-eye"></i>
+
+                                        </button>
+
+                                        <button @click="
+                                        selectedMenu = @js($menu);
+                                        openDeleteMenu = true;
+                                    " class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+
+                                            <i class="fa-solid fa-trash"></i>
+
+                                        </button>
+
+                                    </div>
 
                                 </div>
 
-                                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                            </div>
 
-                                    Aktif
+                @empty
 
-                                </span>
+                    <div class="col-span-full">
+
+                        <div class="bg-white rounded-3xl p-12 text-center shadow-card">
+
+                            <div class="mx-auto w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center">
+
+                                <i class="fa-solid fa-utensils text-4xl text-slate-300"></i>
 
                             </div>
 
-                            <p class="mt-4 text-2xl font-bold text-brand-600">
+                            <h3 class="mt-6 text-2xl font-bold text-slate-800">
 
-                                Rp 25.000
+                                Belum Ada Menu
+
+                            </h3>
+
+                            <p class="mt-2 text-slate-500">
+
+                                Tambahkan menu pertama untuk mulai mengelola produk Anda.
 
                             </p>
 
-                            <p class="mt-2 text-sm text-slate-500 line-clamp-2">
+                            <button @click="openCreateMenu = true"
+                                class="mt-6 px-5 py-3 rounded-2xl bg-brand-600 text-white hover:bg-brand-700 transition">
 
-                                Nasi goreng dengan topping ayam, telur, dan sayuran segar.
+                                <i class="fa-solid fa-plus mr-2"></i>
 
-                            </p>
+                                Tambah Menu
 
-                            <div class="mt-5 flex gap-2">
-
-                                <button @click="openEditMenu = true"
-                                    class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
-
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Edit
-
-                                </button>
-
-                                <button @click="openShowMenu = true"
-                                    class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
-
-                                    <i class="fa-solid fa-eye"></i>
-
-                                </button>
-
-                            </div>
+                            </button>
 
                         </div>
 
                     </div>
-                @endfor
+
+                @endforelse
 
             </div>
 
-            {{-- Pagination Dummy --}}
-            <div class="flex justify-center">
-
-                <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
-
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-left"></i>
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
-
-                        1
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        2
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        3
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            <x-menu.create-modal />
-            <x-menu.edit-modal />
-            <x-menu.delete-modal />
-            <x-menu.show-modal />
 
         </div>
+
+        {{-- Pagination Dummy --}}
+        <div class="flex justify-center">
+
+            <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
+
+                <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
+
+                    <i class="fa-solid fa-chevron-left"></i>
+
+                </button>
+
+                <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
+
+                    1
+
+                </button>
+
+                <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
+
+                    2
+
+                </button>
+
+                <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
+
+                    3
+
+                </button>
+
+                <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <x-menu.create-modal />
+        <x-menu.edit-modal />
+        <x-menu.delete-modal />
+        <x-menu.show-modal />
+
+    </div>
 
 </x-app-layout>
