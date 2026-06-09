@@ -1,9 +1,11 @@
 <template x-teleport="body">
 
+    
     <div x-show="openShowMenu" x-cloak class="fixed inset-0 z-[99999]">
 
         {{-- Backdrop --}}
-        <div @click="openShowMenu = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" x-transition.opacity>
+        <div @click="openShowMenu = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+            x-transition.opacity>
         </div>
 
         {{-- Drawer --}}
@@ -23,8 +25,7 @@
                             Detail Menu
                         </p>
 
-                        <h2 class="text-2xl font-bold mt-1">
-                            Nasi Goreng Spesial
+                        <h2 class="text-2xl font-bold mt-1" x-text="selectedMenu?.name">
                         </h2>
 
                     </div>
@@ -43,9 +44,25 @@
             <div class="h-[calc(100%-88px)] overflow-y-auto">
 
                 {{-- Image --}}
-                <div class="h-64 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                <div class="h-64 overflow-hidden">
 
-                    <i class="fa-solid fa-bowl-food text-7xl text-brand-400"></i>
+                    <template x-if="selectedMenu?.image">
+
+                        <img :src="'/storage/' + selectedMenu.image" :alt="selectedMenu.name"
+                            class="w-full h-full object-cover">
+
+                    </template>
+
+                    <template x-if="!selectedMenu?.image">
+
+                        <div
+                            class="h-full bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+
+                            <i class="fa-solid fa-bowl-food text-7xl text-brand-400"></i>
+
+                        </div>
+
+                    </template>
 
                 </div>
 
@@ -54,16 +71,15 @@
                     {{-- Status --}}
                     <div class="flex gap-2">
 
-                        <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-
-                            Aktif
-
+                        <span class="px-3 py-1 rounded-full text-xs font-medium" :class="selectedMenu?.status === 'available'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-red-100 text-red-700'" x-text="selectedMenu?.status === 'available'
+                            ? 'Aktif'
+                            : 'Nonaktif'">
                         </span>
 
-                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-
-                            Makanan
-
+                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium"
+                            x-text="selectedMenu?.category?.name">
                         </span>
 
                     </div>
@@ -75,8 +91,8 @@
                             Harga Jual
                         </p>
 
-                        <h3 class="text-4xl font-bold text-brand-600 mt-2">
-                            Rp 25.000
+                        <h3 class="text-4xl font-bold text-brand-600 mt-2"
+                            x-text="'Rp ' + Number(selectedMenu?.price || 0).toLocaleString('id-ID')">
                         </h3>
 
                     </div>
@@ -88,37 +104,9 @@
                             Deskripsi
                         </p>
 
-                        <p class="text-slate-500 leading-relaxed">
-                            Nasi goreng dengan topping ayam, telur,
-                            dan sayuran segar.
+                        <p class="text-slate-500 leading-relaxed"
+                            x-text="selectedMenu?.description || 'Tidak ada deskripsi.'">
                         </p>
-
-                    </div>
-
-                    {{-- Recipe --}}
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-
-                        <div class="flex justify-between items-center">
-
-                            <div>
-
-                                <h4 class="font-semibold">
-                                    Recipe
-                                </h4>
-
-                                <p class="text-sm text-slate-500">
-                                    Terhubung dengan inventory
-                                </p>
-
-                            </div>
-
-                            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-medium">
-
-                                Tersedia
-
-                            </span>
-
-                        </div>
 
                     </div>
 
@@ -131,8 +119,7 @@
                                 Dibuat
                             </span>
 
-                            <span>
-                                12 Jun 2025
+                            <span x-text="selectedMenu?.created_at">
                             </span>
 
                         </div>
@@ -143,8 +130,7 @@
                                 Terakhir Diubah
                             </span>
 
-                            <span>
-                                20 Jun 2025
+                            <span x-text="selectedMenu?.updated_at">
                             </span>
 
                         </div>
@@ -154,14 +140,13 @@
                     {{-- Actions --}}
                     <div class="pt-4">
 
-                        <button
-                            @click="
-                                openShowMenu = false;
-                                openEditMenu = true;
-                            "
-                            class="w-full py-3 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700">
+                        <button @click="
+                            openShowMenu = false;
+                            openEditMenu = true;
+                        " class="w-full py-3 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700">
 
                             <i class="fa-solid fa-pen-to-square mr-2"></i>
+
                             Edit Menu
 
                         </button>
@@ -175,5 +160,6 @@
         </div>
 
     </div>
+    
 
 </template>

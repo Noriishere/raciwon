@@ -11,8 +11,7 @@
         </div>
 
         {{-- Modal --}}
-        <div @click.stop
-            class="relative w-full max-w-5xl max-h-[90vh]
+        <div @click.stop class="relative w-full max-w-5xl max-h-[90vh]
                    bg-white rounded-3xl shadow-2xl overflow-hidden"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
@@ -46,135 +45,162 @@
 
             </div>
 
-            {{-- Body --}}
-            <div class="p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
+            <form action="{{ route('admin.menu.store') }}" method="POST" enctype="multipart/form-data">
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                @csrf
 
-                    {{-- Form --}}
-                    <div class="lg:col-span-2">
+                {{-- Body --}}
+                <div class="p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
 
-                        <div class="space-y-5">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                            <div>
+                        {{-- Form --}}
+                        <div class="lg:col-span-2">
 
-                                <label class="block mb-2 text-sm font-medium">
-                                    Nama Menu
-                                </label>
+                            <div class="space-y-5">
 
-                                <input type="text" placeholder="Contoh: Nasi Goreng Spesial"
-                                    class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
-
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-4">
-
+                                {{-- Nama --}}
                                 <div>
 
                                     <label class="block mb-2 text-sm font-medium">
-                                        Harga
+                                        Nama Menu
                                     </label>
 
-                                    <input type="number" placeholder="25000"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3">
+                                    <input type="text" name="name" placeholder="Contoh: Nasi Goreng Spesial"
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
 
                                 </div>
 
+                                {{-- Harga + Kategori --}}
+                                <div class="grid md:grid-cols-2 gap-4">
+
+                                    <div>
+
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Harga
+                                        </label>
+
+                                        <input type="number" name="price" min="0" placeholder="25000"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3">
+
+                                    </div>
+
+                                    <div>
+
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Kategori
+                                        </label>
+
+                                        <select name="category_id"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3">
+
+                                            <option value="">
+                                                Pilih Kategori
+                                            </option>
+
+                                            @foreach ($categories as $category)
+
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->name }}
+                                                </option>
+
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                {{-- Status --}}
                                 <div>
 
                                     <label class="block mb-2 text-sm font-medium">
-                                        Kategori
+                                        Status
                                     </label>
 
-                                    <select class="w-full rounded-xl border border-slate-200 px-4 py-3">
+                                    <select name="status" class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
-                                        <option>Makanan</option>
-                                        <option>Minuman</option>
-                                        <option>Snack</option>
+                                        <option value="available">
+                                            Aktif
+                                        </option>
+
+                                        <option value="unavailable">
+                                            Nonaktif
+                                        </option>
 
                                     </select>
 
                                 </div>
 
-                            </div>
+                                {{-- Deskripsi --}}
+                                <div>
 
-                            <div>
+                                    <label class="block mb-2 text-sm font-medium">
+                                        Deskripsi
+                                    </label>
 
-                                <label class="block mb-2 text-sm font-medium">
-                                    Status
-                                </label>
+                                    <textarea name="description" rows="6"
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 resize-none"></textarea>
 
-                                <select class="w-full rounded-xl border border-slate-200 px-4 py-3">
-
-                                    <option>Aktif</option>
-                                    <option>Nonaktif</option>
-
-                                </select>
-
-                            </div>
-
-                            <div>
-
-                                <label class="block mb-2 text-sm font-medium">
-                                    Deskripsi
-                                </label>
-
-                                <textarea rows="6" class="w-full rounded-xl border border-slate-200 px-4 py-3"></textarea>
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
+                        {{-- Preview --}}
+                        <div>
 
-                    {{-- Preview --}}
-                    <div>
+                            <div class="border border-slate-200 rounded-3xl overflow-hidden">
 
-                        <div class="border border-slate-200 rounded-3xl overflow-hidden">
+                                <div
+                                    class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
 
-                            <div
-                                class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                                    <i class="fa-solid fa-image text-6xl text-brand-300"></i>
 
-                                <i class="fa-solid fa-image text-6xl text-brand-300">
-                                </i>
+                                </div>
 
-                            </div>
+                                <div class="p-5">
 
-                            <div class="p-5">
+                                    <label
+                                        class="block w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:border-brand-400 transition">
 
-                                <button type="button"
-                                    class="w-full py-3 border-2 border-dashed border-slate-300 rounded-xl hover:border-brand-400 transition">
+                                        <i class="fa-solid fa-upload mr-2"></i>
 
-                                    <i class="fa-solid fa-upload mr-2"></i>
+                                        Upload Gambar
 
-                                    Upload Gambar
+                                        <input type="file" name="image" accept="image/*" class="hidden">
 
-                                </button>
+                                    </label>
 
-                                <span
-                                    class="inline-block mt-5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                    <span
+                                        class="inline-block mt-5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
 
-                                    Aktif
+                                        Aktif
 
-                                </span>
+                                    </span>
 
-                                <h4 class="font-bold text-lg mt-4">
+                                    <h4 class="font-bold text-lg mt-4">
 
-                                    Preview Menu
+                                        Preview Menu
 
-                                </h4>
+                                    </h4>
 
-                                <p class="text-slate-500 text-sm mt-1">
+                                    <p class="text-slate-500 text-sm mt-1">
 
-                                    Nama menu akan tampil di sini.
+                                        Nama menu akan tampil di sini.
 
-                                </p>
+                                    </p>
 
-                                <p class="mt-4 text-3xl font-bold text-brand-600">
+                                    <p class="mt-4 text-3xl font-bold text-brand-600">
 
-                                    Rp 0
+                                        Rp 0
 
-                                </p>
+                                    </p>
+
+                                </div>
 
                             </div>
 
@@ -184,28 +210,30 @@
 
                 </div>
 
-            </div>
+                {{-- Footer --}}
+                <div class="px-8 py-3 bg-slate-50 border-t flex justify-end gap-3">
 
-            {{-- Footer --}}
-            <div class="px-8 py-3 bg-slate-50 border-t flex justify-end gap-3">
+                    <button type="button" @click="openCreateMenu = false"
+                        class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
 
-                <button type="button" @click="openCreateMenu = false"
-                    class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
+                        Batal
 
-                    Batal
+                    </button>
 
-                </button>
+                    <button type="submit"
+                        class="px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition">
 
-                <button type="submit"
-                    class="px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition">
+                        <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                        Simpan Menu
 
-                    Simpan Menu
+                    </button>
 
-                </button>
+                </div>
+                
 
-            </div>
+            </form>
+
 
         </div>
 
