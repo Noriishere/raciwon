@@ -45,103 +45,112 @@
                 </div>
 
                 {{-- Body --}}
-                <div class="p-6">
+                <form action="{{ route('categories.store') }}" method="POST" x-data="{
+        name:'',
+        icon:'fa-solid fa-bowl-food',
+        description:''
+    }">
+                    @csrf
 
-                    <div class="space-y-5">
+                    <div class="p-6">
 
-                        {{-- Nama --}}
-                        <div>
+                        <div class="space-y-5">
 
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                            {{-- Nama --}}
+                            <div>
 
-                                Nama Kategori
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Nama Kategori
+                                </label>
 
-                            </label>
+                                <input type="text" name="name" x-model="name" value="{{ old('name') }}"
+                                    placeholder="Contoh: Makanan"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3">
 
-                            <input type="text" placeholder="Contoh: Makanan"
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-200 focus:border-brand-500">
-
-                        </div>
-
-                        {{-- Icon --}}
-                        <div>
-
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
-
-                                Icon
-
-                            </label>
-
-                            <select
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-200 focus:border-brand-500">
-
-                                <option>
-                                    🍜 Makanan
-                                </option>
-
-                                <option>
-                                    ☕ Minuman
-                                </option>
-
-                                <option>
-                                    🍰 Dessert
-                                </option>
-
-                                <option>
-                                    🍟 Snack
-                                </option>
-
-                                <option>
-                                    🐟 Seafood
-                                </option>
-
-                                <option>
-                                    🥤 Beverage
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                        {{-- Deskripsi --}}
-                        <div>
-
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
-
-                                Deskripsi
-
-                            </label>
-
-                            <textarea rows="3" placeholder="Masukkan deskripsi kategori..."
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 resize-none focus:ring-2 focus:ring-brand-200 focus:border-brand-500"></textarea>
-
-                        </div>
-
-                        {{-- Preview --}}
-                        <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4">
-
-                            <p class="text-xs uppercase tracking-wide text-slate-500 mb-3">
-                                Preview
-                            </p>
-
-                            <div class="flex items-center gap-4">
-
-                                <div
-                                    class="w-12 h-12 rounded-xl bg-orange-100 text-brand-600 flex items-center justify-center text-xl">
-
-                                    🍜
-
-                                </div>
-
-                                <div>
-
-                                    <h3 class="font-semibold text-slate-800">
-                                        Makanan
-                                    </h3>
-
-                                    <p class="text-xs text-slate-500">
-                                        Kategori menu makanan utama
+                                @error('name')
+                                    <p class="text-red-500 text-sm mt-2">
+                                        {{ $message }}
                                     </p>
+                                @enderror
+
+                            </div>
+
+                            {{-- Icon --}}
+                            <div>
+
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Icon
+                                </label>
+
+                                <select name="icon" x-model="icon"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3">
+
+                                    <option value="fa-solid fa-bowl-food">
+                                        Makanan
+                                    </option>
+
+                                    <option value="fa-solid fa-mug-hot">
+                                        Minuman
+                                    </option>
+
+                                    <option value="fa-solid fa-ice-cream">
+                                        Dessert
+                                    </option>
+
+                                    <option value="fa-solid fa-cookie-bite">
+                                        Snack
+                                    </option>
+
+                                    <option value="fa-solid fa-fish">
+                                        Seafood
+                                    </option>
+
+                                    <option value="fa-solid fa-glass-water">
+                                        Beverage
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            {{-- Deskripsi --}}
+                            <div>
+
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Deskripsi
+                                </label>
+
+                                <textarea rows="3" name="description" x-model="description"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3 resize-none"></textarea>
+
+                            </div>
+
+                            {{-- Preview --}}
+                            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4">
+
+                                <p class="text-xs uppercase tracking-wide text-slate-500 mb-3">
+                                    Preview
+                                </p>
+
+                                <div class="flex items-center gap-4">
+
+                                    <div
+                                        class="w-12 h-12 rounded-xl bg-orange-100 text-brand-600 flex items-center justify-center">
+
+                                        <i :class="icon"></i>
+
+                                    </div>
+
+                                    <div>
+
+                                        <h3 class="font-semibold text-slate-800" x-text="name || 'Nama Kategori'">
+                                        </h3>
+
+                                        <p class="text-xs text-slate-500"
+                                            x-text="description || 'Deskripsi kategori...'">
+                                        </p>
+
+                                    </div>
 
                                 </div>
 
@@ -151,29 +160,28 @@
 
                     </div>
 
-                </div>
+                    {{-- Footer --}}
+                    <div
+                        class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-3">
 
-                {{-- Footer --}}
-                <div
-                    class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-3">
+                        <button type="button" @click="openCreateCategory = false"
+                            class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
 
-                    <button type="button" @click="openCreateCategory = false"
-                        class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
+                            Batal
 
-                        Batal
+                        </button>
 
-                    </button>
+                        <button type="submit"
+                            class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-medium transition">
 
-                    <button type="submit"
-                        class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-medium transition">
+                            <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                        <i class="fa-solid fa-floppy-disk mr-2"></i>
+                            Simpan Kategori
 
-                        Simpan Kategori
+                        </button>
 
-                    </button>
-
-                </div>
+                    </div>
+                </form>
 
             </div>
 

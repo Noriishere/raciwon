@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::view('/dashboard', 'dashboard')->name('admin.dashboard');
     Route::view('/orders', 'orders.index')->name('admin.orders');
     Route::view('/menu', 'menu.index')->name('admin.menu');
-    Route::view('/categories', 'categories.index')->name('admin.categories');
+    Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::view('/inventory', 'inventory.index')->name('admin.inventory');
     Route::view('/stock-movements', 'stock-movements.index')->name('admin.stock-movements');
     Route::view('/expenses', 'expenses.index')->name('admin.expenses');

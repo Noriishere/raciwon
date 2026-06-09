@@ -20,7 +20,13 @@
     openCreateCategory:false,
     openEditCategory:false,
     openDeleteCategory:false,
-    openShowCategory:false
+    openShowCategory:false,
+    selectedCategory:{
+    id:null,
+    name:'',
+    icon:'',
+    description:''
+}
 }">
 
         {{-- Statistics --}}
@@ -37,7 +43,7 @@
                         </p>
 
                         <h3 class="text-3xl font-bold mt-2">
-                            12
+                            {{ $stats['total_categories'] }}
                         </h3>
 
                     </div>
@@ -63,7 +69,7 @@
                         </p>
 
                         <h3 class="text-3xl font-bold mt-2">
-                            10
+                            {{ $stats['used_categories'] }}
                         </h3>
 
                     </div>
@@ -89,7 +95,7 @@
                         </p>
 
                         <h3 class="text-3xl font-bold mt-2">
-                            2
+                            {{ $stats['empty_categories'] }}
                         </h3>
 
                     </div>
@@ -115,7 +121,7 @@
                         </p>
 
                         <h3 class="text-3xl font-bold mt-2">
-                            48
+                            {{ $stats['total_menu'] }}
                         </h3>
 
                     </div>
@@ -163,67 +169,73 @@
         {{-- Category Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
 
-            @for ($i = 1; $i <= 8; $i++)
+            @foreach ($categories as $category)
 
-                <div class="bg-white rounded-3xl p-6 shadow-card hover:-translate-y-1 transition duration-300">
+                        <div class="bg-white rounded-3xl p-6 shadow-card hover:-translate-y-1 transition duration-300">
 
-                    <div class="flex items-start justify-between">
+                            <div class="flex items-start justify-between">
 
-                        <div class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center">
 
-                            <i class="fa-solid fa-bowl-food text-2xl"></i>
+                                    <i class="{{ $category->icon }} text-2xl"></i>
+
+                                </div>
+
+                                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+
+                                    {{ $category->menus_count }} Menu
+
+                                </span>
+
+                            </div>
+
+                            <h3 class="mt-5 text-xl font-bold text-slate-800">
+
+                                {{ $category->name }}
+
+                            </h3>
+
+                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+
+                                {{ $category->description }}
+
+                            </p>
+
+                            <div class="mt-6 flex gap-2">
+
+                                <button @click="
+                                selectedCategory = @js($category);
+                                openShowCategory = true;
+                            " class="flex-1 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button @click="
+                                                            selectedCategory = {
+                                                                id: {{ $category->id }},
+                                                                name: @js($category->name),
+                                                                icon: @js($category->icon),
+                                                                description: @js($category->description)
+                                                            };
+
+                                                            openEditCategory = true;
+                                                        "
+                                    class="flex-1 h-11 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button @click="
+                    selectedCategory = @js($category);
+                    openDeleteCategory = true;
+                " class="flex-1 h-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
 
                         </div>
 
-                        <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-
-                            18 Menu
-
-                        </span>
-
-                    </div>
-
-                    <h3 class="mt-5 text-xl font-bold text-slate-800">
-
-                        Makanan
-
-                    </h3>
-
-                    <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-
-                        Menu utama seperti nasi goreng, ayam geprek,
-                        dan makanan berat lainnya.
-
-                    </p>
-
-                    <div class="mt-6 flex gap-2">
-
-                        <button @click="openShowCategory = true"
-                            class="flex-1 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
-
-                            <i class="fa-solid fa-eye"></i>
-
-                        </button>
-
-                        <button @click="openEditCategory = true"
-                            class="flex-1 h-11 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
-
-                            <i class="fa-solid fa-pen"></i>
-
-                        </button>
-
-                        <button @click="openDeleteCategory = true"
-                            class="flex-1 h-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
-
-                            <i class="fa-solid fa-trash"></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            @endfor
+            @endforeach
 
         </div>
         <x-categories.create-modal />

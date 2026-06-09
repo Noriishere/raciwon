@@ -1,6 +1,6 @@
-{{-- Detail Category Modal --}}
-<template x-teleport="body">
+{{-- Show Category Modal --}} <template x-teleport="body">
 
+    
     <div x-show="openShowCategory" x-cloak class="fixed inset-0 z-[99999] overflow-y-auto p-4"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
@@ -12,7 +12,6 @@
 
         <div class="min-h-full flex items-center justify-center">
 
-            {{-- Modal --}}
             <div @click.stop
                 class="relative w-full max-w-xl my-8 max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
 
@@ -53,20 +52,20 @@
                         <div class="flex flex-col sm:flex-row sm:items-center gap-4">
 
                             <div
-                                class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center text-3xl">
+                                class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center">
 
-                                🍜
+                                <i :class="selectedCategory.icon" class="text-3xl">
+                                </i>
 
                             </div>
 
                             <div>
 
-                                <h3 class="text-2xl font-bold text-slate-800">
-                                    Makanan
+                                <h3 class="text-2xl font-bold text-slate-800" x-text="selectedCategory.name">
                                 </h3>
 
                                 <p class="text-slate-500 text-sm mt-1">
-                                    Kategori menu makanan utama
+                                    Kategori Menu
                                 </p>
 
                             </div>
@@ -84,8 +83,8 @@
                                 Total Menu
                             </p>
 
-                            <h4 class="text-3xl font-bold text-slate-800 mt-2">
-                                18
+                            <h4 class="text-3xl font-bold text-slate-800 mt-2"
+                                x-text="selectedCategory.menus_count ?? 0">
                             </h4>
 
                         </div>
@@ -114,11 +113,8 @@
                             Deskripsi
                         </p>
 
-                        <p class="text-slate-600 leading-relaxed">
-
-                            Kategori untuk menu makanan utama seperti nasi goreng,
-                            ayam geprek, mie goreng, dan berbagai menu berat lainnya.
-
+                        <p class="text-slate-600 leading-relaxed"
+                            x-text="selectedCategory.description || 'Tidak ada deskripsi.'">
                         </p>
 
                     </div>
@@ -132,8 +128,7 @@
                                 Dibuat
                             </p>
 
-                            <p class="mt-2 font-medium text-slate-800">
-                                22 Juli 2025
+                            <p class="mt-2 font-medium text-slate-800" x-text="selectedCategory.created_at">
                             </p>
 
                         </div>
@@ -144,8 +139,7 @@
                                 Terakhir Diubah
                             </p>
 
-                            <p class="mt-2 font-medium text-slate-800">
-                                23 Juli 2025
+                            <p class="mt-2 font-medium text-slate-800" x-text="selectedCategory.updated_at">
                             </p>
 
                         </div>
@@ -171,5 +165,6 @@
         </div>
 
     </div>
+    
 
 </template>

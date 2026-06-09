@@ -1,6 +1,7 @@
 {{-- Edit Category Modal --}}
 <template x-teleport="body">
 
+
     <div x-show="openEditCategory" x-cloak class="fixed inset-0 z-[99999] overflow-y-auto p-4"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
@@ -12,7 +13,6 @@
 
         <div class="min-h-full flex items-center justify-center">
 
-            {{-- Modal --}}
             <div @click.stop
                 class="relative w-full max-w-xl my-8 max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
 
@@ -33,7 +33,7 @@
 
                         </div>
 
-                        <button @click="openEditCategory = false"
+                        <button type="button" @click="openEditCategory = false"
                             class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition">
 
                             <i class="fa-solid fa-xmark"></i>
@@ -44,104 +44,106 @@
 
                 </div>
 
-                {{-- Body --}}
-                <div class="p-6">
+                {{-- Form --}}
+                <form :action="'/categories/' + selectedCategory.id" method="POST">
 
-                    <div class="space-y-5">
+                    @csrf
+                    @method('PUT')
 
-                        {{-- Nama --}}
-                        <div>
+                    <div class="p-6">
 
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                        <div class="space-y-5">
 
-                                Nama Kategori
+                            {{-- Nama --}}
+                            <div>
 
-                            </label>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Nama Kategori
+                                </label>
 
-                            <input type="text" value="Makanan"
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500">
+                                <input type="text" name="name" x-model="selectedCategory.name"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500">
 
-                        </div>
+                            </div>
 
-                        {{-- Icon --}}
-                        <div>
+                            {{-- Icon --}}
+                            <div>
 
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Icon
+                                </label>
 
-                                Icon
+                                <select name="icon" x-model="selectedCategory.icon"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500">
 
-                            </label>
+                                    <option value="fa-solid fa-bowl-food">
+                                        🍜 Makanan
+                                    </option>
 
-                            <select
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500">
+                                    <option value="fa-solid fa-mug-hot">
+                                        ☕ Minuman
+                                    </option>
 
-                                <option selected>
-                                    🍜 Makanan
-                                </option>
+                                    <option value="fa-solid fa-ice-cream">
+                                        🍰 Dessert
+                                    </option>
 
-                                <option>
-                                    ☕ Minuman
-                                </option>
+                                    <option value="fa-solid fa-cookie-bite">
+                                        🍟 Snack
+                                    </option>
 
-                                <option>
-                                    🍰 Dessert
-                                </option>
+                                    <option value="fa-solid fa-fish">
+                                        🐟 Seafood
+                                    </option>
 
-                                <option>
-                                    🍟 Snack
-                                </option>
+                                    <option value="fa-solid fa-glass-water">
+                                        🥤 Beverage
+                                    </option>
 
-                                <option>
-                                    🐟 Seafood
-                                </option>
+                                </select>
 
-                                <option>
-                                    🥤 Beverage
-                                </option>
+                            </div>
 
-                            </select>
+                            {{-- Deskripsi --}}
+                            <div>
 
-                        </div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                                    Deskripsi
+                                </label>
 
-                        {{-- Deskripsi --}}
-                        <div>
+                                <textarea name="description" rows="3" x-model="selectedCategory.description"
+                                    class="w-full rounded-2xl border border-slate-200 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"></textarea>
 
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                            </div>
 
-                                Deskripsi
+                            {{-- Preview --}}
+                            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4">
 
-                            </label>
+                                <p class="text-xs uppercase tracking-wide text-slate-500 mb-3">
+                                    Preview
+                                </p>
 
-                            <textarea rows="3"
-                                class="w-full rounded-2xl border border-slate-200 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500">Kategori untuk menu makanan utama seperti nasi goreng, ayam geprek, mie goreng dan makanan berat lainnya.</textarea>
+                                <div class="flex items-center gap-4">
 
-                        </div>
+                                    <div
+                                        class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
 
-                        {{-- Preview --}}
-                        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4">
+                                        <i :class="selectedCategory.icon" class="text-xl">
+                                        </i>
 
-                            <p class="text-xs uppercase tracking-wide text-slate-500 mb-3">
-                                Preview
-                            </p>
+                                    </div>
 
-                            <div class="flex items-center gap-4">
+                                    <div>
 
-                                <div
-                                    class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                        <h3 class="font-semibold text-slate-800"
+                                            x-text="selectedCategory.name || 'Nama Kategori'">
+                                        </h3>
 
-                                    🍜
+                                        <p class="text-xs text-slate-500"
+                                            x-text="selectedCategory.description || 'Deskripsi kategori...'">
+                                        </p>
 
-                                </div>
-
-                                <div>
-
-                                    <h3 class="font-semibold text-slate-800">
-                                        Makanan
-                                    </h3>
-
-                                    <p class="text-xs text-slate-500">
-                                        Kategori menu makanan utama
-                                    </p>
+                                    </div>
 
                                 </div>
 
@@ -151,34 +153,35 @@
 
                     </div>
 
-                </div>
+                    {{-- Footer --}}
+                    <div
+                        class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-3">
 
-                {{-- Footer --}}
-                <div
-                    class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-3">
+                        <button type="button" @click="openEditCategory = false"
+                            class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
 
-                    <button type="button" @click="openEditCategory = false"
-                        class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
+                            Batal
 
-                        Batal
+                        </button>
 
-                    </button>
+                        <button type="submit"
+                            class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
 
-                    <button type="submit"
-                        class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
+                            <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                        <i class="fa-solid fa-floppy-disk mr-2"></i>
+                            Update Kategori
 
-                        Update Kategori
+                        </button>
 
-                    </button>
+                    </div>
 
-                </div>
+                </form>
 
             </div>
 
         </div>
 
     </div>
+
 
 </template>

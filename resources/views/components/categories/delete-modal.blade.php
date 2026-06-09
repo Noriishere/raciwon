@@ -1,89 +1,95 @@
-{{-- Delete Category Modal --}}
-        <template x-teleport="body">
+{{-- Delete Category Modal --}} <template x-teleport="body">
 
-            <div x-show="openDeleteCategory" x-cloak
-                class="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    
+    <div x-show="openDeleteCategory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
-                {{-- Backdrop --}}
-                <div @click="openDeleteCategory = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md">
-                </div>
+        {{-- Backdrop --}}
+        <div @click="openDeleteCategory = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md">
+        </div>
 
-                {{-- Modal --}}
-                <div @click.stop class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
-                    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+        {{-- Modal --}}
+        <div @click.stop class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
-                    {{-- Body --}}
-                    <div class="p-8 text-center">
+            <form :action="'/categories/' + selectedCategory.id" method="POST">
 
-                        <div
-                            class="mx-auto w-20 h-20 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                @csrf
+                @method('DELETE')
 
-                            <i class="fa-solid fa-trash text-3xl"></i>
+                {{-- Body --}}
+                <div class="p-8 text-center">
 
-                        </div>
+                    <div
+                        class="mx-auto w-20 h-20 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
 
-                        <h3 class="mt-6 font-brand text-4xl text-slate-800">
-                            Hapus Kategori
-                        </h3>
+                        <i class="fa-solid fa-trash text-3xl"></i>
 
-                        <p class="mt-4 text-slate-500 leading-relaxed">
+                    </div>
 
-                            Kategori
+                    <h3 class="mt-6 font-brand text-4xl text-slate-800">
+                        Hapus Kategori
+                    </h3>
 
-                            <span class="font-semibold text-slate-700">
-                                Makanan
-                            </span>
+                    <p class="mt-4 text-slate-500 leading-relaxed">
 
-                            akan dihapus secara permanen dari sistem.
+                        Kategori
+
+                        <span class="font-semibold text-slate-700" x-text="selectedCategory.name">
+                        </span>
+
+                        akan dihapus secara permanen dari sistem.
+
+                    </p>
+
+                    <div class="mt-5 p-4 rounded-2xl bg-red-50 border border-red-100">
+
+                        <p class="text-sm text-red-600">
+
+                            <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+
+                            Tindakan ini tidak dapat dibatalkan.
 
                         </p>
 
-                        <div class="mt-5 p-4 rounded-2xl bg-red-50 border border-red-100">
-
-                            <p class="text-sm text-red-600">
-
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-
-                                Tindakan ini tidak dapat dibatalkan.
-
-                            </p>
-
-                        </div>
-
                     </div>
 
-                    {{-- Footer --}}
-                    <div class="px-6 pb-6">
+                </div>
 
-                        <div class="grid grid-cols-2 gap-3">
+                {{-- Footer --}}
+                <div class="px-6 pb-6">
 
-                            <button type="button" @click="openDeleteCategory = false"
-                                class="py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
+                    <div class="grid grid-cols-2 gap-3">
 
-                                Batal
+                        <button type="button" @click="openDeleteCategory = false"
+                            class="py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 transition font-medium">
 
-                            </button>
+                            Batal
 
-                            <button type="submit"
-                                class="py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-medium transition">
+                        </button>
 
-                                <i class="fa-solid fa-trash mr-2"></i>
+                        <button type="submit"
+                            class="py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-medium transition">
 
-                                Hapus
+                            <i class="fa-solid fa-trash mr-2"></i>
 
-                            </button>
+                            Hapus
 
-                        </div>
+                        </button>
 
                     </div>
 
                 </div>
 
-            </div>
+            </form>
 
-        </template>
+        </div>
+
+    </div>
+    
+
+</template>

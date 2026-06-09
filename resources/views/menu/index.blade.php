@@ -4,7 +4,7 @@
         openCreateMenu: false,
         openEditMenu: false,
         openShowMenu: false,
-        openDeleteMenu: false
+        openDeleteMenu: false,
     }">
 
         <div class="space-y-8">
