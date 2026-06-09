@@ -1,3 +1,7 @@
+
+@props([
+    'categories'
+])
 {{-- Create Menu Modal --}}
 <template x-teleport="body">
 
