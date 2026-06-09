@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\MenuController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -12,14 +13,23 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
 
-        Route::middleware('auth:customer')->group(function () {
+    });
 
-            Route::get('/me', [AuthController::class, 'me']);
-            Route::post('/logout', [AuthController::class, 'logout']);
-            Route::get('/categories', [CategoryController::class, 'index']);
+    Route::middleware('auth:customer')->group(function () {
 
-        });
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/logout', [AuthController::class, 'logout']);
 
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::get('/{category}', [CategoryController::class, 'show']);
+    });
+
+    Route::prefix('menu')->group(function () {
+        Route::get('/', [MenuController::class, 'index']);
+        Route::get('/{menu}', [MenuController::class, 'show']);
     });
 
 });
