@@ -171,70 +171,81 @@
 
             @foreach ($categories as $category)
 
-                        <div class="bg-white rounded-3xl p-6 shadow-card hover:-translate-y-1 transition duration-300">
+            <div class="bg-white rounded-3xl p-6 shadow-card hover:-translate-y-1 transition duration-300">
 
-                            <div class="flex items-start justify-between">
+                <div class="flex items-start justify-between">
 
-                                <div class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center">
 
-                                    <i class="{{ $category->icon }} text-2xl"></i>
+                        <i class="{{ $category->icon }} text-2xl"></i>
 
-                                </div>
+                    </div>
 
-                                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
 
-                                    {{ $category->menus_count }} Menu
+                        {{ $category->menus_count }} Menu
 
-                                </span>
+                    </span>
 
-                            </div>
+                </div>
 
-                            <h3 class="mt-5 text-xl font-bold text-slate-800">
+                <h3 class="mt-5 text-xl font-bold text-slate-800">
 
-                                {{ $category->name }}
+                    {{ $category->name }}
 
-                            </h3>
+                </h3>
 
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                <p class="text-sm text-slate-500 mt-2 leading-relaxed">
 
-                                {{ $category->description }}
+                    {{ $category->description }}
 
-                            </p>
+                </p>
 
-                            <div class="mt-6 flex gap-2">
+                <div class="mt-6 flex gap-2">
 
-                                <button @click="
-                                selectedCategory = @js($category);
-                                openShowCategory = true;
-                            " class="flex-1 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
+                    <button @click="
+                                    selectedCategory = @js($category);
+                                    openShowCategory = true;
+                                " class="flex-1 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
 
-                                <button @click="
-                                                            selectedCategory = {
-                                                                id: {{ $category->id }},
-                                                                name: @js($category->name),
-                                                                icon: @js($category->icon),
-                                                                description: @js($category->description)
-                                                            };
+                    <button @click="
+                                                                selectedCategory = {
+                                                                    id: {{ $category->id }},
+                                                                    name: @js($category->name),
+                                                                    icon: @js($category->icon),
+                                                                    description: @js($category->description)
+                                                                };
 
-                                                            openEditCategory = true;
-                                                        "
-                                    class="flex-1 h-11 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
+                                                                openEditCategory = true;
+                                                            "
+                        class="flex-1 h-11 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
 
-                                <button @click="
-                    selectedCategory = @js($category);
-                    openDeleteCategory = true;
-                " class="flex-1 h-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
+                    <button @click="
+                        selectedCategory = @js($category);
+                        openDeleteCategory = true;
+                    " class="flex-1 h-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
 
-                            </div>
+                </div>
 
-                        </div>
-
+            </div>
+            @empty
+            <div
+                class="col-span-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-card text-center">
+                <div class="w-20 h-20 bg-slate-50 text-slate-400 rounded-full flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-layer-group text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Belum Ada Kategori</h3>
+                <p class="text-slate-500 max-w-md">
+                    Data kategori menu masih kosong. Silakan tambah kategori baru untuk mulai mengorganisir menu
+                    kuliner.
+                </p>
+            </div>
             @endforeach
 
         </div>
