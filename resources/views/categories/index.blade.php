@@ -169,7 +169,7 @@
         {{-- Category Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
 
-            @foreach ($categories as $category)
+            @forelse ($categories as $category)
 
             <div class="bg-white rounded-3xl p-6 shadow-card hover:-translate-y-1 transition duration-300">
 
@@ -246,7 +246,7 @@
                     kuliner.
                 </p>
             </div>
-            @endforeach
+            @endforelse
 
         </div>
         <x-categories.create-modal />
