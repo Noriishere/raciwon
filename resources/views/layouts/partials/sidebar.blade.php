@@ -70,9 +70,9 @@
 
                 </a>
 
-                <a href="{{ route('admin.menu') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                <a href="{{ route('admin.menu.index') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
                     class="flex items-center px-4 py-3 rounded-xl transition
-                    {{ request()->routeIs('admin.menu')
+                    {{ request()->routeIs('admin.menu.*')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
 
