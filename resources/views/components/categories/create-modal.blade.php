@@ -45,7 +45,7 @@
                 </div>
 
                 {{-- Body --}}
-                <form action="{{ route('categories.store') }}" method="POST" x-data="{
+                <form action="{{ route('admin.categories.store') }}" method="POST" x-data="{
         name:'',
         icon:'fa-solid fa-bowl-food',
         description:''
