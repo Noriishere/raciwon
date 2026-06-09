@@ -1,3 +1,6 @@
+@props([
+    'categories'
+])
 {{-- Edit Menu Modal --}}
 <template x-teleport="body">
 
@@ -100,10 +103,9 @@
                                             class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                             @foreach ($categories as $category)
-
                                                 <option value="{{ $category->id }}">
-                                                    {{ $category->name }}
-                                                </option>
+                                                        {{ $category->name }}
+                                                    </option>
 
                                             @endforeach
 

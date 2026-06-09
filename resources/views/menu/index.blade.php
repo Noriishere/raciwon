@@ -399,7 +399,7 @@
         </div>
 
         <x-menu.create-modal :categories="$categories"/>
-        <x-menu.edit-modal />
+        <x-menu.edit-modal :categories="$categories"/>
         <x-menu.delete-modal />
         <x-menu.show-modal />
 
