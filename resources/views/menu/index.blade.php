@@ -220,7 +220,7 @@
                                 'category' => $category->id,
                                 'search' => request('search')
                             ]) }}" class="px-4 py-3 rounded-xl font-medium transition
-                                        {{ request('category') == $category->id
+                                                                {{ request('category') == $category->id
                                 ? 'bg-brand-600 text-white'
                                 : 'bg-slate-100 hover:bg-slate-200' }}">
 
@@ -278,7 +278,7 @@
                                         </div>
 
                                         <span class="px-3 py-1 rounded-full text-xs font-medium
-                                    {{ $menu->status === 'available'
+                                                {{ $menu->status === 'available'
                     ? 'bg-green-100 text-green-700'
                     : 'bg-red-100 text-red-700' }}">
 
@@ -303,9 +303,10 @@
                                     <div class="mt-5 flex gap-2">
 
                                         <button @click="
-                                        selectedMenu = @js($menu);
-                                        openEditMenu = true;
-                                    " class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
+                                                    selectedMenu = @js($menu);
+                                                    openEditMenu = true;
+                                                "
+                                            class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
 
                                             <i class="fa-solid fa-pen-to-square mr-2"></i>
 
@@ -314,18 +315,18 @@
                                         </button>
 
                                         <button @click="
-                                        selectedMenu = @js($menu);
-                                        openShowMenu = true;
-                                    " class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
+                                                    selectedMenu = @js($menu);
+                                                    openShowMenu = true;
+                                                " class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
 
                                             <i class="fa-solid fa-eye"></i>
 
                                         </button>
 
                                         <button @click="
-                                        selectedMenu = @js($menu);
-                                        openDeleteMenu = true;
-                                    " class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                                    selectedMenu = @js($menu);
+                                                    openDeleteMenu = true;
+                                                " class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
 
                                             <i class="fa-solid fa-trash"></i>
 
@@ -384,39 +385,16 @@
         {{-- Pagination Dummy --}}
         <div class="flex justify-center">
 
-            <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
+            {{-- Pagination --}}
+            @if ($menus->hasPages())
 
-                <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
+                <div class="mt-8">
 
-                    <i class="fa-solid fa-chevron-left"></i>
+                    {{ $menus->links() }}
 
-                </button>
+                </div>
 
-                <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
-
-                    1
-
-                </button>
-
-                <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                    2
-
-                </button>
-
-                <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                    3
-
-                </button>
-
-                <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                    <i class="fa-solid fa-chevron-right"></i>
-
-                </button>
-
-            </div>
+            @endif
 
         </div>
 
