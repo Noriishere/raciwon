@@ -37,7 +37,7 @@ class MenuController extends Controller
             'total_category' => Category::count(),
         ];
 
-        return view('admin.menu.index', compact(
+        return view('menu.index', compact(
             'menus',
             'categories',
             'stats'
