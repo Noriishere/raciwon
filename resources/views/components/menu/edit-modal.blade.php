@@ -156,15 +156,20 @@
 
                             <div class="border border-slate-200 rounded-3xl overflow-hidden">
 
-                                <div
-                                    class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                            {{-- Tampilkan gambar jika data tersedia --}}
+                            <template x-if="selectedMenu.image">
+                                <img :src="'/storage/' + selectedMenu.image" alt="Preview Menu" class="w-full h-52 object-cover">
+                            </template>
 
+                            {{-- Tampilkan ikon default jika gambar kosong --}}
+                            <template x-if="!selectedMenu.image">
+                                <div class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
                                     <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
-
                                 </div>
+                            </template>
 
-                                <div class="p-5">
-
+                            <div class="p-5">
+                            
                                     <label
                                         class="block w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:border-brand-400 transition">
 
