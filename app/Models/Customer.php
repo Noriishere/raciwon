@@ -37,6 +37,11 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->getKey();
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function getJWTCustomClaims(): array
     {
         return [];

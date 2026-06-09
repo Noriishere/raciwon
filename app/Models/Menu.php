@@ -29,4 +29,16 @@ class Menu extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    // Tambahan relasi ke model Rating
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    // Accessor untuk menghitung rata-rata rating menu
+    public function getAverageRatingAttribute()
+    {
+        return round($this->ratings()->avg('rating') ?? 0, 1);
+    }
 }
