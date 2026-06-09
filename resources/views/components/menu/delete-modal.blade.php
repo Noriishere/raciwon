@@ -16,7 +16,7 @@
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
-            <form :action="'{{ url('admin.menus') }}/' + selectedMenu.id" method="POST">
+            <form :action="'{{ route('admin.menu.destroy') }}/' + selectedMenu.id" method="POST">
 
                 @csrf
                 @method('DELETE')

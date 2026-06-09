@@ -55,7 +55,7 @@
                 </div>
 
             </div>
-            <form :action="'{{ url('admin.menu') }}/' + selectedMenu.id" method="POST" enctype="multipart/form-data">
+            <form :action="'{{ route('admin.menu.update') }}/' + selectedMenu.id" method="POST" enctype="multipart/form-data">
 
                 @csrf
                 @method('PUT')
