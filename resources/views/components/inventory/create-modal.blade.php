@@ -41,7 +41,10 @@
                     }
                 }
             }" class="relative w-full max-w-5xl max-h-[90vh]
-                   bg-white rounded-3xl shadow-2xl overflow-hidden">
+                   bg-white rounded-3xl shadow-2xl overflow-hidden"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Header --}}
             <div class="bg-gradient-to-r from-brand-600 to-brand-500 px-8 py-6 text-white">
