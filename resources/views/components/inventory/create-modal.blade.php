@@ -12,14 +12,39 @@
         </div>
 
         {{-- Modal --}}
-        <div @click.stop
-            class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
-            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+        <div @click.stop x-data="{
+                name: '',
+                unit: '',
+                stock: 0,
+                minimum: 0,
+                cost: 0,
+
+                get status() {
+
+                    if (Number(this.stock) <= 0) {
+                        return {
+                            label: 'Habis',
+                            color: 'bg-red-100 text-red-700'
+                        }
+                    }
+
+                    if (Number(this.stock) <= Number(this.minimum)) {
+                        return {
+                            label: 'Low Stock',
+                            color: 'bg-yellow-100 text-yellow-700'
+                        }
+                    }
+
+                    return {
+                        label: 'Aman',
+                        color: 'bg-green-100 text-green-700'
+                    }
+                }
+            }" class="relative w-full max-w-5xl max-h-[90vh]
+                   bg-white rounded-3xl shadow-2xl overflow-hidden">
 
             {{-- Header --}}
-            <div class="shrink-0 bg-gradient-to-r from-brand-600 to-brand-500 px-6 lg:px-8 py-6 text-white">
+            <div class="bg-gradient-to-r from-brand-600 to-brand-500 px-8 py-6 text-white">
 
                 <div class="flex items-center justify-between">
 
@@ -29,7 +54,7 @@
                             Tambah Bahan Baku
                         </h2>
 
-                        <p class="mt-1 text-orange-100">
+                        <p class="text-orange-100 mt-1">
                             Tambahkan bahan baku baru ke inventaris RACIWON.
                         </p>
 
@@ -46,12 +71,9 @@
 
             </div>
 
-            {{-- Body --}}
             <form action="{{ route('admin.inventory.store') }}" method="POST">
 
-                
                 @csrf
-
                 {{-- Body --}}
                 <div class="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
 
@@ -67,12 +89,10 @@
 
                                     <label class="block mb-2 text-sm font-medium">
                                         Nama Bahan
-                                        <span class="text-red-500">*</span>
                                     </label>
 
-                                    <input type="text" name="name" value="{{ old('name') }}"
-                                        placeholder="Contoh: Beras Premium"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500">
+                                    <input x-model="name" type="text" name="name" placeholder="Contoh: Beras Premium"
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                 </div>
 
@@ -85,7 +105,8 @@
                                             Satuan
                                         </label>
 
-                                        <select name="unit" class="w-full rounded-xl border border-slate-200 px-4 py-3">
+                                        <select x-model="unit" name="unit"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                             <option value="">
                                                 Pilih Satuan
@@ -108,7 +129,7 @@
                                             Harga / Unit
                                         </label>
 
-                                        <input type="number" name="cost_per_unit" min="0" step="0.01"
+                                        <input x-model="cost" type="number" step="0.01" min="0" name="cost_per_unit"
                                             placeholder="15000"
                                             class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
@@ -116,7 +137,7 @@
 
                                 </div>
 
-                                {{-- Stok --}}
+                                {{-- Stock --}}
                                 <div class="grid md:grid-cols-2 gap-4">
 
                                     <div>
@@ -125,7 +146,8 @@
                                             Stok Awal
                                         </label>
 
-                                        <input type="number" name="initial_stock" min="0" step="0.01" placeholder="50"
+                                        <input x-model="stock" type="number" step="0.01" min="0" name="initial_stock"
+                                            placeholder="50"
                                             class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                         <p class="mt-2 text-xs text-slate-500">
@@ -140,7 +162,8 @@
                                             Minimum Stok
                                         </label>
 
-                                        <input type="number" name="minimum_stock" min="0" step="0.01" placeholder="10"
+                                        <input x-model="minimum" type="number" step="0.01" min="0" name="minimum_stock"
+                                            placeholder="10"
                                             class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                     </div>
@@ -150,7 +173,6 @@
                             </div>
 
                         </div>
-
                         {{-- Preview --}}
                         <div>
 
@@ -165,20 +187,15 @@
 
                                 <div class="p-5">
 
-                                    <span
-                                        class="inline-flex px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                    <span :class="status.color"
+                                        class="inline-flex px-3 py-1 rounded-full text-xs font-medium">
 
-                                        Inventaris Baru
+                                        <span x-text="status.label"></span>
 
                                     </span>
 
-                                    <h4 class="font-bold text-lg mt-4">
-                                        Preview Bahan
+                                    <h4 class="font-bold text-lg mt-4" x-text="name || 'Preview Bahan'">
                                     </h4>
-
-                                    <p class="text-slate-500 text-sm mt-1">
-                                        Informasi inventaris akan ditampilkan di sini.
-                                    </p>
 
                                     <div class="mt-5 space-y-3">
 
@@ -189,7 +206,11 @@
                                             </span>
 
                                             <span class="font-semibold">
-                                                0
+
+                                                <span x-text="stock || 0"></span>
+
+                                                <span x-text="unit"></span>
+
                                             </span>
 
                                         </div>
@@ -201,7 +222,11 @@
                                             </span>
 
                                             <span class="font-semibold">
-                                                0
+
+                                                <span x-text="minimum || 0"></span>
+
+                                                <span x-text="unit"></span>
+
                                             </span>
 
                                         </div>
@@ -213,27 +238,12 @@
                                             </span>
 
                                             <span class="font-semibold text-brand-600">
-                                                Rp 0
+
+                                                Rp
+
+                                                <span x-text="Number(cost || 0).toLocaleString('id-ID')"></span>
+
                                             </span>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="mt-5 p-4 rounded-2xl border border-amber-200 bg-amber-50">
-
-                                        <div class="flex gap-3">
-
-                                            <i class="fa-solid fa-circle-info text-amber-500 mt-0.5"></i>
-
-                                            <p class="text-xs text-amber-700">
-
-                                                Digunakan untuk stock monitoring,
-                                                recipe builder,
-                                                food costing,
-                                                dan inventory reporting.
-
-                                            </p>
 
                                         </div>
 
@@ -269,7 +279,6 @@
                     </button>
 
                 </div>
-                
 
             </form>
 
