@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
@@ -52,7 +54,39 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:150'],
+            'unit' => ['required'],
+            'cost_per_unit' => ['required', 'numeric'],
+            'initial_stock' => ['required', 'numeric', 'min:0'],
+            'minimum_stock' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        DB::transaction(function () use ($validated) {
+
+            $inventory = Inventory::create([
+                'name' => $validated['name'],
+                'unit' => $validated['unit'],
+                'current_stock' => $validated['initial_stock'],
+                'minimum_stock' => $validated['minimum_stock'],
+                'cost_per_unit' => $validated['cost_per_unit'],
+            ]);
+
+            if ($validated['initial_stock'] > 0) {
+
+                StockMovement::create([
+                    'inventory_id' => $inventory->id,
+                    'user_id' => auth()->id(),
+                    'type' => 'in',
+                    'quantity' => $validated['initial_stock'],
+                    'notes' => 'Stok awal inventory',
+                ]);
+            }
+        });
+
+        return redirect()
+            ->route('admin.inventory.index')
+            ->with('success', 'Bahan berhasil ditambahkan.');
     }
 
     /**
