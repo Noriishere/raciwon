@@ -77,7 +77,7 @@
 
                 @csrf
                 {{-- Body --}}
-                <div class="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
+                <div class="p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
