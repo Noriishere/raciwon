@@ -113,7 +113,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                {{ $stockHabis }}
+                                {{ $stokHabis }}
                             </h3>
 
                         </div>
