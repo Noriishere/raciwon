@@ -1,56 +1,22 @@
 {{-- Create Inventory Modal --}}
-
 <template x-teleport="body">
 
-
     <div x-show="openCreateInventory" x-cloak
-        class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
+        class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
         {{-- Backdrop --}}
         <div @click="openCreateInventory = false" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md">
         </div>
 
-        <div @click.stop x-data="{
-            name: '',
-            unit: '',
-            cost: 0,
-            stock: 0,
-            minimum: 0,
-
-            get status() {
-                if (Number(this.stock) <= 0) {
-                    return {
-                        label: 'Habis',
-                        color: 'bg-red-100 text-red-700'
-                    }
-                }
-
-                if (Number(this.stock) <= Number(this.minimum)) {
-                    return {
-                        label: 'Low Stock',
-                        color: 'bg-yellow-100 text-yellow-700'
-                    }
-                }
-
-                return {
-                    label: 'Aman',
-                    color: 'bg-green-100 text-green-700'
-                }
-            }
-        }" class="
-relative
-w-full
-h-full
-sm:h-auto
-sm:max-h-[90vh]
-max-w-5xl
-bg-white
-sm:rounded-3xl
-shadow-2xl
-overflow-hidden
-" {{-- Form --}} <form action="{{ route('admin.inventory.store') }}" method="POST" class="flex flex-col h-full">
-
-            @csrf
+        {{-- Modal --}}
+        <div @click.stop
+            class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Header --}}
             <div class="shrink-0 bg-gradient-to-r from-brand-600 to-brand-500 px-6 lg:px-8 py-6 text-white">
@@ -70,7 +36,7 @@ overflow-hidden
                     </div>
 
                     <button type="button" @click="openCreateInventory = false"
-                        class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20">
+                        class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition">
 
                         <i class="fa-solid fa-xmark"></i>
 
@@ -80,8 +46,10 @@ overflow-hidden
 
             </div>
 
+            {{-- Body --}}
             <form action="{{ route('admin.inventory.store') }}" method="POST">
 
+                
                 @csrf
 
                 {{-- Body --}}
@@ -305,8 +273,8 @@ overflow-hidden
 
             </form>
 
-
         </div>
 
+    </div>
 
 </template>
