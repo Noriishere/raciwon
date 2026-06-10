@@ -1,7 +1,7 @@
 {{-- Edit Inventory Modal --}}
 <template x-teleport="body">
 
-    <div x-show="openEditInventory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-6"
+    <div x-show="openEditInventory" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
@@ -11,200 +11,173 @@
         </div>
 
         {{-- Modal --}}
-        <div @click.stop
-            class="relative w-full max-w-5xl max-h-[90vh]
+        <div @click.stop class="relative w-full max-w-5xl max-h-[90vh] flex flex-col
                    bg-white rounded-3xl shadow-2xl overflow-hidden"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
             {{-- Header --}}
-            <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-6 text-white">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-6 sm:px-8 py-5 text-white shrink-0">
 
                 <div class="flex items-center justify-between">
 
                     <div>
-
-                        <h2 class="text-2xl font-bold">
+                        <h2 class="text-xl sm:text-2xl font-bold">
                             Edit Bahan Baku
                         </h2>
-
-                        <p class="text-orange-100 mt-1">
+                        <p class="text-orange-100 text-xs sm:text-sm mt-1">
                             Perbarui informasi inventaris bahan baku.
                         </p>
-
                     </div>
 
                     <button type="button" @click="openEditInventory = false"
-                        class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition">
-
+                        class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition flex items-center justify-center">
                         <i class="fa-solid fa-xmark"></i>
-
                     </button>
 
                 </div>
 
             </div>
 
-            {{-- Body --}}
-            <div class="p-8 overflow-y-auto max-h-[calc(90vh-150px)]">
+            <form :action="`{{ url('admin/inventory') }}/${selectedInventory.id}`" method="POST"
+                class="flex flex-col overflow-hidden h-full m-0">
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                @csrf
+                @method('PUT')
 
-                    {{-- Form --}}
-                    <div class="lg:col-span-2">
+                {{-- Body --}}
+                <div class="p-6 sm:p-8 overflow-y-auto flex-1">
 
-                        <div class="space-y-5">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                            <div>
+                        {{-- Form Inputs --}}
+                        <div class="lg:col-span-2">
 
-                                <label class="block mb-2 text-sm font-medium">
-                                    Nama Bahan
-                                </label>
+                            <div class="space-y-4 sm:space-y-5">
 
-                                <input type="text" value="Beras Premium"
-                                    class="w-full rounded-xl border border-slate-200 px-4 py-3">
-
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-4">
-
+                                {{-- Nama --}}
                                 <div>
-
                                     <label class="block mb-2 text-sm font-medium">
-                                        Satuan
+                                        Nama Bahan
                                     </label>
+                                    <input x-model="selectedInventory.name" type="text" name="name"
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 outline-none">
+                                </div>
 
-                                    <select class="w-full rounded-xl border border-slate-200 px-4 py-3">
+                                {{-- Unit + Harga --}}
+                                <div class="grid md:grid-cols-2 gap-4">
 
-                                        <option selected>Kg</option>
-                                        <option>Gram</option>
-                                        <option>Liter</option>
-                                        <option>Ml</option>
-                                        <option>Pcs</option>
-                                        <option>Pack</option>
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Satuan
+                                        </label>
+                                        <select x-model="selectedInventory.unit" name="unit"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 outline-none">
+                                            <option value="kg">Kg</option>
+                                            <option value="gram">Gram</option>
+                                            <option value="liter">Liter</option>
+                                            <option value="ml">Ml</option>
+                                            <option value="pcs">Pcs</option>
+                                            <option value="pack">Pack</option>
+                                        </select>
+                                    </div>
 
-                                    </select>
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Harga Per Unit
+                                        </label>
+                                        <input x-model="selectedInventory.cost_per_unit" type="number" step="0.01"
+                                            min="0" name="cost_per_unit"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 outline-none">
+                                    </div>
 
                                 </div>
 
-                                <div>
+                                {{-- Stock --}}
+                                <div class="grid md:grid-cols-2 gap-4">
 
-                                    <label class="block mb-2 text-sm font-medium">
-                                        Harga Per Unit
-                                    </label>
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Stok Saat Ini
+                                        </label>
+                                        <input x-model="selectedInventory.current_stock" type="number" disabled
+                                            class="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-slate-500 cursor-not-allowed outline-none">
+                                        <p class="mt-1.5 text-xs text-slate-500">
+                                            Stok hanya bisa diubah melalui modul penyesuaian stok.
+                                        </p>
+                                    </div>
 
-                                    <input type="number" value="15000"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3">
-
-                                </div>
-
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-4">
-
-                                <div>
-
-                                    <label class="block mb-2 text-sm font-medium">
-                                        Stok Saat Ini
-                                    </label>
-
-                                    <input type="number" value="50" disabled
-                                        class="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3">
-
-                                </div>
-
-                                <div>
-
-                                    <label class="block mb-2 text-sm font-medium">
-                                        Minimum Stok
-                                    </label>
-
-                                    <input type="number" value="10"
-                                        class="w-full rounded-xl border border-slate-200 px-4 py-3">
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium">
+                                            Minimum Stok
+                                        </label>
+                                        <input x-model="selectedInventory.minimum_stock" type="number" step="0.01"
+                                            min="0" name="minimum_stock"
+                                            class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-brand-500 outline-none">
+                                    </div>
 
                                 </div>
 
-                            </div>
-
-                            <div>
-
-                                <label class="block mb-2 text-sm font-medium">
-                                    Catatan
-                                </label>
-
-                                <textarea rows="5" class="w-full rounded-xl border border-slate-200 px-4 py-3">Bahan utama untuk menu nasi goreng.</textarea>
+                                {{-- Catatan --}}
+                                <div>
+                                    <label class="block mb-2 text-sm font-medium">
+                                        Catatan
+                                    </label>
+                                    <textarea name="notes" rows="4"
+                                        class="w-full rounded-xl border border-slate-200 px-4 py-3 resize-none focus:ring-2 focus:ring-brand-500 outline-none"
+                                        placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
+                        {{-- Preview --}}
+                        <div>
 
-                    {{-- Preview --}}
-                    <div>
+                            <div class="border border-slate-200 rounded-3xl overflow-hidden bg-white">
 
-                        <div class="border border-slate-200 rounded-3xl overflow-hidden">
+                                <div
+                                    class="h-36 sm:h-40 bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center">
+                                    <i class="fa-solid fa-pen-to-square text-5xl text-orange-400"></i>
+                                </div>
 
-                            <div
-                                class="h-52 bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center">
+                                <div class="p-5">
 
-                                <i class="fa-solid fa-pen-to-square text-6xl text-orange-400"></i>
+                                    <span
+                                        class="inline-flex px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">
+                                        Sedang Diedit
+                                    </span>
 
-                            </div>
+                                    <h4 class="font-bold text-lg mt-3 sm:mt-4"
+                                        x-text="selectedInventory.name || 'Preview Bahan'"></h4>
 
-                            <div class="p-5">
+                                    <div class="mt-4 sm:mt-5 space-y-3">
 
-                                <span
-                                    class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">
+                                        <div class="flex justify-between">
+                                            <span class="text-sm text-slate-500">Stok</span>
+                                            <span class="font-semibold">
+                                                <span x-text="selectedInventory.current_stock || 0"></span>
+                                                <span x-text="selectedInventory.unit"></span>
+                                            </span>
+                                        </div>
 
-                                    Sedang Diedit
+                                        <div class="flex justify-between">
+                                            <span class="text-sm text-slate-500">Minimum</span>
+                                            <span class="font-semibold">
+                                                <span x-text="selectedInventory.minimum_stock || 0"></span>
+                                                <span x-text="selectedInventory.unit"></span>
+                                            </span>
+                                        </div>
 
-                                </span>
-
-                                <h4 class="font-bold text-lg mt-4">
-                                    Beras Premium
-                                </h4>
-
-                                <p class="text-slate-500 text-sm mt-1">
-                                    Terakhir diperbarui 2 hari lalu
-                                </p>
-
-                                <div class="mt-5 space-y-3">
-
-                                    <div class="flex justify-between">
-
-                                        <span class="text-slate-500">
-                                            Stok
-                                        </span>
-
-                                        <span class="font-semibold">
-                                            50 Kg
-                                        </span>
-
-                                    </div>
-
-                                    <div class="flex justify-between">
-
-                                        <span class="text-slate-500">
-                                            Minimum
-                                        </span>
-
-                                        <span class="font-semibold">
-                                            10 Kg
-                                        </span>
-
-                                    </div>
-
-                                    <div class="flex justify-between">
-
-                                        <span class="text-slate-500">
-                                            Harga
-                                        </span>
-
-                                        <span class="font-semibold text-brand-600">
-                                            Rp 15.000
-                                        </span>
+                                        <div class="flex justify-between">
+                                            <span class="text-sm text-slate-500">Harga</span>
+                                            <span class="font-semibold text-brand-600">
+                                                Rp <span
+                                                    x-text="Number(selectedInventory.cost_per_unit || 0).toLocaleString('id-ID')"></span>
+                                            </span>
+                                        </div>
 
                                     </div>
 
@@ -218,28 +191,23 @@
 
                 </div>
 
-            </div>
+                {{-- Footer --}}
+                <div class="px-6 sm:px-8 py-4 bg-slate-50 border-t flex justify-end gap-3 shrink-0">
 
-            {{-- Footer --}}
-            <div class="px-8 py-3 bg-slate-50 border-t flex justify-end gap-3">
+                    <button type="button" @click="openEditInventory = false"
+                        class="px-5 py-2.5 sm:py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition text-sm font-medium text-slate-700">
+                        Batal
+                    </button>
 
-                <button type="button" @click="openEditInventory = false"
-                    class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
+                    <button type="submit"
+                        class="px-5 py-2.5 sm:py-3 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition text-sm font-medium shadow-sm flex items-center">
+                        <i class="fa-solid fa-pen mr-2"></i>
+                        Update Bahan
+                    </button>
 
-                    Batal
+                </div>
 
-                </button>
-
-                <button type="submit"
-                    class="px-5 py-3 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition">
-
-                    <i class="fa-solid fa-pen mr-2"></i>
-
-                    Update Bahan
-
-                </button>
-
-            </div>
+            </form>
 
         </div>
 

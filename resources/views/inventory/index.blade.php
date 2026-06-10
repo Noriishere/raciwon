@@ -5,7 +5,8 @@
         openEditInventory: false,
         openShowInventory: false,
         openDeleteInventory: false,
-        openStockModal: false
+        openStockModal: false,
+        selectedInventory: { id: '', name: '', unit: '', current_stock: 0, minimum_stock: 0, cost_per_unit: 0 }
     }">
 
         <div class="space-y-8">
@@ -224,103 +225,110 @@
                         <tbody class="divide-y divide-slate-100">
 
                             @forelse($inventories as $inventory)
-                                <tr class="hover:bg-slate-50 transition">
+                                                            <tr class="hover:bg-slate-50 transition">
 
-                                    <td class="px-6 py-4">
+                                                                <td class="px-6 py-4">
 
-                                        <div>
+                                                                    <div>
 
-                                            <p class="font-semibold text-slate-800">
-                                                {{ $inventory->name }}
-                                            </p>
+                                                                        <p class="font-semibold text-slate-800">
+                                                                            {{ $inventory->name }}
+                                                                        </p>
 
-                                            <p class="text-xs text-slate-500">
-                                                Inventory Item
-                                            </p>
+                                                                        <p class="text-xs text-slate-500">
+                                                                            Inventory Item
+                                                                        </p>
 
-                                        </div>
+                                                                    </div>
 
-                                    </td>
+                                                                </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $inventory->unit }}
-                                    </td>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $inventory->unit }}
+                                                                </td>
 
-                                    <td class="px-6 py-4 font-semibold">
-                                        {{ $inventory->current_stock }}
-                                    </td>
+                                                                <td class="px-6 py-4 font-semibold">
+                                                                    {{ $inventory->current_stock }}
+                                                                </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $inventory->minimum_stock }}
-                                    </td>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $inventory->minimum_stock }}
+                                                                </td>
 
-                                    <td class="px-6 py-4">
-                                        Rp {{ number_format($inventory->cost_per_unit, 0, ',', '.') }}
-                                    </td>
+                                                                <td class="px-6 py-4">
+                                                                    Rp {{ number_format($inventory->cost_per_unit, 0, ',', '.') }}
+                                                                </td>
 
-                                    <td class="px-6 py-4">
+                                                                <td class="px-6 py-4">
 
-                                        @if($inventory->current_stock <= 0)
+                                                                    @if($inventory->current_stock <= 0)
 
-                                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">
-                                                Habis
-                                            </span>
+                                                                        <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">
+                                                                            Habis
+                                                                        </span>
 
-                                        @elseif($inventory->current_stock <= $inventory->minimum_stock)
+                                                                    @elseif($inventory->current_stock <= $inventory->minimum_stock)
 
-                                            <span
-                                                class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">
-                                                Low Stock
-                                            </span>
+                                                                        <span
+                                                                            class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">
+                                                                            Low Stock
+                                                                        </span>
 
-                                        @else
+                                                                    @else
 
-                                            <span
-                                                class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                                                Aman
-                                            </span>
+                                                                        <span
+                                                                            class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                                                            Aman
+                                                                        </span>
 
-                                        @endif
+                                                                    @endif
 
-                                    </td>
+                                                                </td>
 
-                                    <td class="px-6 py-4">
+                                                                <td class="px-6 py-4">
 
-                                        <div class="flex justify-center gap-2">
+                                                                    <div class="flex justify-center gap-2">
 
-                                            <button @click="openShowInventory = true"
-                                                class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200">
+                                                                        <button @click="openShowInventory = true"
+                                                                            class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200">
 
-                                                <i class="fa-solid fa-eye"></i>
+                                                                            <i class="fa-solid fa-eye"></i>
 
-                                            </button>
+                                                                        </button>
 
-                                            <button @click="openEditInventory = true"
-                                                class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200">
+                                                                        <button @click="
+                                    selectedInventory = {
+                                        id: '{{ $inventory->id }}',
+                                        name: '{{ addslashes($inventory->name) }}',
+                                        unit: '{{ $inventory->unit }}',
+                                        current_stock: '{{ $inventory->current_stock }}',
+                                        minimum_stock: '{{ $inventory->minimum_stock }}',
+                                        cost_per_unit: '{{ $inventory->cost_per_unit }}'
+                                    };
+                                    openEditInventory = true;
+                                " class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200 transition flex items-center justify-center">
+                                                                            <i class="fa-solid fa-pen"></i>
+                                                                        </button>
 
-                                                <i class="fa-solid fa-pen"></i>
+                                                                        <button @click="openStockModal = true"
+                                                                            class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 hover:bg-brand-200">
 
-                                            </button>
+                                                                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
-                                            <button @click="openStockModal = true"
-                                                class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 hover:bg-brand-200">
+                                                                        </button>
 
-                                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                                                        <button @click="openDeleteInventory = true"
+                                                                            class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
 
-                                            </button>
+                                                                            <i class="fa-solid fa-trash"></i>
 
-                                            <button @click="openDeleteInventory = true"
-                                                class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
+                                                                        </button>
 
-                                                <i class="fa-solid fa-trash"></i>
+                                                                    </div>
 
-                                            </button>
+                                                                </td>
 
-                                        </div>
-
-                                    </td>
-
-                                </tr>
+                                                            </tr>
                             @empty
 
                                 <tr>
