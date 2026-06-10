@@ -24,20 +24,23 @@ class MenuController extends Controller
             ->paginate(12);
 
         $transformedMenus = $menus->getCollection()->map(function ($menu) {
-            // Mengubah string image tunggal dari DB menjadi array untuk front-end
-            $imagesArray = $menu->image ? [$menu->image] : [];
+            // Generate URL lengkap untuk gambar utama
+            $imageUrl = $menu->image ? asset('storage/'.$menu->image) : null;
+
+            // Masukkan URL lengkap ke dalam array images
+            $imagesArray = $imageUrl ? [$imageUrl] : [];
 
             return [
                 'id' => $menu->id,
                 'name' => $menu->name,
                 'category' => $menu->category ? $menu->category->name : null,
                 'price' => (int) $menu->price,
-                'sold' => '0', // Nilai default sementara
-                'stock' => 10,  // Nilai default, nanti dihitung lewat sistem BOM
+                'sold' => '0',
+                'stock' => 10,
                 'quantity' => 0,
                 'notes' => '',
                 'activeImageIndex' => 0,
-                'image' => $menu->image,
+                'image' => $imageUrl, // Sekarang outputnya jadi: http://domain-kamu.com/storage/menus/file.jpg
                 'images' => $imagesArray,
             ];
         });
