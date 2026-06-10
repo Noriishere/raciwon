@@ -37,8 +37,7 @@
                     color: 'bg-green-100 text-green-700'
                 }
             }
-        }"
-            class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        }" class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden">
 
             {{-- Form --}}
             <form action="{{ route('admin.inventory.store') }}" method="POST" class="flex flex-col h-full">
@@ -283,22 +282,40 @@
                 </div>
 
                 {{-- Footer --}}
-                <div
-                    class="shrink-0 px-6 lg:px-8 py-4 bg-slate-50 border-t flex flex-col-reverse sm:flex-row justify-end gap-3">
+                <div class="shrink-0 border-t bg-slate-50 px-6 lg:px-8 py-4">
 
-                    <button type="button" @click="openCreateInventory = false"
-                        class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 
-                        Batal
+                        <div class="text-sm text-slate-500">
 
-                    </button>
+                            <i class="fa-solid fa-circle-info mr-1"></i>
 
-                    <button type="submit" class="px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700">
+                            Stok awal akan otomatis dicatat sebagai
+                            histori stok masuk pertama.
 
-                        <i class="fa-solid fa-floppy-disk mr-2"></i>
-                        Simpan Bahan
+                        </div>
 
-                    </button>
+                        <div class="flex gap-3">
+
+                            <button type="button" @click="openCreateInventory = false"
+                                class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
+
+                                Batal
+
+                            </button>
+
+                            <button type="submit"
+                                class="px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition">
+
+                                <i class="fa-solid fa-floppy-disk mr-2"></i>
+
+                                Simpan Bahan
+
+                            </button>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
