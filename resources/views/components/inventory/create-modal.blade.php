@@ -260,21 +260,21 @@
                 </div>
 
                 {{-- Footer --}}
-                <div class="px-4 sm:px-6 lg:px-8 py-4 bg-slate-50 border-t flex flex-col sm:flex-row justify-end gap-3">
+                <div class="px-8 py-3 bg-slate-50 border-t flex justify-end gap-3">
 
                     <button type="button" @click="openCreateInventory = false"
-                        class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300">
+                        class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
 
                         Batal
 
                     </button>
 
                     <button type="submit"
-                        class="w-full sm:w-auto px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700">
+                        class="px-5 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition">
 
                         <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                        Simpan Bahan
+                        Simpan Menu
 
                     </button>
 
