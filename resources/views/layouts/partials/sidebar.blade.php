@@ -352,9 +352,9 @@
 
                 </div>
 
-                <a href="{{ route('admin.inventory') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
+                <a href="{{ route('admin.inventory.index') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
                     class="flex items-center px-4 py-3 rounded-xl transition
-            {{ request()->routeIs('admin.inventory')
+            {{ request()->routeIs('admin.inventory.*')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
 
