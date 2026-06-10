@@ -255,7 +255,7 @@
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        Rp {{ number_format($inventory->price, 0, ',', '.') }}
+                                        Rp {{ number_format($inventory->cost_per_unit, 0, ',', '.') }}
                                     </td>
 
                                     <td class="px-6 py-4">
