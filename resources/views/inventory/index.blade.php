@@ -58,7 +58,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                125
+                                {{ $totalBahan }}
                             </h3>
 
                         </div>
@@ -85,7 +85,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                8
+                                {{ $lowStock }}
                             </h3>
 
                         </div>
@@ -113,7 +113,7 @@
                             </p>
 
                             <h3 class="text-3xl font-bold mt-2">
-                                3
+                                {{ $stockHabis }}
                             </h3>
 
                         </div>
@@ -135,45 +135,44 @@
 
                 <div class="flex flex-col lg:flex-row gap-4">
 
-                    {{-- Search --}}
-                    <div class="flex-1 relative">
+                    <form method="GET" class="flex flex-col lg:flex-row gap-4">
 
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        </i>
+                        <div class="flex-1 relative">
 
-                        <input type="text" placeholder="Cari bahan baku..."
-                            class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            <i
+                                class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
 
-                    </div>
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Cari bahan baku..."
+                                class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200">
 
-                    {{-- Filter --}}
-                    <div class="flex flex-wrap gap-2">
+                        </div>
 
-                        <button class="px-4 py-3 rounded-xl bg-brand-600 text-white font-medium">
+                        <div class="flex flex-wrap gap-2">
 
-                            Semua
+                            <button name="filter" value=""
+                                class="px-4 py-3 rounded-xl {{ request('filter') == '' ? 'bg-brand-600 text-white' : 'bg-slate-100' }}">
+                                Semua
+                            </button>
 
-                        </button>
+                            <button name="filter" value="aman"
+                                class="px-4 py-3 rounded-xl {{ request('filter') == 'aman' ? 'bg-brand-600 text-white' : 'bg-slate-100' }}">
+                                Aman
+                            </button>
 
-                        <button class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200">
+                            <button name="filter" value="low"
+                                class="px-4 py-3 rounded-xl {{ request('filter') == 'low' ? 'bg-yellow-500 text-white' : 'bg-yellow-100 text-yellow-700' }}">
+                                Low Stock
+                            </button>
 
-                            Aman
+                            <button name="filter" value="habis"
+                                class="px-4 py-3 rounded-xl {{ request('filter') == 'habis' ? 'bg-red-500 text-white' : 'bg-red-100 text-red-700' }}">
+                                Habis
+                            </button>
 
-                        </button>
+                        </div>
 
-                        <button class="px-4 py-3 rounded-xl bg-yellow-100 text-yellow-700">
-
-                            Low Stock
-
-                        </button>
-
-                        <button class="px-4 py-3 rounded-xl bg-red-100 text-red-700">
-
-                            Habis
-
-                        </button>
-
-                    </div>
+                    </form>
 
                 </div>
 
@@ -224,7 +223,7 @@
 
                         <tbody class="divide-y divide-slate-100">
 
-                            @for ($i = 0; $i < 10; $i++)
+                            @forelse($inventories as $inventory)
                                 <tr class="hover:bg-slate-50 transition">
 
                                     <td class="px-6 py-4">
@@ -232,7 +231,7 @@
                                         <div>
 
                                             <p class="font-semibold text-slate-800">
-                                                Beras Premium
+                                                {{ $inventory->name }}
                                             </p>
 
                                             <p class="text-xs text-slate-500">
@@ -244,29 +243,44 @@
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        Kg
+                                        {{ $inventory->unit }}
                                     </td>
 
                                     <td class="px-6 py-4 font-semibold">
-                                        50
+                                        {{ $inventory->current_stock }}
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        10
+                                        {{ $inventory->minimum_stock }}
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        Rp 15.000
+                                        Rp {{ number_format($inventory->price, 0, ',', '.') }}
                                     </td>
 
                                     <td class="px-6 py-4">
 
-                                        <span
-                                            class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                        @if($inventory->current_stock <= 0)
 
-                                            Aman
+                                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">
+                                                Habis
+                                            </span>
 
-                                        </span>
+                                        @elseif($inventory->current_stock <= $inventory->minimum_stock)
+
+                                            <span
+                                                class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">
+                                                Low Stock
+                                            </span>
+
+                                        @else
+
+                                            <span
+                                                class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                                Aman
+                                            </span>
+
+                                        @endif
 
                                     </td>
 
@@ -307,7 +321,19 @@
                                     </td>
 
                                 </tr>
-                            @endfor
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="7" class="text-center py-10 text-slate-500">
+
+                                        Tidak ada data inventory ditemukan.
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
 
                         </tbody>
 
@@ -320,38 +346,8 @@
             {{-- Pagination --}}
             <div class="flex justify-center">
 
-                <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
-
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-left"></i>
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
-
-                        1
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        2
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        3
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
-
+                <div class="px-6 py-4 border-t">
+                    {{ $inventories->links() }}
                 </div>
 
             </div>
