@@ -118,6 +118,26 @@ class InventoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $inventory = Inventory::with([
+            'recipeItems',
+            'stockMovements',
+        ])->findOrFail($id);
+
+        if ($inventory->recipeItems()->exists()) {
+
+            return back()->with(
+                'error',
+                'Bahan tidak dapat dihapus karena sudah digunakan pada resep menu.'
+            );
+        }
+
+        $inventory->delete();
+
+        return redirect()
+            ->route('admin.inventory.index')
+            ->with(
+                'success',
+                'Bahan berhasil dihapus.'
+            );
     }
 }
