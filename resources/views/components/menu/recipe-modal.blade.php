@@ -265,14 +265,6 @@
                                             Belum Ada Bahan
 
                                         </h4>
-                                        <button
-                                            type="button"
-                                            @click="addItem()"
-                                            class="mt-4 px-4 py-2 rounded-xl bg-brand-600 text-white">
-
-                                            Tambah Bahan Pertama
-
-                                        </button>
                                         <p
                                             class="mt-2 text-sm text-slate-500">
 
