@@ -31,11 +31,7 @@
 
             }
 
-        }
-        selectedMenu:{
-            id:null,
-            name:''
-        }
+        },
         selectedMenu:{
             id:null,
             category_id:null,
@@ -345,9 +341,6 @@
                                             class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
 
                                             <i class="fa-solid fa-pen-to-square mr-2"></i>
-
-                                            Edit
-
                                         </button>
                                         <button @click="
                                     selectedMenu = @js($menu);
