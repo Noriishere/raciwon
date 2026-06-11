@@ -297,36 +297,41 @@
                                                                     </button>
 
                                                                     <button @click="
-                                                                selectedInventory = {
-                                                                    id: '{{ $inventory->id }}',
-                                                                    name: '{{ addslashes($inventory->name) }}',
-                                                                    unit: '{{ $inventory->unit }}',
-                                                                    current_stock: '{{ $inventory->current_stock }}',
-                                                                    minimum_stock: '{{ $inventory->minimum_stock }}',
-                                                                    cost_per_unit: '{{ $inventory->cost_per_unit }}'
-                                                                };
-                                                                openEditInventory = true;
-                                                            " class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200 transition flex items-center justify-center">
+                                                                                            selectedInventory = {
+                                                                                                id: '{{ $inventory->id }}',
+                                                                                                name: '{{ addslashes($inventory->name) }}',
+                                                                                                unit: '{{ $inventory->unit }}',
+                                                                                                current_stock: '{{ $inventory->current_stock }}',
+                                                                                                minimum_stock: '{{ $inventory->minimum_stock }}',
+                                                                                                cost_per_unit: '{{ $inventory->cost_per_unit }}'
+                                                                                            };
+                                                                                            openEditInventory = true;
+                                                                                        "
+                                                                        class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 hover:bg-amber-200 transition flex items-center justify-center">
                                                                         <i class="fa-solid fa-pen"></i>
-                                                                    </button>
-
-                                                                    <button @click="openStockModal = true"
-                                                                        class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 hover:bg-brand-200">
-
-                                                                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-
                                                                     </button>
 
                                                                     <button @click="
                                     selectedInventory = {
                                         id: '{{ $inventory->id }}',
-                                        name: '{{ addslashes($inventory->name) }}'
+                                        name: '{{ addslashes($inventory->name) }}',
+                                        unit: '{{ $inventory->unit }}',
+                                        current_stock: {{ $inventory->current_stock }}
                                     };
 
-                                    openDeleteInventory = true;
-                                " class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
-                                                                        <i class="fa-solid fa-trash"></i>
-                                                                    </button>
+                                    openStockModal = true;
+                                ">
+
+                                                                        <button @click="
+                                                                selectedInventory = {
+                                                                    id: '{{ $inventory->id }}',
+                                                                    name: '{{ addslashes($inventory->name) }}'
+                                                                };
+
+                                                                openDeleteInventory = true;
+                                                            " class="w-10 h-10 rounded-xl bg-red-100 text-red-600 hover:bg-red-200">
+                                                                            <i class="fa-solid fa-trash"></i>
+                                                                        </button>
 
                                                                 </div>
 

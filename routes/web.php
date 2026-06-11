@@ -15,6 +15,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::view('/orders', 'orders.index')->name('admin.orders');
     Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::resource('menu', MenuController::class)->names('admin.menu');
+    Route::post('/inventory/movement',[InventoryController::class, 'storeMovement'])->name('admin.inventory.movement.store');
     Route::resource('inventory', InventoryController::class)->names('admin.inventory');
     Route::view('/stock-movements', 'stock-movements.index')->name('admin.stock-movements');
     Route::view('/expenses', 'expenses.index')->name('admin.expenses');

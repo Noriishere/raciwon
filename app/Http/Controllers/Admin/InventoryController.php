@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\StockMovement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class InventoryController extends Controller
 {
@@ -138,6 +139,107 @@ class InventoryController extends Controller
             ->with(
                 'success',
                 'Bahan berhasil dihapus.'
+            );
+    }
+
+    public function storeMovement(Request $request)
+    {
+        $validated = $request->validate([
+            'inventory_id' => [
+                'required',
+                'exists:inventories,id',
+            ],
+
+            'type' => [
+                'required',
+                'in:in,out,waste,adjustment',
+            ],
+
+            'quantity' => [
+                'required',
+                'numeric',
+                'min:0.01',
+            ],
+
+            'notes' => [
+                'nullable',
+                'string',
+                'max:1000',
+            ],
+        ]);
+
+        DB::transaction(function () use ($validated) {
+
+            $inventory = Inventory::lockForUpdate()
+                ->findOrFail($validated['inventory_id']);
+
+            $currentStock = $inventory->current_stock;
+            $quantity = $validated['quantity'];
+
+            switch ($validated['type']) {
+
+                case 'in':
+
+                    $newStock = $currentStock + $quantity;
+
+                    break;
+
+                case 'out':
+
+                    if ($currentStock < $quantity) {
+
+                        throw ValidationException::withMessages([
+                            'quantity' => 'Stok tidak mencukupi.',
+                        ]);
+                    }
+
+                    $newStock = $currentStock - $quantity;
+
+                    break;
+
+                case 'waste':
+
+                    if ($currentStock < $quantity) {
+
+                        throw ValidationException::withMessages([
+                            'quantity' => 'Stok tidak mencukupi.',
+                        ]);
+                    }
+
+                    $newStock = $currentStock - $quantity;
+
+                    break;
+
+                case 'adjustment':
+
+                    // quantity dianggap stok hasil stock opname
+                    $newStock = $quantity;
+
+                    break;
+
+                default:
+
+                    $newStock = $currentStock;
+            }
+
+            StockMovement::create([
+                'inventory_id' => $inventory->id,
+                'user_id' => auth()->id(),
+                'type' => $validated['type'],
+                'quantity' => $quantity,
+                'notes' => $validated['notes'] ?? null,
+            ]);
+
+            $inventory->update([
+                'current_stock' => $newStock,
+            ]);
+        });
+
+        return redirect()
+            ->route('admin.inventory.index')
+            ->with(
+                'success',
+                'Pergerakan stok berhasil disimpan.'
             );
     }
 }
