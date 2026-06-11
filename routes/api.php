@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\MenuController;
@@ -33,3 +34,5 @@ Route::prefix('v1')->group(function () {
     });
 
 });
+
+Route::get('/admin/recipe/{menu}',[RecipeController::class, 'show'])->name('admin.recipe.show');

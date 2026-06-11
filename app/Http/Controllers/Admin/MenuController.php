@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,10 @@ class MenuController extends Controller
             ->withQueryString();
 
         $categories = Category::all();
-
+        $menus = Menu::withCount('recipeItems')
+            ->latest()
+            ->paginate(12);
+            
         $stats = [
             'total_menu' => Menu::count(),
             'active_menu' => Menu::where('status', 'available')->count(),
@@ -37,9 +41,12 @@ class MenuController extends Controller
             'total_category' => Category::count(),
         ];
 
+        $inventories = Inventory::orderBy('name')->get();
+
         return view('menu.index', compact(
             'menus',
             'categories',
+            'inventories',
             'stats'
         ));
     }

@@ -5,7 +5,37 @@
         openEditMenu:false,
         openShowMenu:false,
         openDeleteMenu:false,
+        openRecipeMenu:false,
+        recipeItems:[],
 
+        async loadRecipe(menuId) {
+
+            try {
+
+                const response = await fetch(
+                    `/admin/recipe/${menuId}`
+                );
+
+                const result = await response.json();
+
+                this.recipeItems = result.data.map(item => ({
+                    inventory_id: item.inventory_id,
+                    quantity: item.quantity
+                }));
+
+            } catch(error) {
+
+                console.error(error);
+
+                this.recipeItems = [];
+
+            }
+
+        }
+        selectedMenu:{
+            id:null,
+            name:''
+        }
         selectedMenu:{
             id:null,
             category_id:null,
@@ -220,7 +250,7 @@
                                 'category' => $category->id,
                                 'search' => request('search')
                             ]) }}" class="px-4 py-3 rounded-xl font-medium transition
-                                                                {{ request('category') == $category->id
+                                                                                                                                                                                                                {{ request('category') == $category->id
                                 ? 'bg-brand-600 text-white'
                                 : 'bg-slate-100 hover:bg-slate-200' }}">
 
@@ -278,7 +308,7 @@
                                         </div>
 
                                         <span class="px-3 py-1 rounded-full text-xs font-medium
-                                                {{ $menu->status === 'available'
+                                                                                                                                    {{ $menu->status === 'available'
                     ? 'bg-green-100 text-green-700'
                     : 'bg-red-100 text-red-700' }}">
 
@@ -287,7 +317,12 @@
                                         </span>
 
                                     </div>
+                                    <span class="inline-flex px-2 py-1 rounded-full bg-orange-100 text-orange-700 text-xs">
 
+                                        {{ $menu->recipe_items_count }}
+                                        Bahan
+
+                                    </span>
                                     <p class="mt-4 text-2xl font-bold text-brand-600">
 
                                         Rp {{ number_format($menu->price, 0, ',', '.') }}
@@ -300,12 +335,13 @@
 
                                     </p>
 
-                                    <div class="mt-5 flex gap-2">
+                                    <div class="mt-5 grid grid-cols-4 gap-2">
 
-                                        <button @click="
-                                                    selectedMenu = @js($menu);
-                                                    openEditMenu = true;
-                                                "
+                                        <button
+                                            @click="
+                                                                                                                                        selectedMenu = @js($menu);
+                                                                                                                                        openEditMenu = true;
+                                                                                                                                    "
                                             class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
 
                                             <i class="fa-solid fa-pen-to-square mr-2"></i>
@@ -313,20 +349,34 @@
                                             Edit
 
                                         </button>
-
                                         <button @click="
-                                                    selectedMenu = @js($menu);
-                                                    openShowMenu = true;
-                                                " class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
+                                    selectedMenu = @js($menu);
+
+                                    await loadRecipe({{ $menu->id }});
+
+                                    openRecipeMenu = true;
+                                " class="rounded-xl bg-amber-100 text-amber-700 hover:bg-amber-200 transition">
+
+                                            <i class="fa-solid fa-utensils"></i>
+
+                                        </button>
+                                        <button
+                                            @click="
+                                                                                                                                        selectedMenu = @js($menu);
+                                                                                                                                        openShowMenu = true;
+                                                                                                                                    "
+                                            class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
 
                                             <i class="fa-solid fa-eye"></i>
 
                                         </button>
 
-                                        <button @click="
-                                                    selectedMenu = @js($menu);
-                                                    openDeleteMenu = true;
-                                                " class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                        <button
+                                            @click="
+                                                                                                                                        selectedMenu = @js($menu);
+                                                                                                                                        openDeleteMenu = true;
+                                                                                                                                    "
+                                            class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
 
                                             <i class="fa-solid fa-trash"></i>
 
@@ -398,11 +448,11 @@
 
         </div>
 
-        <x-menu.create-modal :categories="$categories"/>
-        <x-menu.edit-modal :categories="$categories"/>
+        <x-menu.create-modal :categories="$categories" />
+        <x-menu.edit-modal :categories="$categories" />
         <x-menu.delete-modal />
         <x-menu.show-modal />
-
+        <x-menu.recipe-modal :inventories="$inventories" />
     </div>
 
 </x-app-layout>
