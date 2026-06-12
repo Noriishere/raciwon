@@ -392,7 +392,7 @@
                                         <div class="rounded-xl bg-green-50 p-3">
 
                                             <p class="text-xs text-slate-500">
-                                                CM
+                                                Profit
                                             </p>
 
                                             <p class="font-semibold text-green-600">
