@@ -353,8 +353,9 @@
 
                                     <td class="px-6 py-4">
 
-                                        <span class="px-3 py-1 rounded-full text-xs font-medium
-                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                        <span
+                                            class="px-3 py-1 rounded-full text-xs font-medium
+                                                        {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
@@ -391,6 +392,17 @@
 
                                     <td class="px-6 py-4 text-slate-500">
                                         {{ $movement->notes ?: '-' }}
+                                    </td>
+
+                                </tr>
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="8" class="px-6 py-10 text-center text-slate-500">
+
+                                        Belum ada riwayat pergerakan stok.
+
                                     </td>
 
                                 </tr>
