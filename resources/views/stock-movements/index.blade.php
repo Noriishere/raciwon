@@ -212,7 +212,7 @@
 
                                 <span>Stock Out</span>
 
-                                <span>{{ $outPercent }}</span>
+                                <span>{{ $outPercent }}%</span>
 
                             </div>
 
@@ -231,7 +231,7 @@
 
                                 <span>Waste</span>
 
-                                <span>{{ $wastePercent }}</span>
+                                <span>{{ $wastePercent }}%</span>
 
                             </div>
 
@@ -250,7 +250,7 @@
 
                                 <span>Adjustment</span>
 
-                                <span>{{ $adjustmentPercent }}</span>
+                                <span>{{ $adjustmentPercent }}%</span>
 
                             </div>
 

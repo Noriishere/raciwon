@@ -310,14 +310,14 @@
                 <div class="shrink-0 px-6 py-4 border-t bg-slate-50 flex flex-col sm:flex-row justify-end gap-3">
 
                     <button type="button" @click="
-    openStockModal = false;
+                        openStockModal = false;
 
-    type = 'in';
-    quantity = 0;
-    notes = '';
+                        type = 'in';
+                        quantity = 0;
+                        notes = '';
 
-    resetStockModal();
-" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200">
+                        resetStockModal();
+                    " class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200">
 
                         Batal
 
