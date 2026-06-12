@@ -14,8 +14,35 @@
         $wastePercent = round(($breakdown['waste'] / $totalMovement) * 100);
         $adjustmentPercent = round(($breakdown['adjustment'] / $totalMovement) * 100);
     @endphp
+
     <div x-data="{
-        openStockModal: false
+
+    openStockModal:false,
+
+    inventories:@js($inventories),
+
+    selectedInventory:{
+        id:null,
+        name:'',
+        unit:'',
+        current_stock:0
+    },
+
+    selectInventory(id){
+
+        const inventory =
+            this.inventories.find(
+                item => item.id == id
+            );
+
+        if(inventory){
+
+            this.selectedInventory = inventory;
+
+        }
+
+    }
+
     }">
 
         <div class="space-y-8">
@@ -360,7 +387,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                                {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
@@ -441,15 +468,15 @@
 
     @push('scripts')
         <script>
-    
+
             const labels = @json(
                 $movementTrend->pluck('date')
             );
-    
-        const values = @json(
-            $movementTrend->pluck('total')
-        );
-    
+
+            const values = @json(
+                $movementTrend->pluck('total')
+            );
+
         </script>
     @endpush
 </x-app-layout>

@@ -2,7 +2,7 @@
 
 <template x-teleport="body">
 
-    
+
     <div x-show="openStockModal" x-cloak class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
 
         {{-- Backdrop --}}
@@ -79,13 +79,51 @@
 
                         {{-- Form --}}
                         <div class="lg:col-span-2">
+                            <template x-if="selectedInventory.id">
 
-                            <input type="hidden" name="inventory_id" :value="selectedInventory.id">
+                                <input type="hidden" name="inventory_id" :value="selectedInventory.id">
+
+                            </template>
 
                             <div class="space-y-5">
+                                <template x-if="!selectedInventory.id">
 
+                                    <div>
+
+                                        <label class="block mb-2 text-sm font-medium">
+
+                                            Bahan Baku
+
+                                        </label>
+
+                                        <select x-model="selectedInventory.id" @change="
+        selectInventory(
+            $event.target.value
+        )
+    " class="w-full rounded-xl border border-slate-200 px-4 py-3">
+
+                                            <option value="">
+                                                Pilih Bahan
+                                            </option>
+
+                                            @foreach($inventories as $inventory)
+
+                                                <option value="{{ $inventory->id }}">
+
+                                                    {{ $inventory->name }}
+
+                                                </option>
+
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+                                </template>
                                 {{-- Inventory Info --}}
-                                <div class="rounded-2xl border border-slate-200 p-4 bg-slate-50">
+                                <div x-show="selectedInventory.id"
+                                    class="rounded-2xl border border-slate-200 p-4 bg-slate-50">
 
                                     <h4 class="font-semibold text-slate-800" x-text="selectedInventory.name">
                                     </h4>
@@ -267,8 +305,13 @@
                 {{-- Footer --}}
                 <div class="shrink-0 px-6 py-4 border-t bg-slate-50 flex flex-col sm:flex-row justify-end gap-3">
 
-                    <button type="button" @click="openStockModal = false"
-                        class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200">
+                    <button type="button" @click="
+    openStockModal = false;
+
+    type = 'in';
+    quantity = 0;
+    notes = '';
+" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200">
 
                         Batal
 
@@ -289,6 +332,6 @@
         </div>
 
     </div>
-    
+
 
 </template>

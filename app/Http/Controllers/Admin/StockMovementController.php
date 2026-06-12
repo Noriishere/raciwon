@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\StockMovement;
 use Illuminate\Http\Request;
 
@@ -78,6 +79,7 @@ class StockMovementController extends Controller
             ->groupBy('date')
             ->orderBy('date')
             ->get();
+        $inventories = Inventory::orderBy('name')->get();
 
         return view(
             'stock-movements.index',
@@ -85,7 +87,8 @@ class StockMovementController extends Controller
                 'movements',
                 'stats',
                 'breakdown',
-                'movementTrend'
+                'movementTrend',
+                'inventories'
             )
         );
     }
