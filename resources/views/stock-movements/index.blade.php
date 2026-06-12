@@ -39,17 +39,18 @@
         this.selectedInventory = inventory;
 
     }
-        resetStockModal(){
-
-        this.selectedInventory = {
-            id:null,
-            name:'',
-            unit:'',
-            current_stock:0
-        };
-
+    },
+    resetStockModal(){
+    
+    this.selectedInventory = {
+        id:null,
+        name:'',
+        unit:'',
+        current_stock:0
+    };
+    
     }
-}}">
+}">
 
         <div class="space-y-8">
 
@@ -393,7 +394,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                                                            {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
