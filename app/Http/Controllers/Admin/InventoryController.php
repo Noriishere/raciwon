@@ -111,7 +111,45 @@ class InventoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+            ],
+
+            'unit' => [
+                'required',
+            ],
+
+            'minimum_stock' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'cost_per_unit' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+        ]);
+
+        $inventory->update([
+            'name' => $validated['name'],
+            'unit' => $validated['unit'],
+            'minimum_stock' => $validated['minimum_stock'],
+            'cost_per_unit' => $validated['cost_per_unit'],
+        ]);
+
+        return redirect()
+            ->route('admin.inventory.index')
+            ->with(
+                'success',
+                'Bahan berhasil diperbarui.'
+            );
     }
 
     /**

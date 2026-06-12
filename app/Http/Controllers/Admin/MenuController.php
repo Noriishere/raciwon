@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -33,7 +34,7 @@ class MenuController extends Controller
         $menus = Menu::withCount('recipeItems')
             ->latest()
             ->paginate(12);
-            
+
         $stats = [
             'total_menu' => Menu::count(),
             'active_menu' => Menu::where('status', 'available')->count(),
@@ -68,12 +69,12 @@ class MenuController extends Controller
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:150'],
             'images' => ['nullable', 'array'],              // Validasi input form array
-            'images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'], 
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric'],
             'status' => ['required'],
         ]);
-    
+
         // 1. Proses upload banyak gambar jika ada
         $imagePaths = [];
         if ($request->hasFile('images')) {
@@ -81,13 +82,13 @@ class MenuController extends Controller
                 $imagePaths[] = $file->store('menus', 'public');
             }
         }
-    
+
         // 2. Masukkan array path gambar ke dalam key 'image' (sesuai kolom DB Anda)
-        $validated['image'] = $imagePaths; 
-    
+        $validated['image'] = $imagePaths;
+
         // 3. Simpan ke database
         Menu::create($validated);
-    
+
         return back()->with('success', 'Menu berhasil ditambahkan.');
     }
 
@@ -121,26 +122,26 @@ class MenuController extends Controller
             'price' => ['required', 'numeric'],
             'status' => ['required'],
         ]);
-    
+
         // Jika user mengupload gambar-gambar baru
         if ($request->hasFile('images')) {
             // Hapus foto-foto lama yang ada di dalam array database
             if (is_array($menu->image)) {
                 foreach ($menu->image as $oldPath) {
-                    \Storage::disk('public')->delete($oldPath);
+                    Storage::disk('public')->delete($oldPath);
                 }
             }
-    
+
             $imagePaths = [];
             foreach ($request->file('images') as $file) {
                 $imagePaths[] = $file->store('menus', 'public');
             }
-            
+
             $validated['image'] = $imagePaths;
         }
-    
+
         $menu->update($validated);
-    
+
         return back()->with('success', 'Menu berhasil diperbarui.');
     }
 
