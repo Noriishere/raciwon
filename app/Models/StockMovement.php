@@ -12,6 +12,8 @@ class StockMovement extends Model
         'type',
         'quantity',
         'notes',
+        'stock_before',
+        'stock_after',
     ];
 
     public function inventory()

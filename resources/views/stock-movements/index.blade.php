@@ -1,5 +1,14 @@
 <x-app-layout>
+    @php
 
+        $typeColors = [
+            'in' => 'bg-green-100 text-green-700',
+            'out' => 'bg-blue-100 text-blue-700',
+            'waste' => 'bg-red-100 text-red-700',
+            'adjustment' => 'bg-amber-100 text-amber-700',
+        ];
+
+    @endphp
     <div x-data="{
         openStockModal: false
     }">
@@ -46,7 +55,9 @@
                     </p>
 
                     <h3 class="text-3xl font-bold mt-2">
-                        245
+
+                        {{ number_format($stats['total']) }}
+
                     </h3>
 
                 </div>
@@ -58,7 +69,9 @@
                     </p>
 
                     <h3 class="text-3xl font-bold text-green-600 mt-2">
-                        120
+
+                        {{ number_format($stats['in']) }}
+
                     </h3>
 
                 </div>
@@ -70,7 +83,9 @@
                     </p>
 
                     <h3 class="text-3xl font-bold text-blue-600 mt-2">
-                        95
+
+                        {{ number_format($stats['out']) }}
+
                     </h3>
 
                 </div>
@@ -82,7 +97,9 @@
                     </p>
 
                     <h3 class="text-3xl font-bold text-red-600 mt-2">
-                        30
+
+                        {{ number_format($stats['waste']) }}
+
                     </h3>
 
                 </div>
@@ -216,32 +233,61 @@
             {{-- Filter --}}
             <div class="bg-white rounded-3xl shadow-card p-5">
 
-                <div class="grid lg:grid-cols-4 gap-4">
+                <form method="GET">
 
-                    <input type="text" placeholder="Cari bahan..."
-                        class="rounded-xl border border-slate-200 px-4 py-3">
+                    <div class="grid lg:grid-cols-4 gap-4">
 
-                    <select class="rounded-xl border border-slate-200 px-4 py-3">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari bahan..."
+                            class="rounded-xl border border-slate-200 px-4 py-3">
 
-                        <option>Semua Type</option>
-                        <option>IN</option>
-                        <option>OUT</option>
-                        <option>WASTE</option>
-                        <option>ADJUSTMENT</option>
+                        <select name="type" class="rounded-xl border border-slate-200 px-4 py-3">
 
-                    </select>
+                            <option value="">
+                                Semua Type
+                            </option>
 
-                    <input type="date" class="rounded-xl border border-slate-200 px-4 py-3">
+                            <option value="in" @selected(request('type') == 'in')>
 
-                    <select class="rounded-xl border border-slate-200 px-4 py-3">
+                                IN
 
-                        <option>Semua User</option>
-                        <option>Owner</option>
-                        <option>Cashier</option>
+                            </option>
 
-                    </select>
+                            <option value="out" @selected(request('type') == 'out')>
 
-                </div>
+                                OUT
+
+                            </option>
+
+                            <option value="waste" @selected(request('type') == 'waste')>
+
+                                WASTE
+
+                            </option>
+
+                            <option value="adjustment" @selected(request('type') == 'adjustment')>
+
+                                ADJUSTMENT
+
+                            </option>
+
+                        </select>
+
+                        <button type="submit" class="rounded-xl bg-brand-600 text-white">
+
+                            Filter
+
+                        </button>
+
+                        <a href="{{ route('admin.stock-movements.index') }}"
+                            class="rounded-xl bg-slate-100 flex items-center justify-center">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
@@ -273,6 +319,14 @@
                                 </th>
 
                                 <th class="px-6 py-4 text-left">
+                                    Sebelum
+                                </th>
+
+                                <th class="px-6 py-4 text-left">
+                                    Sesudah
+                                </th>
+
+                                <th class="px-6 py-4 text-left">
                                     User
                                 </th>
 
@@ -286,42 +340,61 @@
 
                         <tbody class="divide-y divide-slate-100">
 
-                            @for ($i = 0; $i < 15; $i++)
+                            @forelse($movements as $movement)
                                 <tr class="hover:bg-slate-50 transition">
 
                                     <td class="px-6 py-4">
-                                        08 Jun 2026
+                                        {{ $movement->created_at->format('d M Y H:i') }}
                                     </td>
 
                                     <td class="px-6 py-4 font-medium">
-                                        Beras Premium
+                                        {{ $movement->inventory->name }}
                                     </td>
 
                                     <td class="px-6 py-4">
 
-                                        <span
-                                            class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium
+                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
-                                            IN
+                                            {{ strtoupper($movement->type) }}
 
                                         </span>
 
                                     </td>
 
                                     <td class="px-6 py-4 font-semibold text-green-600">
-                                        +20 Kg
+                                        {{ number_format($movement->quantity, 2) }}
+                                        {{ $movement->inventory->unit }}
+                                    </td>
+
+                                    {{-- Sebelum --}}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+
+                                        {{ number_format($movement->stock_before, 2) }}
+
+                                    </td>
+
+                                    {{-- Sesudah --}}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+
+                                        <span class="font-semibold">
+
+                                            {{ number_format($movement->stock_after, 2) }}
+
+                                        </span>
+
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        Owner
+                                        {{ $movement->user->name }}
                                     </td>
 
                                     <td class="px-6 py-4 text-slate-500">
-                                        Pembelian supplier
+                                        {{ $movement->notes ?: '-' }}
                                     </td>
 
                                 </tr>
-                            @endfor
+                            @endforelse
 
                         </tbody>
 
@@ -334,37 +407,9 @@
             {{-- Pagination --}}
             <div class="flex justify-center">
 
-                <div class="bg-white rounded-2xl shadow-card p-2 flex gap-2">
+                <div class="mt-6">
 
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-left"></i>
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-brand-600 text-white">
-
-                        1
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        2
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl hover:bg-slate-100">
-
-                        3
-
-                    </button>
-
-                    <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
+                    {{ $movements->links() }}
 
                 </div>
 

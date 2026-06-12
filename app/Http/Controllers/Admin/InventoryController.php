@@ -266,6 +266,9 @@ class InventoryController extends Controller
                 'type' => $validated['type'],
                 'quantity' => $quantity,
                 'notes' => $validated['notes'] ?? null,
+
+                'stock_before' => $currentStock,
+                'stock_after' => $newStock,
             ]);
 
             $inventory->update([

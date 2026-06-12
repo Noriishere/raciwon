@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\RecipeController;
+use App\Http\Controllers\Admin\StockMovementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::view('/users', 'users.index')->name('admin.users');
 
     Route::post('/recipe',[RecipeController::class, 'store'])->name('admin.recipe.store');
-
+    Route::get('/stock-movements',[StockMovementController::class, 'index'])->name('admin.stock-movements.index');
     Route::get('/recipe/{menu}',[RecipeController::class, 'show'])->name('admin.recipe.show');
     // Rute admin lainnya tinggal dimasukkan di bawah sini
 });
