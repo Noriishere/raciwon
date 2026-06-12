@@ -246,7 +246,7 @@
                                 'category' => $category->id,
                                 'search' => request('search')
                             ]) }}" class="px-4 py-3 rounded-xl font-medium transition
-                                                                                                                                                                                                                {{ request('category') == $category->id
+                                                                                                                                                                                                                                        {{ request('category') == $category->id
                                 ? 'bg-brand-600 text-white'
                                 : 'bg-slate-100 hover:bg-slate-200' }}">
 
@@ -269,7 +269,8 @@
 
                 @forelse ($menus as $menu)
 
-                            <div class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+                            <div
+                                class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
 
                                 {{-- 1. PEMBERSIH DATA GAMBAR (PHP BLOCK) --}}
                                 @php
@@ -277,15 +278,15 @@
                                     // Deteksi format array murni
                                     if (is_array($menu->image)) {
                                         $rawImages = $menu->image;
-                                    } 
+                                    }
                                     // Deteksi format string dipisah koma (a.jpg,b.jpg)
                                     elseif (is_string($menu->image) && str_contains($menu->image, ',')) {
                                         $rawImages = explode(',', $menu->image);
-                                    } 
+                                    }
                                     // Deteksi format JSON string (["a.jpg", "b.jpg"])
                                     elseif (is_string($menu->image) && str_starts_with(trim($menu->image), '[')) {
                                         $rawImages = json_decode($menu->image, true) ?? [];
-                                    } 
+                                    }
                                     // Deteksi string tunggal biasa
                                     elseif (is_string($menu->image) && !empty($menu->image)) {
                                         $rawImages = [$menu->image];
@@ -293,9 +294,9 @@
 
                                     // Bersihkan sisa karakter aneh (kutipan, kurung kurawal, dll)
                                     $cleanImages = [];
-                                    foreach($rawImages as $img) {
+                                    foreach ($rawImages as $img) {
                                         $clean = trim(str_replace(['"', '[', ']', '\\'], '', $img));
-                                        if(!empty($clean)) {
+                                        if (!empty($clean)) {
                                             $cleanImages[] = $clean;
                                         }
                                     }
@@ -303,35 +304,34 @@
 
                                 {{-- 2. SLIDER GAMBAR DENGAN ALPINE.JS --}}
                                 @if (count($cleanImages) > 0)
-                                    
+
                                     <div x-data="{ activeSlide: 0, totalSlides: {{ count($cleanImages) }} }"
-                                         x-init="if(totalSlides > 1) setInterval(() => { activeSlide = (activeSlide + 1) % totalSlides }, 3500)"
-                                         class="relative w-full h-48 bg-slate-100 overflow-hidden group">
-                            
+                                        x-init="if(totalSlides > 1) setInterval(() => { activeSlide = (activeSlide + 1) % totalSlides }, 3500)"
+                                        class="relative w-full h-48 bg-slate-100 overflow-hidden group">
+
                                         {{-- Track Gambar --}}
                                         <div class="flex transition-transform duration-500 h-full w-full"
-                                             x-bind:style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                                            x-bind:style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
                                             @foreach($cleanImages as $img)
-                                                <img src="{{ Storage::url($img) }}" alt="{{ $menu->name }}" 
-                                                     class="w-full h-full flex-shrink-0 object-cover">
+                                                <img src="{{ Storage::url($img) }}" alt="{{ $menu->name }}"
+                                                    class="w-full h-full flex-shrink-0 object-cover">
                                             @endforeach
                                         </div>
-                            
+
                                         {{-- Titik Indikator (Hanya muncul jika gambar > 1) --}}
                                         @if(count($cleanImages) > 1)
                                             <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
                                                 @foreach($cleanImages as $index => $img)
-                                                    <button type="button" 
-                                                            @click="activeSlide = {{ $index }}"
-                                                            class="h-1.5 rounded-full transition-all duration-300 shadow-sm"
-                                                            :class="activeSlide === {{ $index }} ? 'w-4 bg-brand-500' : 'w-1.5 bg-white/80 hover:bg-white'">
+                                                    <button type="button" @click="activeSlide = {{ $index }}"
+                                                        class="h-1.5 rounded-full transition-all duration-300 shadow-sm"
+                                                        :class="activeSlide === {{ $index }} ? 'w-4 bg-brand-500' : 'w-1.5 bg-white/80 hover:bg-white'">
                                                     </button>
                                                 @endforeach
                                             </div>
                                         @endif
                                     </div>
-                                
-                                {{-- 3. JIKA TIDAK ADA GAMBAR SAMA SEKALI --}}
+
+                                    {{-- 3. JIKA TIDAK ADA GAMBAR SAMA SEKALI --}}
                                 @else
                                     <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
                                         <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
@@ -355,7 +355,7 @@
                                         </div>
 
                                         <span class="px-3 py-1 rounded-full text-xs font-medium
-                                                                                                                                    {{ $menu->status === 'available'
+                                                                                                                                                {{ $menu->status === 'available'
                     ? 'bg-green-100 text-green-700'
                     : 'bg-red-100 text-red-700' }}">
 
@@ -373,7 +373,33 @@
                                     <p class="mt-4 text-2xl font-bold text-brand-600">
 
                                         Rp {{ number_format($menu->price, 0, ',', '.') }}
+                                    <div class="mt-3 grid grid-cols-2 gap-2">
 
+                                        <div class="rounded-xl bg-slate-50 p-3">
+
+                                            <p class="text-xs text-slate-500">
+                                                Food Cost
+                                            </p>
+
+                                            <p class="font-semibold text-red-600">
+                                                Rp {{ number_format($menu->food_cost ?? 0, 0, ',', '.') }}
+                                            </p>
+
+                                        </div>
+
+                                        <div class="rounded-xl bg-green-50 p-3">
+
+                                            <p class="text-xs text-slate-500">
+                                                Profit
+                                            </p>
+
+                                            <p class="font-semibold text-green-600">
+                                                Rp {{ number_format($menu->profit ?? 0, 0, ',', '.') }}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
                                     </p>
 
                                     <p class="mt-2 text-sm text-slate-500 line-clamp-2">
@@ -386,29 +412,29 @@
 
                                         <button
                                             @click="
-                                                                                                                                        selectedMenu = @js($menu);
-                                                                                                                                        openEditMenu = true;
-                                                                                                                                    "
+                                                                                                                                                    selectedMenu = @js($menu);
+                                                                                                                                                    openEditMenu = true;
+                                                                                                                                                "
                                             class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition">
 
                                             <i class="fa-solid fa-pen-to-square mr-2"></i>
                                         </button>
                                         <button @click="
-                                    selectedMenu = @js($menu);
+                                                selectedMenu = @js($menu);
 
-                                    await loadRecipe({{ $menu->id }});
+                                                await loadRecipe({{ $menu->id }});
 
-                                    openRecipeMenu = true;
-                                " class="rounded-xl bg-amber-100 text-amber-700 hover:bg-amber-200 transition">
+                                                openRecipeMenu = true;
+                                            " class="rounded-xl bg-amber-100 text-amber-700 hover:bg-amber-200 transition">
 
                                             <i class="fa-solid fa-utensils"></i>
 
                                         </button>
                                         <button
                                             @click="
-                                                                                                                                        selectedMenu = @js($menu);
-                                                                                                                                        openShowMenu = true;
-                                                                                                                                    "
+                                                                                                                                                    selectedMenu = @js($menu);
+                                                                                                                                                    openShowMenu = true;
+                                                                                                                                                "
                                             class="w-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition">
 
                                             <i class="fa-solid fa-eye"></i>
@@ -417,9 +443,9 @@
 
                                         <button
                                             @click="
-                                                                                                                                        selectedMenu = @js($menu);
-                                                                                                                                        openDeleteMenu = true;
-                                                                                                                                    "
+                                                                                                                                                    selectedMenu = @js($menu);
+                                                                                                                                                    openDeleteMenu = true;
+                                                                                                                                                "
                                             class="w-11 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
 
                                             <i class="fa-solid fa-trash"></i>
