@@ -178,7 +178,7 @@
 
                                 <span>Stock Out</span>
 
-                                <span>{{ $outPercent }}/span>
+                                <span>{{ $outPercent }}</span>
 
                             </div>
 
