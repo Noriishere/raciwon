@@ -47,7 +47,7 @@
     }
 
 }}">
-
+<pre x-text="JSON.stringify(inventories,null,2)"></pre>
         <div class="space-y-8">
 
             {{-- Header --}}
