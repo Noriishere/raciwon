@@ -116,7 +116,7 @@
 
         <a href="{{ route('admin.stock-movements.index') }}" :class="sidebarOpen ? 'justify-start gap-3' : 'justify-center'"
             class="flex items-center px-4 py-3 rounded-xl transition
-            {{ request()->routeIs('admin.stock-movements')
+            {{ request()->routeIs('admin.stock-movements.index')
     ? 'bg-white text-brand-700 font-semibold shadow-md'
     : 'hover:bg-brand-600 text-orange-50' }}">
 
