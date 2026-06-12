@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     protected $fillable = [
-        'category_id',
-        'name',
-        'image',
-        'description',
-        'price',
-        'status',
+        'category_id', 
+        'name', 
+        'image', // Pastikan kolom ini masuk fillable
+        'description', 
+        'price', 
+        'status'
     ];
-
-    public function category()
+    protected $casts = [
+            'image' => 'array',
+    ];
+   public function category()
     {
         return $this->belongsTo(Category::class);
     }

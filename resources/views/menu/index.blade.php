@@ -269,22 +269,73 @@
 
                 @forelse ($menus as $menu)
 
-                            <div
-                                class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+                            <div class="bg-white rounded-3xl shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
 
-                                @if ($menu->image)
+                                {{-- 1. PEMBERSIH DATA GAMBAR (PHP BLOCK) --}}
+                                @php
+                                    $rawImages = [];
+                                    // Deteksi format array murni
+                                    if (is_array($menu->image)) {
+                                        $rawImages = $menu->image;
+                                    } 
+                                    // Deteksi format string dipisah koma (a.jpg,b.jpg)
+                                    elseif (is_string($menu->image) && str_contains($menu->image, ',')) {
+                                        $rawImages = explode(',', $menu->image);
+                                    } 
+                                    // Deteksi format JSON string (["a.jpg", "b.jpg"])
+                                    elseif (is_string($menu->image) && str_starts_with(trim($menu->image), '[')) {
+                                        $rawImages = json_decode($menu->image, true) ?? [];
+                                    } 
+                                    // Deteksi string tunggal biasa
+                                    elseif (is_string($menu->image) && !empty($menu->image)) {
+                                        $rawImages = [$menu->image];
+                                    }
 
-                                    <img src="{{ Storage::url($menu->image) }}" alt="{{ $menu->name }}"
-                                        class="w-full h-48 object-cover">
+                                    // Bersihkan sisa karakter aneh (kutipan, kurung kurawal, dll)
+                                    $cleanImages = [];
+                                    foreach($rawImages as $img) {
+                                        $clean = trim(str_replace(['"', '[', ']', '\\'], '', $img));
+                                        if(!empty($clean)) {
+                                            $cleanImages[] = $clean;
+                                        }
+                                    }
+                                @endphp
 
-                                @else
-
-                                    <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
-
-                                        <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
-
+                                {{-- 2. SLIDER GAMBAR DENGAN ALPINE.JS --}}
+                                @if (count($cleanImages) > 0)
+                                    
+                                    <div x-data="{ activeSlide: 0, totalSlides: {{ count($cleanImages) }} }"
+                                         x-init="if(totalSlides > 1) setInterval(() => { activeSlide = (activeSlide + 1) % totalSlides }, 3500)"
+                                         class="relative w-full h-48 bg-slate-100 overflow-hidden group">
+                            
+                                        {{-- Track Gambar --}}
+                                        <div class="flex transition-transform duration-500 h-full w-full"
+                                             x-bind:style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                                            @foreach($cleanImages as $img)
+                                                <img src="{{ Storage::url($img) }}" alt="{{ $menu->name }}" 
+                                                     class="w-full h-full flex-shrink-0 object-cover">
+                                            @endforeach
+                                        </div>
+                            
+                                        {{-- Titik Indikator (Hanya muncul jika gambar > 1) --}}
+                                        @if(count($cleanImages) > 1)
+                                            <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                                                @foreach($cleanImages as $index => $img)
+                                                    <button type="button" 
+                                                            @click="activeSlide = {{ $index }}"
+                                                            class="h-1.5 rounded-full transition-all duration-300 shadow-sm"
+                                                            :class="activeSlide === {{ $index }} ? 'w-4 bg-brand-500' : 'w-1.5 bg-white/80 hover:bg-white'">
+                                                    </button>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
-
+                                
+                                {{-- 3. JIKA TIDAK ADA GAMBAR SAMA SEKALI --}}
+                                @else
+                                    <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                                        <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
+                                    </div>
                                 @endif
 
                                 <div class="p-5">

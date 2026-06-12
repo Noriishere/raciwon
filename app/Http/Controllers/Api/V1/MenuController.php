@@ -24,11 +24,34 @@ class MenuController extends Controller
             ->paginate(12);
 
         $transformedMenus = $menus->getCollection()->map(function ($menu) {
-            // Generate URL lengkap untuk gambar utama
-            $imageUrl = $menu->image ? asset('storage/'.$menu->image) : null;
+            
+          $rawImage = $menu->image;
+            $imagesArray = [];
 
-            // Masukkan URL lengkap ke dalam array images
-            $imagesArray = $imageUrl ? [$imageUrl] : [];
+            // 1. Jika data berupa string yang dipisahkan koma (contoh: "menus/a.png,menus/b.png")
+            if (is_string($rawImage) && str_contains($rawImage, ',')) {
+                $rawImage = explode(',', $rawImage);
+            } 
+            // 2. Jika data berupa JSON string (contoh: '["menus/a.png"]')
+            elseif (is_string($rawImage) && str_starts_with(trim($rawImage), '[')) {
+                $rawImage = json_decode($rawImage, true);
+            }
+
+            // 3. Ubah semua path menjadi URL utuh
+            if (is_array($rawImage)) {
+                foreach ($rawImage as $path) {
+                    // Bersihkan path dari spasi atau karakter sisa
+                    $cleanPath = trim(str_replace(['"', '[', ']', '\\'], '', $path));
+                    if (!empty($cleanPath)) {
+                        $imagesArray[] = asset('storage/' . $cleanPath);
+                    }
+                }
+            } elseif (is_string($rawImage) && !empty($rawImage)) {
+                $imagesArray[] = asset('storage/' . trim($rawImage));
+            }
+
+            // Ambil gambar pertama sebagai cover
+            $mainImageUrl = count($imagesArray) > 0 ? $imagesArray[0] : null;
 
             return [
                 'id' => $menu->id,
@@ -40,8 +63,8 @@ class MenuController extends Controller
                 'quantity' => 0,
                 'notes' => '',
                 'activeImageIndex' => 0,
-                'image' => $imageUrl, // Sekarang outputnya jadi: http://domain-kamu.com/storage/menus/file.jpg
-                'images' => $imagesArray,
+                'image' => $mainImageUrl, // Gambar utama (String URL tunggal)
+                'images' => $imagesArray, // Kumpulan semua gambar (Array URL)
             ];
         });
 
@@ -57,7 +80,17 @@ class MenuController extends Controller
     {
         $menu->load('category');
 
-        $imagesArray = $menu->image ? [$menu->image] : [];
+        $imagesArray = [];
+
+        if (is_array($menu->image)) {
+            foreach ($menu->image as $path) {
+                $imagesArray[] = asset('storage/' . $path);
+            }
+        } elseif (is_string($menu->image) && !empty($menu->image)) {
+            $imagesArray[] = asset('storage/' . $menu->image);
+        }
+
+        $mainImageUrl = count($imagesArray) > 0 ? $imagesArray[0] : null;
 
         return response()->json([
             'status' => 'success',
@@ -71,7 +104,7 @@ class MenuController extends Controller
                 'quantity' => 0,
                 'notes' => '',
                 'activeImageIndex' => 0,
-                'image' => $menu->image,
+                'image' => $mainImageUrl,
                 'images' => $imagesArray,
             ],
         ]);

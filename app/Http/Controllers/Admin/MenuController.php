@@ -67,24 +67,28 @@ class MenuController extends Controller
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:150'],
-            'image' => ['nullable', 'image'],
+            'images' => ['nullable', 'array'],              // Validasi input form array
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'], 
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric'],
             'status' => ['required'],
         ]);
-
-        if ($request->hasFile('image')) {
-
-            $validated['image'] =
-                $request->file('image')->store('menus', 'public');
+    
+        // 1. Proses upload banyak gambar jika ada
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('menus', 'public');
+            }
         }
-
+    
+        // 2. Masukkan array path gambar ke dalam key 'image' (sesuai kolom DB Anda)
+        $validated['image'] = $imagePaths; 
+    
+        // 3. Simpan ke database
         Menu::create($validated);
-
-        return back()->with(
-            'success',
-            'Menu berhasil ditambahkan.'
-        );
+    
+        return back()->with('success', 'Menu berhasil ditambahkan.');
     }
 
     /**
@@ -111,24 +115,33 @@ class MenuController extends Controller
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:150'],
-            'image' => ['nullable', 'image'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric'],
             'status' => ['required'],
         ]);
-
-        if ($request->hasFile('image')) {
-
-            $validated['image'] =
-                $request->file('image')->store('menus', 'public');
+    
+        // Jika user mengupload gambar-gambar baru
+        if ($request->hasFile('images')) {
+            // Hapus foto-foto lama yang ada di dalam array database
+            if (is_array($menu->image)) {
+                foreach ($menu->image as $oldPath) {
+                    \Storage::disk('public')->delete($oldPath);
+                }
+            }
+    
+            $imagePaths = [];
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('menus', 'public');
+            }
+            
+            $validated['image'] = $imagePaths;
         }
-
+    
         $menu->update($validated);
-
-        return back()->with(
-            'success',
-            'Menu berhasil diperbarui.'
-        );
+    
+        return back()->with('success', 'Menu berhasil diperbarui.');
     }
 
     /**

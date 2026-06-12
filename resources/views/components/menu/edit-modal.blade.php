@@ -104,8 +104,8 @@
 
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
-                                                        {{ $category->name }}
-                                                    </option>
+                                                    {{ $category->name }}
+                                                </option>
 
                                             @endforeach
 
@@ -151,88 +151,107 @@
 
                         </div>
 
-                        {{-- Preview --}}
-                        <div>
+                        {{-- Preview & Gambar --}}
+                        <div x-data="{
+                            get previewImageUrl() {
+                                if (!selectedMenu.image) return null;
+                                
+                                // Jika array (format baru)
+                                if (Array.isArray(selectedMenu.image) && selectedMenu.image.length > 0) {
+                                    return '/storage/' + selectedMenu.image[0];
+                                }
+                                
+                                // Jika string (bisa berupa teks json, teks koma, atau teks biasa)
+                                if (typeof selectedMenu.image === 'string' && selectedMenu.image !== '') {
+                                    let clean = selectedMenu.image.replace(/[\[\]\x22\\\\]/g, '').trim();
+                                    if (clean.includes(',')) clean = clean.split(',')[0];
+                                    return clean ? '/storage/' + clean : null;
+                                }
+                                
+                                return null;
+                            }
+                        }">
 
                             <div class="border border-slate-200 rounded-3xl overflow-hidden">
 
-                            {{-- Tampilkan gambar jika data tersedia --}}
-                            <template x-if="selectedMenu.image">
-                                <img :src="'/storage/' + selectedMenu.image" alt="Preview Menu" class="w-full h-52 object-cover">
-                            </template>
+                                {{-- Tampilkan gambar PERTAMA jika data tersedia --}}
+                                <template x-if="previewImageUrl">
+                                    <img :src="previewImageUrl" alt="Preview Menu" class="w-full h-52 object-cover">
+                                </template>
 
-                            {{-- Tampilkan ikon default jika gambar kosong --}}
-                            <template x-if="!selectedMenu.image">
-                                <div class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
-                                    <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
-                                </div>
-                            </template>
-
-                            <div class="p-5">
-                            
-                                    <label
-                                        class="block w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:border-brand-400 transition">
-
-                                        <i class="fa-solid fa-camera mr-2"></i>
-
-                                        Ganti Gambar
-
-                                        <input type="file" name="image" accept="image/*" class="hidden">
-
-                                    </label>
-
-                                    <div class="mt-5 flex items-center gap-2">
-
-                                        <span class="px-3 py-1 rounded-full text-xs font-medium" :class="selectedMenu.status === 'available'
-        ? 'bg-green-100 text-green-700'
-        : 'bg-red-100 text-red-700'" x-text="selectedMenu.status === 'available'
-        ? 'Aktif'
-        : 'Nonaktif'">
-                                        </span>
-
-                                        <span
-                                            class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium"
-                                            x-text="selectedMenu.category?.name">
-                                        </span>
-
+                                {{-- Tampilkan ikon default jika gambar kosong --}}
+                                <template x-if="!previewImageUrl">
+                                    <div class="h-52 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                                        <i class="fa-solid fa-bowl-food text-6xl text-brand-400"></i>
                                     </div>
+                                </template>
 
-                                    <h4 class="font-bold text-lg mt-4" x-text="selectedMenu.name">
-                                    </h4>
+                                <div class="p-5">
+                                
+                                        <label
+                                            class="block w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:border-brand-400 transition">
 
-                                    <p class="text-slate-500 text-sm mt-1"
-                                        x-text="selectedMenu.description || 'Tidak ada deskripsi.'">
-                                    </p>
+                                            <i class="fa-solid fa-camera mr-2"></i>
 
-                                    <p class="mt-4 text-3xl font-bold text-brand-600"
-                                        x-text="'Rp ' + Number(selectedMenu.price || 0).toLocaleString('id-ID')">
-                                    </p>
+                                            Ganti Gambar (Bisa Pilih Banyak)
 
-                                    <div class="mt-6 pt-4 border-t">
+                                            {{-- UBAH DI SINI: name="images[]" dan tambah multiple --}}
+                                            <input type="file" name="images[]" multiple accept="image/*" class="hidden">
 
-                                        <div class="flex justify-between text-sm">
+                                        </label>
 
-                                            <span class="text-slate-500">
-                                                Dibuat
+                                        <div class="mt-5 flex items-center gap-2">
+
+                                            <span class="px-3 py-1 rounded-full text-xs font-medium" :class="selectedMenu.status === 'available'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-red-100 text-red-700'" x-text="selectedMenu.status === 'available'
+                                                ? 'Aktif'
+                                                : 'Nonaktif'">
                                             </span>
 
-                                            <span class="font-medium" x-text="selectedMenu.created_at">
+                                            <span
+                                                class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium"
+                                                x-text="selectedMenu.category?.name">
                                             </span>
 
                                         </div>
 
-                                        <div class="flex justify-between text-sm mt-2">
+                                        <h4 class="font-bold text-lg mt-4" x-text="selectedMenu.name">
+                                        </h4>
 
-                                            <span class="text-slate-500">
-                                                Diubah
-                                            </span>
+                                        <p class="text-slate-500 text-sm mt-1"
+                                            x-text="selectedMenu.description || 'Tidak ada deskripsi.'">
+                                        </p>
 
-                                            <span class="font-medium" x-text="selectedMenu.updated_at">
-                                            </span>
+                                        <p class="mt-4 text-3xl font-bold text-brand-600"
+                                            x-text="'Rp ' + Number(selectedMenu.price || 0).toLocaleString('id-ID')">
+                                        </p>
+
+                                        <div class="mt-6 pt-4 border-t">
+
+                                            <div class="flex justify-between text-sm">
+
+                                                <span class="text-slate-500">
+                                                    Dibuat
+                                                </span>
+
+                                                <span class="font-medium" x-text="selectedMenu.created_at">
+                                                </span>
+
+                                            </div>
+
+                                            <div class="flex justify-between text-sm mt-2">
+
+                                                <span class="text-slate-500">
+                                                    Diubah
+                                                </span>
+
+                                                <span class="font-medium" x-text="selectedMenu.updated_at">
+                                                </span>
+
+                                            </div>
 
                                         </div>
-
-                                    </div>
 
                                 </div>
 
