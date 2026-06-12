@@ -315,6 +315,8 @@
     type = 'in';
     quantity = 0;
     notes = '';
+
+    resetStockModal();
 " class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-200">
 
                         Batal

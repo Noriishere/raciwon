@@ -34,14 +34,21 @@
         item => Number(item.id) === Number(id)
     );
 
-    console.log(inventory);
-
     if(inventory){
 
         this.selectedInventory = inventory;
 
     }
+        resetStockModal(){
 
+        this.selectedInventory = {
+            id:null,
+            name:'',
+            unit:'',
+            current_stock:0
+        };
+
+    }
 }}">
 
         <div class="space-y-8">
