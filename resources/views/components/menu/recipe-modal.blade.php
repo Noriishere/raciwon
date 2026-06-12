@@ -102,7 +102,7 @@
         <form
             action="{{ route('admin.recipe.store') }}"
             method="POST"
-            class="flex flex-col h-full">
+            class="flex flex-col min-h-0 flex-1 overflow-hidden">
 
             @csrf
 
