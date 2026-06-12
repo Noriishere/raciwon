@@ -98,11 +98,13 @@
 
                                         </label>
 
-                                        <select x-model="selectedInventory.id" @change="
+                                        <select
+    @change="
         selectInventory(
             $event.target.value
         )
-    " class="w-full rounded-xl border border-slate-200 px-4 py-3">
+    "
+    class="w-full rounded-xl border border-slate-200 px-4 py-3">
 
                                             <option value="">
                                                 Pilih Bahan
