@@ -41,6 +41,13 @@ class StockMovementController extends Controller
             ->paginate(15)
             ->withQueryString();
 
+        $breakdown = [
+            'in' => StockMovement::where('type', 'in')->count(),
+            'out' => StockMovement::where('type', 'out')->count(),
+            'waste' => StockMovement::where('type', 'waste')->count(),
+            'adjustment' => StockMovement::where('type', 'adjustment')->count(),
+        ];
+
         $stats = [
             'total' => StockMovement::count(),
 
@@ -69,7 +76,8 @@ class StockMovementController extends Controller
             'stock-movements.index',
             compact(
                 'movements',
-                'stats'
+                'stats',
+                'breakdown'
             )
         );
     }

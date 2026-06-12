@@ -7,7 +7,12 @@
             'waste' => 'bg-red-100 text-red-700',
             'adjustment' => 'bg-amber-100 text-amber-700',
         ];
+        $totalMovement = max(array_sum($breakdown), 1);
 
+        $inPercent = round(($breakdown['in'] / $totalMovement) * 100);
+        $outPercent = round(($breakdown['out'] / $totalMovement) * 100);
+        $wastePercent = round(($breakdown['waste'] / $totalMovement) * 100);
+        $adjustmentPercent = round(($breakdown['adjustment'] / $totalMovement) * 100);
     @endphp
     <div x-data="{
         openStockModal: false
@@ -154,13 +159,13 @@
 
                                 <span>Stock In</span>
 
-                                <span>48%</span>
+                                <span>{{ $inPercent }}%</span>
 
                             </div>
 
                             <div class="h-2 rounded-full bg-slate-100">
 
-                                <div class="h-2 rounded-full bg-green-500 w-[48%]">
+                                <div class="h-2 rounded-full bg-green-500" style="width: {{ $inPercent }}%">
                                 </div>
 
                             </div>
@@ -173,13 +178,13 @@
 
                                 <span>Stock Out</span>
 
-                                <span>37%</span>
+                                <span>{{ $outPercent }}/span>
 
                             </div>
 
                             <div class="h-2 rounded-full bg-slate-100">
 
-                                <div class="h-2 rounded-full bg-blue-500 w-[37%]">
+                                <div class="h-2 rounded-full bg-blue-500" style="width: {{ $outPercent }}%">
                                 </div>
 
                             </div>
@@ -192,13 +197,13 @@
 
                                 <span>Waste</span>
 
-                                <span>10%</span>
+                                <span>{{ $wastePercent }}</span>
 
                             </div>
 
                             <div class="h-2 rounded-full bg-slate-100">
 
-                                <div class="h-2 rounded-full bg-red-500 w-[10%]">
+                                <div class="h-2 rounded-full bg-red-500" style="width: {{ $wastePercent }}%">
                                 </div>
 
                             </div>
@@ -211,13 +216,13 @@
 
                                 <span>Adjustment</span>
 
-                                <span>5%</span>
+                                <span>{{ $adjustmentPercent }}</span>
 
                             </div>
 
                             <div class="h-2 rounded-full bg-slate-100">
 
-                                <div class="h-2 rounded-full bg-yellow-500 w-[5%]">
+                                <div class="h-2 rounded-full bg-yellow-500" style="width: {{ $adjustmentPercent }}%">
                                 </div>
 
                             </div>
@@ -355,7 +360,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                        {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
