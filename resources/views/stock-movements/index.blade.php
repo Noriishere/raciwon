@@ -439,18 +439,17 @@
 
     </div>
 
-</x-app-layout>
-
-@push('scripts')
-    <script>
-
-        const labels = @json(
-            $movementTrend->pluck('date')
+    @push('scripts')
+        <script>
+    
+            const labels = @json(
+                $movementTrend->pluck('date')
+            );
+    
+        const values = @json(
+            $movementTrend->pluck('total')
         );
-
-    const values = @json(
-        $movementTrend->pluck('total')
-    );
-
-    </script>
-@endpush
+    
+        </script>
+    @endpush
+</x-app-layout>
