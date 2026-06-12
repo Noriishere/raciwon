@@ -30,20 +30,23 @@
 
     selectInventory(id){
 
-        const inventory =
-            this.inventories.find(
-                item => item.id == id
-            );
+    console.log('selected id:', id);
 
-        if(inventory){
+    console.log('inventories:', this.inventories);
 
-            this.selectedInventory = inventory;
+    const inventory = this.inventories.find(
+        item => Number(item.id) === Number(id)
+    );
 
-        }
+    console.log('found:', inventory);
+
+    if(inventory){
+
+        this.selectedInventory = inventory;
 
     }
 
-    }">
+}">
 
         <div class="space-y-8">
 
@@ -387,7 +390,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                                        {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
