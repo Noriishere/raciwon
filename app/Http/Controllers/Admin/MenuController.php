@@ -42,6 +42,14 @@ class MenuController extends Controller
             'total_category' => Category::count(),
         ];
 
+        $menus = Menu::with([
+            'category',
+            'recipeItems.inventory',
+        ])
+            ->withCount('recipeItems')
+            ->latest()
+            ->paginate(12);
+
         $inventories = Inventory::orderBy('name')->get();
 
         return view('menu.index', compact(

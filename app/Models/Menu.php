@@ -7,17 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     protected $fillable = [
-        'category_id', 
-        'name', 
+        'category_id',
+        'name',
         'image', // Pastikan kolom ini masuk fillable
-        'description', 
-        'price', 
-        'status'
+        'description',
+        'price',
+        'status',
     ];
+
     protected $casts = [
-            'image' => 'array',
+        'image' => 'array',
     ];
-   public function category()
+
+    protected $appends = [
+        'food_cost',
+        'contribution_margin',
+        'margin_percentage',
+    ];
+
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -36,6 +44,38 @@ class Menu extends Model
     public function ratings()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function getContributionMarginAttribute()
+    {
+        return $this->price - $this->food_cost;
+    }
+
+    public function getFoodCostAttribute()
+    {
+        return $this->recipeItems
+            ->sum(function ($item) {
+
+                return
+                    $item->quantity *
+                    $item->inventory->cost_per_unit;
+
+            });
+    }
+
+    public function getMarginPercentageAttribute()
+    {
+        if ($this->price <= 0) {
+            return 0;
+        }
+
+        return round(
+            (
+                $this->contribution_margin /
+                $this->price
+            ) * 100,
+            1
+        );
     }
 
     // Accessor untuk menghitung rata-rata rating menu
