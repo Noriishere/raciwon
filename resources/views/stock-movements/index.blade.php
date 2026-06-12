@@ -360,7 +360,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                                {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
@@ -440,3 +440,17 @@
     </div>
 
 </x-app-layout>
+
+@push('scripts')
+    <script>
+
+        const labels = @json(
+            $movementTrend->pluck('date')
+        );
+
+    const values = @json(
+        $movementTrend->pluck('total')
+    );
+
+    </script>
+@endpush

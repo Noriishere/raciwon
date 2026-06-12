@@ -71,13 +71,21 @@ class StockMovementController extends Controller
                 'adjustment'
             )->count(),
         ];
+        $movementTrend = StockMovement::selectRaw('
+    DATE(created_at) as date,
+    COUNT(*) as total
+')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
         return view(
             'stock-movements.index',
             compact(
                 'movements',
                 'stats',
-                'breakdown'
+                'breakdown',
+                'movementTrend'
             )
         );
     }
