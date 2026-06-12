@@ -1,5 +1,7 @@
 {{-- Stock Movement Modal --}}
-
+@props([
+    'inventories' => []
+])
 <template x-teleport="body">
 
 

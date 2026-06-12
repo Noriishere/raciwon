@@ -387,7 +387,7 @@
 
                                         <span
                                             class="px-3 py-1 rounded-full text-xs font-medium
-                                                                                {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
+                                                                                    {{ $typeColors[$movement->type] ?? 'bg-slate-100 text-slate-700' }}">
 
                                             {{ strtoupper($movement->type) }}
 
@@ -460,7 +460,7 @@
             </div>
 
             {{-- Modal --}}
-            <x-inventory.stock-modal />
+            <x-inventory.stock-modal :inventories="$inventories" />
 
         </div>
 
