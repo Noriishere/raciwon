@@ -83,7 +83,7 @@
 
 <body class="font-sans bg-amber-50 text-slate-800 antialiased">
 
-    {{ $slot }}
+    @yield('content')
 
     @stack('scripts')
 

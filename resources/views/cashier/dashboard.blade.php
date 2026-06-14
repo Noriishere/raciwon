@@ -1,5 +1,5 @@
-<x-layouts.cashier>
-
+@extends('layouts.cashier')
+@section('content')
     <div x-data="cashierOrders()" x-init="startPolling()" class="min-h-screen flex">
 
         {{-- Main Area --}}
@@ -105,8 +105,7 @@
                         Live Orders
                     </h2>
 
-                    <span class="px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-sm"
-                        x-text="orders.length"></span>
+                    <span class="px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-sm" x-text="orders.length"></span>
 
                 </div>
 
@@ -212,4 +211,4 @@
         </script>
 
     @endpush
-</x-layouts.cashier>
+@endsection
