@@ -426,7 +426,7 @@
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        {{ $movement->user->name }}
+                                        {{ $movement->user->name? }}
                                     </td>
 
                                     <td class="px-6 py-4 text-slate-500">
