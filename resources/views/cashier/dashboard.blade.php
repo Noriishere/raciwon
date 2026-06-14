@@ -1,16 +1,18 @@
 @extends('layouts.cashier')
+
 @section('content')
-    <div x-data="cashierOrders()" x-init="startPolling()" class="min-h-screen flex">
+
+    <div x-data="cashierOrders()" x-init="startPolling()" class="min-h-screen flex flex-col lg:flex-row">
 
         {{-- Main Area --}}
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-4 sm:p-6">
 
             {{-- Header --}}
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
 
                 <div>
 
-                    <h1 class="text-4xl font-brand text-brand-600">
+                    <h1 class="text-3xl sm:text-4xl font-brand text-brand-600">
                         RACIWON POS
                     </h1>
 
@@ -33,15 +35,17 @@
             </div>
 
             {{-- Quick Actions --}}
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-                <button class="h-40 rounded-3xl bg-brand-500 hover:bg-brand-600 text-white transition shadow-card">
+                {{-- Orders --}}
+                <button
+                    class="h-28 sm:h-32 lg:h-40 rounded-3xl bg-brand-500 hover:bg-brand-600 text-white transition shadow-card">
 
                     <div class="flex flex-col items-center justify-center h-full">
 
-                        <i class="fa-solid fa-cart-shopping text-5xl mb-4"></i>
+                        <i class="fa-solid fa-cart-shopping text-3xl sm:text-4xl lg:text-5xl mb-3"></i>
 
-                        <span class="text-lg">
+                        <span class="text-sm sm:text-base lg:text-lg">
                             Orders
                         </span>
 
@@ -49,13 +53,15 @@
 
                 </button>
 
-                <button class="h-40 rounded-3xl bg-brand-400 hover:bg-brand-500 text-white transition shadow-card">
+                {{-- Tables --}}
+                <button
+                    class="h-28 sm:h-32 lg:h-40 rounded-3xl bg-brand-400 hover:bg-brand-500 text-white transition shadow-card">
 
                     <div class="flex flex-col items-center justify-center h-full">
 
-                        <i class="fa-solid fa-table text-5xl mb-4"></i>
+                        <i class="fa-solid fa-table text-3xl sm:text-4xl lg:text-5xl mb-3"></i>
 
-                        <span class="text-lg">
+                        <span class="text-sm sm:text-base lg:text-lg">
                             Tables
                         </span>
 
@@ -63,13 +69,15 @@
 
                 </button>
 
-                <button class="h-40 rounded-3xl bg-amber-500 hover:bg-amber-600 text-white transition shadow-card">
+                {{-- Refill --}}
+                <button
+                    class="h-28 sm:h-32 lg:h-40 rounded-3xl bg-amber-500 hover:bg-amber-600 text-white transition shadow-card">
 
                     <div class="flex flex-col items-center justify-center h-full">
 
-                        <i class="fa-solid fa-box-open text-5xl mb-4"></i>
+                        <i class="fa-solid fa-box-open text-3xl sm:text-4xl lg:text-5xl mb-3"></i>
 
-                        <span class="text-lg">
+                        <span class="text-sm sm:text-base lg:text-lg">
                             Refill Stock
                         </span>
 
@@ -77,13 +85,15 @@
 
                 </button>
 
-                <button class="h-40 rounded-3xl bg-red-500 hover:bg-red-600 text-white transition shadow-card">
+                {{-- Waste --}}
+                <button
+                    class="h-28 sm:h-32 lg:h-40 rounded-3xl bg-red-500 hover:bg-red-600 text-white transition shadow-card">
 
                     <div class="flex flex-col items-center justify-center h-full">
 
-                        <i class="fa-solid fa-trash text-5xl mb-4"></i>
+                        <i class="fa-solid fa-trash text-3xl sm:text-4xl lg:text-5xl mb-3"></i>
 
-                        <span class="text-lg">
+                        <span class="text-sm sm:text-base lg:text-lg">
                             Waste
                         </span>
 
@@ -94,9 +104,19 @@
             </div>
 
         </div>
-        {{-- Live Orders --}}
-        <div class="w-[420px] border-l border-orange-100 bg-white">
 
+        {{-- Live Orders --}}
+        <div class="
+                w-full
+                lg:w-[420px]
+                border-t
+                lg:border-t-0
+                lg:border-l
+                border-orange-100
+                bg-white
+            ">
+
+            {{-- Header --}}
             <div class="p-6 border-b">
 
                 <div class="flex items-center justify-between">
@@ -111,20 +131,38 @@
 
             </div>
 
-            <div class="overflow-y-auto h-[calc(100vh-90px)]">
+            {{-- Order List --}}
+            <div class="
+                    overflow-y-auto
+                    max-h-[500px]
+                    lg:h-[calc(100vh-90px)]
+                    lg:max-h-none
+                ">
+
+                {{-- Loading --}}
                 <div x-show="loading" class="p-6 text-center text-slate-400">
 
                     Memuat order...
 
                 </div>
-                <div x-show="orders.length === 0" class="p-10 text-center text-slate-400">
+
+                {{-- Empty State --}}
+                <div x-show="orders.length === 0 && !loading" class="p-10 text-center text-slate-400">
 
                     Belum ada order masuk.
 
                 </div>
+
+                {{-- Orders --}}
                 <template x-for="order in orders" :key="order.id">
 
-                    <div class="p-5 border-b hover:bg-orange-50 transition">
+                    <div class="
+                            p-4
+                            border-b
+                            hover:bg-orange-50
+                            transition
+                            cursor-pointer
+                        ">
 
                         <div class="flex justify-between">
 
@@ -134,9 +172,15 @@
 
                                 <p class="text-sm text-slate-500" x-text="order.customer.name"></p>
 
+                                <p class="text-xs text-slate-400 mt-1" x-text="
+                                        order.table
+                                        ? 'Meja ' + order.table.number
+                                        : 'Take Away'
+                                    "></p>
+
                             </div>
 
-                            <span class="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">
+                            <span class="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs h-fit">
 
                                 Pending
 
@@ -151,6 +195,25 @@
 
                         </div>
 
+                        <div class="mt-4">
+
+                            <button class="
+                                    w-full
+                                    py-2
+                                    rounded-xl
+                                    bg-brand-600
+                                    hover:bg-brand-700
+                                    text-white
+                                    text-sm
+                                    transition
+                                ">
+
+                                Detail Order
+
+                            </button>
+
+                        </div>
+
                     </div>
 
                 </template>
@@ -160,14 +223,19 @@
         </div>
 
     </div>
+
     @push('scripts')
 
         <script>
 
             function cashierOrders() {
                 return {
+
                     loading: false,
+
                     orders: @js($orders),
+
+                    previousCount: @json(count($orders)),
 
                     async fetchOrders() {
                         try {
@@ -181,6 +249,21 @@
 
                             const result =
                                 await response.json();
+
+                            if (
+                                result.data.length >
+                                this.previousCount
+                            ) {
+
+                                // nanti tinggal tambahin notif mp3
+                                console.log(
+                                    'Order baru masuk'
+                                );
+
+                            }
+
+                            this.previousCount =
+                                result.data.length;
 
                             this.orders =
                                 result.data;
@@ -211,4 +294,5 @@
         </script>
 
     @endpush
+
 @endsection
