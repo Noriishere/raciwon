@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Controllers\Admin\StockMovementController;
+use App\Http\Controllers\Cashier\CashierController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,11 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
     Route::get('/stock-movements',[StockMovementController::class, 'index'])->name('admin.stock-movements.index');
     Route::get('/recipe/{menu}',[RecipeController::class, 'show'])->name('admin.recipe.show');
     // Rute admin lainnya tinggal dimasukkan di bawah sini
+});
+
+Route::prefix('cashier')->middleware(['auth:web'])->group(function() {
+    Route::get('/dashboard',[CashierController::class, 'index'])->name('cashier.index');
+    Route::get('/orders/pending',[CashierController::class, 'pendingOrders']);
 });
 
 Route::middleware('auth:web')->group(function () {
