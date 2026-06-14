@@ -35,6 +35,7 @@ Route::prefix('admin')->middleware(['auth:web', 'verified'])->group(function () 
 Route::prefix('cashier')->middleware(['auth:web'])->group(function() {
     Route::get('/dashboard',[CashierController::class, 'index'])->name('cashier.index');
     Route::get('/orders/pending',[CashierController::class, 'pendingOrders']);
+    Route::patch('/orders/{order}/confirm',[CashierController::class, 'confirm'])->name('cashier.orders.confirm');
 });
 
 Route::middleware('auth:web')->group(function () {

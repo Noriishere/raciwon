@@ -44,4 +44,16 @@ class CashierController extends Controller
             'data' => $orders,
         ]);
     }
+
+    public function confirm(Order $order)
+    {
+        $order->update([
+            'status' => 'confirmed',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesanan diterima.',
+        ]);
+    }
 }

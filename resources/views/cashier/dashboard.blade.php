@@ -107,14 +107,14 @@
 
         {{-- Live Orders --}}
         <div class="
-                w-full
-                lg:w-[420px]
-                border-t
-                lg:border-t-0
-                lg:border-l
-                border-orange-100
-                bg-white
-            ">
+                                                w-full
+                                                lg:w-[420px]
+                                                border-t
+                                                lg:border-t-0
+                                                lg:border-l
+                                                border-orange-100
+                                                bg-white
+                                            ">
 
             {{-- Header --}}
             <div class="p-6 border-b">
@@ -133,11 +133,11 @@
 
             {{-- Order List --}}
             <div class="
-                    overflow-y-auto
-                    max-h-[500px]
-                    lg:h-[calc(100vh-90px)]
-                    lg:max-h-none
-                ">
+                                                    overflow-y-auto
+                                                    max-h-[500px]
+                                                    lg:h-[calc(100vh-90px)]
+                                                    lg:max-h-none
+                                                ">
 
                 {{-- Loading --}}
                 <div x-show="loading" class="p-6 text-center text-slate-400">
@@ -157,12 +157,12 @@
                 <template x-for="order in orders" :key="order.id">
 
                     <div class="
-                            p-4
-                            border-b
-                            hover:bg-orange-50
-                            transition
-                            cursor-pointer
-                        ">
+                                                            p-4
+                                                            border-b
+                                                            hover:bg-orange-50
+                                                            transition
+                                                            cursor-pointer
+                                                        ">
 
                         <div class="flex justify-between">
 
@@ -173,10 +173,10 @@
                                 <p class="text-sm text-slate-500" x-text="order.customer.name"></p>
 
                                 <p class="text-xs text-slate-400 mt-1" x-text="
-                                        order.table
-                                        ? 'Meja ' + order.table.number
-                                        : 'Take Away'
-                                    "></p>
+                                                                        order.table
+                                                                        ? 'Meja ' + order.table.number
+                                                                        : 'Take Away'
+                                                                    "></p>
 
                             </div>
 
@@ -197,7 +197,7 @@
 
                         <div class="mt-4">
 
-                            <button class="
+                            <button @click="openDetail(order)" class="
                                     w-full
                                     py-2
                                     rounded-xl
@@ -222,21 +222,225 @@
 
         </div>
 
-    </div>
+        <div x-show="selectedOrder" x-cloak class="
+                                    fixed inset-0 z-50
+                                    flex items-center justify-center
+                                    p-4
+                                " x-transition.opacity>
 
+            {{-- Backdrop --}}
+            <div @click="closeDetail()" class="
+                                        absolute inset-0
+                                        bg-black/50
+                                        backdrop-blur-sm
+                                    "></div>
+
+            {{-- Modal --}}
+            <div class="
+                                        relative
+                                        bg-white
+                                        w-full
+                                        max-w-2xl
+                                        rounded-3xl
+                                        shadow-2xl
+                                        overflow-hidden
+                                    ">
+
+                {{-- Header --}}
+                <div class="
+                                            bg-brand-600
+                                            text-white
+                                            p-6
+                                        ">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <h2 class="text-2xl font-bold" x-text="selectedOrder?.order_number"></h2>
+
+                            <p class="text-orange-100" x-text="selectedOrder?.customer?.name"></p>
+
+                        </div>
+
+                        <button @click="closeDetail()">
+
+                            <i class="fa-solid fa-xmark text-xl"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                {{-- Body --}}
+                <div class="p-6">
+
+                    <div class="mb-5">
+
+                        <p class="text-sm text-slate-500">
+                            Jenis Order
+                        </p>
+
+                        <p class="font-semibold" x-text="selectedOrder?.order_type"></p>
+
+                    </div>
+
+                    <div class="mb-5">
+
+                        <p class="text-sm text-slate-500">
+                            Lokasi
+                        </p>
+
+                        <p x-text="
+                                                    selectedOrder?.table
+                                                    ? 'Meja ' + selectedOrder.table.number
+                                                    : 'Take Away'
+                                                "></p>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="font-bold mb-3">
+                            Daftar Pesanan
+                        </h3>
+
+                        <template x-for="item in selectedOrder?.items" :key="item.id">
+
+                            <div class="
+                                                        flex justify-between
+                                                        py-3 border-b
+                                                    ">
+
+                                <div>
+
+                                    <p class="font-medium" x-text="item.menu.name"></p>
+
+                                    <p class="text-sm text-slate-500" x-text="'Qty: ' + item.quantity"></p>
+
+                                </div>
+
+                                <div class="font-semibold" x-text="
+                                                            'Rp ' +
+                                                            Number(item.subtotal)
+                                                            .toLocaleString('id-ID')
+                                                        "></div>
+
+                            </div>
+
+                        </template>
+
+                    </div>
+
+                    <div class="
+                                                mt-6
+                                                pt-4
+                                                border-t
+                                                flex justify-between
+                                                items-center
+                                            ">
+
+                        <span class="text-slate-500">
+                            Total
+                        </span>
+
+                        <span class="
+                                                    text-2xl
+                                                    font-bold
+                                                    text-brand-600
+                                                " x-text="
+                                                    'Rp ' +
+                                                    Number(selectedOrder?.subtotal ?? 0)
+                                                    .toLocaleString('id-ID')
+                                                "></span>
+
+                    </div>
+
+                </div>
+
+                {{-- Footer --}}
+                <div class="
+                                            p-6
+                                            border-t
+                                            flex gap-3
+                                            justify-end
+                                        ">
+
+                    <button @click="closeDetail()" class="
+                                                px-4 py-2
+                                                rounded-xl
+                                                bg-slate-200
+                                            ">
+
+                        Tutup
+
+                    </button>
+
+                    <button @click="confirmOrder()" class="
+                            px-4 py-2
+                            rounded-xl
+                            bg-green-600
+                            text-white
+                        ">
+
+                        Terima Pesanan
+
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
     @push('scripts')
 
         <script>
-
             function cashierOrders() {
                 return {
+                    selectedOrder: null,
 
+                    openDetail(order) {
+                        this.selectedOrder = order;
+                    },
+
+                    closeDetail() {
+                        this.selectedOrder = null;
+                    },
                     loading: false,
 
                     orders: @js($orders),
 
                     previousCount: @json(count($orders)),
+                    async confirmOrder() {
+                        try {
 
+                            await fetch(
+                                `/cashier/orders/${this.selectedOrder.id}/confirm`,
+                                {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'X-CSRF-TOKEN':
+                                            document
+                                                .querySelector(
+                                                    'meta[name="csrf-token"]'
+                                                )
+                                                .content,
+                                    }
+                                }
+                            );
+
+                            this.closeDetail();
+
+                            this.fetchOrders();
+
+                        } catch (error) {
+
+                            console.error(error);
+
+                        }
+                    },
                     async fetchOrders() {
                         try {
 
