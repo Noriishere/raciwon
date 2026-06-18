@@ -35,16 +35,16 @@
                     @csrf
 
                     <button type="submit" class="
-                    h-11 w-11
-                    rounded-xl
-                    bg-red-500
-                    hover:bg-red-600
-                    text-white
-                    transition
-                    flex
-                    items-center
-                    justify-center
-                " title="Logout">
+                        h-11 w-11
+                        rounded-xl
+                        bg-red-500
+                        hover:bg-red-600
+                        text-white
+                        transition
+                        flex
+                        items-center
+                        justify-center
+                    " title="Logout">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
 
@@ -125,14 +125,14 @@
 
         {{-- Live Orders --}}
         <div class="
-                                                        w-full
-                                                        lg:w-[420px]
-                                                        border-t
-                                                        lg:border-t-0
-                                                        lg:border-l
-                                                        border-orange-100
-                                                        bg-white
-                                                    ">
+                                                            w-full
+                                                            lg:w-[420px]
+                                                            border-t
+                                                            lg:border-t-0
+                                                            lg:border-l
+                                                            border-orange-100
+                                                            bg-white
+                                                        ">
 
             {{-- Header --}}
             <div class="p-6 border-b">
@@ -151,11 +151,11 @@
 
             {{-- Order List --}}
             <div class="
-                                                            overflow-y-auto
-                                                            max-h-[500px]
-                                                            lg:h-[calc(100vh-90px)]
-                                                            lg:max-h-none
-                                                        ">
+                                                                overflow-y-auto
+                                                                max-h-[500px]
+                                                                lg:h-[calc(100vh-90px)]
+                                                                lg:max-h-none
+                                                            ">
 
                 {{-- Loading --}}
                 <div x-show="loading" class="p-6 text-center text-slate-400">
@@ -175,12 +175,12 @@
                 <template x-for="order in orders" :key="order.id">
 
                     <div class="
-                                                                    p-4
-                                                                    border-b
-                                                                    hover:bg-orange-50
-                                                                    transition
-                                                                    cursor-pointer
-                                                                ">
+                                                                        p-4
+                                                                        border-b
+                                                                        hover:bg-orange-50
+                                                                        transition
+                                                                        cursor-pointer
+                                                                    ">
 
                         <div class="flex justify-between">
 
@@ -191,10 +191,10 @@
                                 <p class="text-sm text-slate-500" x-text="order.customer.name"></p>
 
                                 <p class="text-xs text-slate-400 mt-1" x-text="
-                                                                                order.table
-                                                                                ? 'Meja ' + order.table.number
-                                                                                : 'Take Away'
-                                                                            "></p>
+                                                                                    order.table
+                                                                                    ? 'Meja ' + order.table.number
+                                                                                    : 'Take Away'
+                                                                                "></p>
 
                             </div>
 
@@ -216,15 +216,15 @@
                         <div class="mt-4">
 
                             <button @click="openDetail(order)" class="
-                                            w-full
-                                            py-2
-                                            rounded-xl
-                                            bg-brand-600
-                                            hover:bg-brand-700
-                                            text-white
-                                            text-sm
-                                            transition
-                                        ">
+                                                w-full
+                                                py-2
+                                                rounded-xl
+                                                bg-brand-600
+                                                hover:bg-brand-700
+                                                text-white
+                                                text-sm
+                                                transition
+                                            ">
 
                                 Detail Order
 
@@ -241,35 +241,35 @@
         </div>
 
         <div x-show="selectedOrder" x-cloak class="
-                                            fixed inset-0 z-50
-                                            flex items-center justify-center
-                                            p-4
-                                        " x-transition.opacity>
+                                                fixed inset-0 z-50
+                                                flex items-center justify-center
+                                                p-4
+                                            " x-transition.opacity>
 
             {{-- Backdrop --}}
             <div @click="closeDetail()" class="
-                                                absolute inset-0
-                                                bg-black/50
-                                                backdrop-blur-sm
-                                            "></div>
+                                                    absolute inset-0
+                                                    bg-black/50
+                                                    backdrop-blur-sm
+                                                "></div>
 
             {{-- Modal --}}
             <div class="
-                                                relative
-                                                bg-white
-                                                w-full
-                                                max-w-2xl
-                                                rounded-3xl
-                                                shadow-2xl
-                                                overflow-hidden
-                                            ">
+                                                    relative
+                                                    bg-white
+                                                    w-full
+                                                    max-w-2xl
+                                                    rounded-3xl
+                                                    shadow-2xl
+                                                    overflow-hidden
+                                                ">
 
                 {{-- Header --}}
                 <div class="
-                                                    bg-brand-600
-                                                    text-white
-                                                    p-6
-                                                ">
+                                                        bg-brand-600
+                                                        text-white
+                                                        p-6
+                                                    ">
 
                     <div class="flex justify-between">
 
@@ -311,10 +311,10 @@
                         </p>
 
                         <p x-text="
-                                                            selectedOrder?.table
-                                                            ? 'Meja ' + selectedOrder.table.number
-                                                            : 'Take Away'
-                                                        "></p>
+                                                                selectedOrder?.table
+                                                                ? 'Meja ' + selectedOrder.table.number
+                                                                : 'Take Away'
+                                                            "></p>
 
                     </div>
 
@@ -327,9 +327,9 @@
                         <template x-for="item in selectedOrder?.items" :key="item.id">
 
                             <div class="
-                                                                flex justify-between
-                                                                py-3 border-b
-                                                            ">
+                                                                    flex justify-between
+                                                                    py-3 border-b
+                                                                ">
 
                                 <div>
 
@@ -340,10 +340,10 @@
                                 </div>
 
                                 <div class="font-semibold" x-text="
-                                                                    'Rp ' +
-                                                                    Number(item.subtotal)
-                                                                    .toLocaleString('id-ID')
-                                                                "></div>
+                                                                        'Rp ' +
+                                                                        Number(item.subtotal)
+                                                                        .toLocaleString('id-ID')
+                                                                    "></div>
 
                             </div>
 
@@ -352,55 +352,104 @@
                     </div>
 
                     <div class="
-                                                        mt-6
-                                                        pt-4
-                                                        border-t
-                                                        flex justify-between
-                                                        items-center
-                                                    ">
+                                                            mt-6
+                                                            pt-4
+                                                            border-t
+                                                            flex justify-between
+                                                            items-center
+                                                        ">
 
                         <span class="text-slate-500">
                             Total
                         </span>
 
                         <span class="
-                                                            text-2xl
-                                                            font-bold
-                                                            text-brand-600
-                                                        " x-text="
-                                                            'Rp ' +
-                                                            Number(selectedOrder?.subtotal ?? 0)
-                                                            .toLocaleString('id-ID')
-                                                        "></span>
+                                                                text-2xl
+                                                                font-bold
+                                                                text-brand-600
+                                                            " x-text="
+                                                                'Rp ' +
+                                                                Number(selectedOrder?.subtotal ?? 0)
+                                                                .toLocaleString('id-ID')
+                                                            "></span>
 
                     </div>
+                    <div x-show="selectedOrder?.status === 'confirmed'" class="mt-6 border-t pt-6">
 
+                        <h3 class="font-bold mb-4">
+                            Metode Pembayaran
+                        </h3>
+
+                        <div class="grid grid-cols-3 gap-3">
+
+                            <button @click="paymentMethod = 'cash'" :class="
+                    paymentMethod === 'cash'
+                    ? 'border-brand-600 bg-brand-50'
+                    : 'border-slate-200'
+                " class="
+                    border-2
+                    rounded-2xl
+                    p-4
+                    transition
+                ">
+                                💵 Cash
+                            </button>
+
+                            <button @click="paymentMethod = 'transfer'" :class="
+                    paymentMethod === 'transfer'
+                    ? 'border-brand-600 bg-brand-50'
+                    : 'border-slate-200'
+                " class="
+                    border-2
+                    rounded-2xl
+                    p-4
+                    transition
+                ">
+                                🏦 Transfer
+                            </button>
+
+                            <button @click="paymentMethod = 'qris'" :class="
+                    paymentMethod === 'qris'
+                    ? 'border-brand-600 bg-brand-50'
+                    : 'border-slate-200'
+                " class="
+                    border-2
+                    rounded-2xl
+                    p-4
+                    transition
+                ">
+                                📱 QRIS
+                            </button>
+
+                        </div>
+
+                    </div>
                 </div>
 
                 {{-- Footer --}}
                 <div class="
-                                                    p-6
-                                                    border-t
-                                                    flex gap-3
-                                                    justify-end
-                                                ">
+                                                        p-6
+                                                        border-t
+                                                        flex gap-3
+                                                        justify-end
+                                                    ">
 
                     <button @click="closeDetail()" class="
-                                                        px-4 py-2
-                                                        rounded-xl
-                                                        bg-slate-200
-                                                    ">
+                                                            px-4 py-2
+                                                            rounded-xl
+                                                            bg-slate-200
+                                                        ">
 
                         Tutup
 
                     </button>
 
                     <button @click="confirmOrder()" class="
-                                    px-4 py-2
-                                    rounded-xl
-                                    bg-green-600
-                                    text-white
-                                ">
+                                        px-4 py-2
+                                        rounded-xl
+                                        bg-green-600
+                                        text-white
+                                    ">
 
                         Terima Pesanan
 
