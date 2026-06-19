@@ -444,15 +444,30 @@
 
                     </button>
 
-                    <button @click="confirmOrder()" class="
-                                        px-4 py-2
-                                        rounded-xl
-                                        bg-green-600
-                                        text-white
-                                    ">
-
+                    <button
+                        x-show="selectedOrder?.status === 'pending'"
+                        @click="confirmOrder()"
+                        class="
+                            px-4 py-2
+                            rounded-xl
+                            bg-green-600
+                            text-white
+                        "
+                    >
                         Terima Pesanan
+                    </button>
 
+                    <button
+                        x-show="selectedOrder?.status === 'confirmed'"
+                        @click="processPayment()"
+                        class="
+                            px-4 py-2
+                            rounded-xl
+                            bg-blue-600
+                            text-white
+                        "
+                    >
+                        Proses Pembayaran
                     </button>
                 </div>
 
@@ -466,7 +481,7 @@
             function cashierOrders() {
                 return {
                     selectedOrder: null,
-
+                    paymentMethod: 'cash',
                     openDetail(order) {
                         this.selectedOrder = order;
                     },
