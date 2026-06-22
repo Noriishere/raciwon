@@ -48,7 +48,7 @@ class CashierController extends Controller
             'items.menu',
         ])
             ->where('status', 'pending')
-            ->latest()
+            ->oldest()
             ->get();
 
         return response()->json([
