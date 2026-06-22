@@ -58,6 +58,22 @@ class CashierController extends Controller
         ]);
     }
 
+    public function processingOrders()
+    {
+        $orders = Order::with([
+            'customer',
+            'table',
+            'items.menu',
+        ])
+            ->where('status', 'confirmed')
+            ->oldest()
+            ->get();
+
+        return response()->json([
+            'data' => $orders,
+        ]);
+    }
+
     public function payment(
         Request $request,
         Order $order

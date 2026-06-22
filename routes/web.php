@@ -36,6 +36,7 @@ Route::prefix('cashier')->middleware(['auth:web'])->group(function() {
     Route::get('/dashboard',[CashierController::class, 'index'])->name('cashier.index');
     Route::get('/orders/pending',[CashierController::class, 'pendingOrders']);
     Route::post('/orders/{order}/payment',[CashierController::class, 'payment']);
+    Route::get('/orders/processing',[CashierController::class, 'processingOrders']);
 });
 
 Route::middleware('auth:web')->group(function () {
