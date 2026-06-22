@@ -228,13 +228,7 @@
             </div>
 
             {{-- Order List --}}
-            <div
-                class="
-                                                                                                                                        overflow-y-auto
-                                                                                                                                        max-h-[500px]
-                                                                                                                                        lg:h-[calc(100vh-90px)]
-                                                                                                                                        lg:max-h-none
-                                                                                                                                    ">
+            <div class="flex-1 overflow-y-auto">
 
                 {{-- Empty State --}}
                 <div x-show="orders.length === 0 && !loading" class="p-10 text-center text-slate-400">
