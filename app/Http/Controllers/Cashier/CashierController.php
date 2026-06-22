@@ -18,7 +18,7 @@ class CashierController extends Controller
             'items.menu',
         ])
             ->where('status', 'pending')
-            ->latest()
+            ->orderBy('created_at')
             ->get();
 
         $processingOrders = Order::with([
@@ -27,7 +27,7 @@ class CashierController extends Controller
             'items.menu',
         ])
             ->where('status', 'confirmed')
-            ->latest()
+            ->orderBy('created_at')
             ->get();
 
         return view(
