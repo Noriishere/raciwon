@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Cashier;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Services\InventoryService;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CashierController extends Controller
 {
@@ -22,10 +21,20 @@ class CashierController extends Controller
             ->latest()
             ->get();
 
+        $processingOrders = Order::with([
+            'customer',
+            'table',
+            'items.menu',
+        ])
+            ->where('status', 'confirmed')
+            ->latest()
+            ->get();
+
         return view(
             'cashier.dashboard',
             [
                 'orders' => $orders,
+                'processingOrders' => $processingOrders,
                 'pendingOrders' => $orders->count(),
             ]
         );
@@ -49,22 +58,9 @@ class CashierController extends Controller
         ]);
     }
 
-    public function confirm(Order $order)
-    {
-        $order->update([
-            'status' => 'confirmed',
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Pesanan diterima.',
-        ]);
-    }
-
     public function payment(
         Request $request,
-        Order $order,
-        InventoryService $inventoryService
+        Order $order
     ) {
         $validated = $request->validate([
             'payment_method' => [
@@ -75,8 +71,7 @@ class CashierController extends Controller
 
         DB::transaction(function () use (
             $validated,
-            $order,
-            $inventoryService
+            $order
         ) {
 
             Payment::create([
@@ -87,16 +82,14 @@ class CashierController extends Controller
                 'status' => 'paid',
             ]);
 
-            $inventoryService
-                ->reduceStock($order);
-
             $order->update([
-                'status' => 'completed',
+                'status' => 'confirmed',
             ]);
         });
 
         return response()->json([
             'success' => true,
+            'message' => 'Pembayaran berhasil.',
         ]);
     }
 }
