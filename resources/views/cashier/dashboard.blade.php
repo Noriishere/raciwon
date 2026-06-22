@@ -600,7 +600,7 @@
                     paymentMethod: 'cash',
 
                     loading: false,
-
+                    firstLoad: true,
                     orders: @js($orders),
                     openDetail(order) {
 
