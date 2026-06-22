@@ -120,138 +120,138 @@
                 </button>
 
             </div>
+            {{-- Processing Orders --}}
+            <div class="mt-8">
 
-        </div>
-        {{-- Processing Orders --}}
-        <div class="mt-8">
+                <div class="flex items-center justify-between mb-4">
 
-            <div class="flex items-center justify-between mb-4">
-
-                <h2 class="
+                    <h2 class="
                     text-2xl
                     font-bold
                     text-blue-600
                 ">
-                    Sedang Diproses
-                </h2>
+                        Sedang Diproses
+                    </h2>
 
-                <span class="
+                    <span class="
                     px-3 py-1
                     rounded-full
                     bg-blue-100
                     text-blue-700
                     text-sm
                 ">
-                    {{ $processingOrders->count() }}
-                </span>
+                        {{ $processingOrders->count() }}
+                    </span>
 
-            </div>
+                </div>
 
-            <div class="
+                <div class="
                 grid
                 md:grid-cols-2
                 xl:grid-cols-3
                 gap-4
             ">
 
-                @forelse($processingOrders as $order)
+                    @forelse($processingOrders as $order)
 
-                            <div class="
-                                    bg-white
-                                    rounded-3xl
-                                    shadow-card
-                                    border
-                                    border-blue-100
-                                    p-5
-                                ">
-
-                                <div class="
-                                        flex
-                                        justify-between
-                                        items-start
+                                    <div class="
+                                        bg-white
+                                        rounded-3xl
+                                        shadow-card
+                                        border
+                                        border-blue-100
+                                        p-5
                                     ">
 
-                                    <div>
+                                        <div class="
+                                            flex
+                                            justify-between
+                                            items-start
+                                        ">
 
-                                        <h3 class="font-bold">
-                                            {{ $order->order_number }}
-                                        </h3>
+                                            <div>
 
-                                        <p class="text-sm text-slate-500">
-                                            {{ $order->customer->name }}
-                                        </p>
+                                                <h3 class="font-bold">
+                                                    {{ $order->order_number }}
+                                                </h3>
+
+                                                <p class="text-sm text-slate-500">
+                                                    {{ $order->customer->name }}
+                                                </p>
+
+                                            </div>
+
+                                            <span class="
+                                                px-2 py-1
+                                                rounded-full
+                                                bg-blue-100
+                                                text-blue-700
+                                                text-xs
+                                            ">
+                                                Processing
+                                            </span>
+
+                                        </div>
+
+                                        <div class="mt-3">
+
+                                            <p class="text-sm text-slate-500">
+
+                                                {{ $order->table
+                            ? 'Meja ' . $order->table->number
+                            : 'Take Away' }}
+
+                                            </p>
+
+                                        </div>
+
+                                        <div class="mt-4">
+
+                                            <p class="font-semibold text-brand-600">
+
+                                                Rp {{ number_format(
+                            $order->subtotal,
+                            0,
+                            ',',
+                            '.'
+                        ) }}
+
+                                            </p>
+
+                                        </div>
+
+                                        <button class="
+                                            mt-4
+                                            w-full
+                                            py-2
+                                            rounded-xl
+                                            bg-green-600
+                                            hover:bg-green-700
+                                            text-white
+                                        ">
+                                            Selesaikan Pesanan
+                                        </button>
 
                                     </div>
 
-                                    <span class="
-                                            px-2 py-1
-                                            rounded-full
-                                            bg-blue-100
-                                            text-blue-700
-                                            text-xs
-                                        ">
-                                        Processing
-                                    </span>
+                    @empty
 
-                                </div>
-
-                                <div class="mt-3">
-
-                                    <p class="text-sm text-slate-500">
-
-                                        {{ $order->table
-                        ? 'Meja ' . $order->table->number
-                        : 'Take Away' }}
-
-                                    </p>
-
-                                </div>
-
-                                <div class="mt-4">
-
-                                    <p class="font-semibold text-brand-600">
-
-                                        Rp {{ number_format(
-                        $order->subtotal,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
-
-                                    </p>
-
-                                </div>
-
-                                <button class="
-                                        mt-4
-                                        w-full
-                                        py-2
-                                        rounded-xl
-                                        bg-green-600
-                                        hover:bg-green-700
-                                        text-white
-                                    ">
-                                    Selesaikan Pesanan
-                                </button>
-
-                            </div>
-
-                @empty
-
-                    <div class="
+                        <div class="
                             col-span-full
                             text-center
                             py-10
                             text-slate-400
                         ">
-                        Tidak ada pesanan diproses.
-                    </div>
+                            Tidak ada pesanan diproses.
+                        </div>
 
-                @endforelse
+                    @endforelse
+
+                </div>
 
             </div>
-
         </div>
+
         {{-- Live Orders --}}
         <div class="
                                                                                         w-full
