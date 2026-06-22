@@ -36,16 +36,17 @@
 
                     <button type="submit"
                         class="
-                                                                                                                                h-11 w-11
-                                                                                                                                rounded-xl
-                                                                                                                                bg-red-500
-                                                                                                                                hover:bg-red-600
-                                                                                                                                text-white
-                                                                                                                                transition
-                                                                                                                                flex
-                                                                                                                                items-center
-                                                                                                                                justify-center
-                                                                                                                            " title="Logout">
+                                                                                                                                    h-11 w-11
+                                                                                                                                    rounded-xl
+                                                                                                                                    bg-red-500
+                                                                                                                                    hover:bg-red-600
+                                                                                                                                    text-white
+                                                                                                                                    transition
+                                                                                                                                    flex
+                                                                                                                                    items-center
+                                                                                                                                    justify-center
+                                                                                                                                "
+                        title="Logout">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
 
@@ -178,10 +179,10 @@
                             <div class="mt-3">
 
                                 <p class="text-sm text-slate-500" x-text="
-                                                                                    order.table
-                                                                                    ? 'Meja ' + order.table.number
-                                                                                    : 'Take Away'
-                                                                                ">
+                                                                                        order.table
+                                                                                        ? 'Meja ' + order.table.number
+                                                                                        : 'Take Away'
+                                                                                    ">
                                 </p>
 
                             </div>
@@ -189,10 +190,10 @@
                             <div class="mt-4">
 
                                 <p class="font-semibold text-brand-600" x-text="
-                                                                                    'Rp ' +
-                                                                                    Number(order.subtotal)
-                                                                                    .toLocaleString('id-ID')
-                                                                                ">
+                                                                                        'Rp ' +
+                                                                                        Number(order.subtotal)
+                                                                                        .toLocaleString('id-ID')
+                                                                                    ">
                                 </p>
 
                             </div>
@@ -243,12 +244,12 @@
 
                     <div
                         class="
-                                                                                                                                                                                p-4
-                                                                                                                                                                                border-b
-                                                                                                                                                                                hover:bg-orange-50
-                                                                                                                                                                                transition
-                                                                                                                                                                                cursor-pointer
-                                                                                                                                                                            ">
+                                                                                                                                                                                    p-4
+                                                                                                                                                                                    border-b
+                                                                                                                                                                                    hover:bg-orange-50
+                                                                                                                                                                                    transition
+                                                                                                                                                                                    cursor-pointer
+                                                                                                                                                                                ">
 
                         <div class="flex justify-between">
 
@@ -260,23 +261,24 @@
 
                                 <p class="text-xs text-slate-400 mt-1"
                                     x-text="
-                                                                                                                                                                                            order.table
-                                                                                                                                                                                            ? 'Meja ' + order.table.number
-                                                                                                                                                                                            : 'Take Away'
-                                                                                                                                                                                        ">
+                                                                                                                                                                                                order.table
+                                                                                                                                                                                                ? 'Meja ' + order.table.number
+                                                                                                                                                                                                : 'Take Away'
+                                                                                                                                                                                            ">
                                 </p>
 
                             </div>
 
-                            <span class="px-2 py-1 rounded-full text-xs h-fit" :class="
-                                                                                                                            order.status === 'pending'
-                                                                                                                                ? 'bg-yellow-100 text-yellow-700'
-                                                                                                                                : 'bg-blue-100 text-blue-700'
-                                                                                                                        "
+                            <span class="px-2 py-1 rounded-full text-xs h-fit"
+                                :class="
+                                                                                                                                order.status === 'pending'
+                                                                                                                                    ? 'bg-yellow-100 text-yellow-700'
+                                                                                                                                    : 'bg-blue-100 text-blue-700'
+                                                                                                                            "
                                 x-text="
-                                                                                                                            order.status.charAt(0).toUpperCase()
-                                                                                                                            + order.status.slice(1)
-                                                                                                                        "></span>
+                                                                                                                                order.status.charAt(0).toUpperCase()
+                                                                                                                                + order.status.slice(1)
+                                                                                                                            "></span>
 
                         </div>
 
@@ -291,15 +293,15 @@
 
                             <button @click="openDetail(order)"
                                 class="
-                                                                                                                                                        w-full
-                                                                                                                                                        py-2
-                                                                                                                                                        rounded-xl
-                                                                                                                                                        bg-brand-600
-                                                                                                                                                        hover:bg-brand-700
-                                                                                                                                                        text-white
-                                                                                                                                                        text-sm
-                                                                                                                                                        transition
-                                                                                                                                                    ">
+                                                                                                                                                            w-full
+                                                                                                                                                            py-2
+                                                                                                                                                            rounded-xl
+                                                                                                                                                            bg-brand-600
+                                                                                                                                                            hover:bg-brand-700
+                                                                                                                                                            text-white
+                                                                                                                                                            text-sm
+                                                                                                                                                            transition
+                                                                                                                                                        ">
 
                                 Detail Order
 
@@ -317,40 +319,40 @@
 
         <div x-show="selectedOrder" x-cloak
             class="
-                                                                                                                                                        fixed inset-0 z-50
-                                                                                                                                                        flex items-center justify-center
-                                                                                                                                                        p-4
-                                                                                                                                                    "
+                                                                                                                                                            fixed inset-0 z-50
+                                                                                                                                                            flex items-center justify-center
+                                                                                                                                                            p-4
+                                                                                                                                                        "
             x-transition.opacity>
 
             {{-- Backdrop --}}
             <div @click="closeDetail()"
                 class="
-                                                                                                                                                            absolute inset-0
-                                                                                                                                                            bg-black/50
-                                                                                                                                                            backdrop-blur-sm
-                                                                                                                                                        ">
+                                                                                                                                                                absolute inset-0
+                                                                                                                                                                bg-black/50
+                                                                                                                                                                backdrop-blur-sm
+                                                                                                                                                            ">
             </div>
 
             {{-- Modal --}}
             <div
                 class="
-                                                                                                                                                            relative
-                                                                                                                                                            bg-white
-                                                                                                                                                            w-full
-                                                                                                                                                            max-w-2xl
-                                                                                                                                                            rounded-3xl
-                                                                                                                                                            shadow-2xl
-                                                                                                                                                            overflow-hidden
-                                                                                                                                                        ">
+                                                                                                                                                                relative
+                                                                                                                                                                bg-white
+                                                                                                                                                                w-full
+                                                                                                                                                                max-w-2xl
+                                                                                                                                                                rounded-3xl
+                                                                                                                                                                shadow-2xl
+                                                                                                                                                                overflow-hidden
+                                                                                                                                                            ">
 
                 {{-- Header --}}
                 <div
                     class="
-                                                                                                                                                                bg-brand-600
-                                                                                                                                                                text-white
-                                                                                                                                                                p-6
-                                                                                                                                                            ">
+                                                                                                                                                                    bg-brand-600
+                                                                                                                                                                    text-white
+                                                                                                                                                                    p-6
+                                                                                                                                                                ">
 
                     <div class="flex justify-between">
 
@@ -393,10 +395,10 @@
 
                         <p
                             x-text="
-                                                                                                                                                                        selectedOrder?.table
-                                                                                                                                                                        ? 'Meja ' + selectedOrder.table.number
-                                                                                                                                                                        : 'Take Away'
-                                                                                                                                                                    ">
+                                                                                                                                                                            selectedOrder?.table
+                                                                                                                                                                            ? 'Meja ' + selectedOrder.table.number
+                                                                                                                                                                            : 'Take Away'
+                                                                                                                                                                        ">
                         </p>
 
                     </div>
@@ -411,9 +413,9 @@
 
                             <div
                                 class="
-                                                                                                                                                                            flex justify-between
-                                                                                                                                                                            py-3 border-b
-                                                                                                                                                                        ">
+                                                                                                                                                                                flex justify-between
+                                                                                                                                                                                py-3 border-b
+                                                                                                                                                                            ">
 
                                 <div>
 
@@ -425,10 +427,10 @@
 
                                 <div class="font-semibold"
                                     x-text="
-                                                                                                                                                                                'Rp ' +
-                                                                                                                                                                                Number(item.subtotal)
-                                                                                                                                                                                .toLocaleString('id-ID')
-                                                                                                                                                                            ">
+                                                                                                                                                                                    'Rp ' +
+                                                                                                                                                                                    Number(item.subtotal)
+                                                                                                                                                                                    .toLocaleString('id-ID')
+                                                                                                                                                                                ">
                                 </div>
 
                             </div>
@@ -439,12 +441,12 @@
 
                     <div
                         class="
-                                                                                                                                                                    mt-6
-                                                                                                                                                                    pt-4
-                                                                                                                                                                    border-t
-                                                                                                                                                                    flex justify-between
-                                                                                                                                                                    items-center
-                                                                                                                                                                ">
+                                                                                                                                                                        mt-6
+                                                                                                                                                                        pt-4
+                                                                                                                                                                        border-t
+                                                                                                                                                                        flex justify-between
+                                                                                                                                                                        items-center
+                                                                                                                                                                    ">
 
                         <span class="text-slate-500">
                             Total
@@ -452,15 +454,15 @@
 
                         <span
                             class="
-                                                                                                                                                                        text-2xl
-                                                                                                                                                                        font-bold
-                                                                                                                                                                        text-brand-600
-                                                                                                                                                                    "
+                                                                                                                                                                            text-2xl
+                                                                                                                                                                            font-bold
+                                                                                                                                                                            text-brand-600
+                                                                                                                                                                        "
                             x-text="
-                                                                                                                                                                        'Rp ' +
-                                                                                                                                                                        Number(selectedOrder?.subtotal ?? 0)
-                                                                                                                                                                        .toLocaleString('id-ID')
-                                                                                                                                                                    "></span>
+                                                                                                                                                                            'Rp ' +
+                                                                                                                                                                            Number(selectedOrder?.subtotal ?? 0)
+                                                                                                                                                                            .toLocaleString('id-ID')
+                                                                                                                                                                        "></span>
 
                     </div>
                     <div x-show="selectedOrder?.status === 'pending'" class="mt-6 border-t pt-6">
@@ -471,45 +473,48 @@
 
                         <div class="grid grid-cols-3 gap-3">
 
-                            <button @click="paymentMethod = 'cash'" :class="
-                                                                                                                            paymentMethod === 'cash'
-                                                                                                                            ? 'border-brand-600 bg-brand-50'
-                                                                                                                            : 'border-slate-200'
-                                                                                                                        "
+                            <button @click="paymentMethod = 'cash'"
+                                :class="
+                                                                                                                                paymentMethod === 'cash'
+                                                                                                                                ? 'border-brand-600 bg-brand-50'
+                                                                                                                                : 'border-slate-200'
+                                                                                                                            "
                                 class="
-                                                                                                                            border-2
-                                                                                                                            rounded-2xl
-                                                                                                                            p-4
-                                                                                                                            transition
-                                                                                                                        ">
+                                                                                                                                border-2
+                                                                                                                                rounded-2xl
+                                                                                                                                p-4
+                                                                                                                                transition
+                                                                                                                            ">
                                 💵 Cash
                             </button>
 
-                            <button @click="paymentMethod = 'transfer'" :class="
-                                                                                                                            paymentMethod === 'transfer'
-                                                                                                                            ? 'border-brand-600 bg-brand-50'
-                                                                                                                            : 'border-slate-200'
-                                                                                                                        "
+                            <button @click="paymentMethod = 'transfer'"
+                                :class="
+                                                                                                                                paymentMethod === 'transfer'
+                                                                                                                                ? 'border-brand-600 bg-brand-50'
+                                                                                                                                : 'border-slate-200'
+                                                                                                                            "
                                 class="
-                                                                                                                            border-2
-                                                                                                                            rounded-2xl
-                                                                                                                            p-4
-                                                                                                                            transition
-                                                                                                                        ">
+                                                                                                                                border-2
+                                                                                                                                rounded-2xl
+                                                                                                                                p-4
+                                                                                                                                transition
+                                                                                                                            ">
                                 🏦 Transfer
                             </button>
 
-                            <button @click="paymentMethod = 'qris'" :class="
-                                                                                                                            paymentMethod === 'qris'
-                                                                                                                            ? 'border-brand-600 bg-brand-50'
-                                                                                                                            : 'border-slate-200'
-                                                                                                                        "
+                            <button @click="paymentMethod = 'qris'"
+                                :class="
+                                                                                                                                paymentMethod === 'qris'
+                                                                                                                                ? 'border-brand-600 bg-brand-50'
+                                                                                                                                : 'border-slate-200'
+                                                                                                                            "
                                 class="
-                                                                                                                            border-2
-                                                                                                                            rounded-2xl
-                                                                                                                            p-4
-                                                                                                                            transition
-                                                                                                                        ">
+                                                                                                                                border-2
+                                                                                                                                rounded-2xl
+                                                                                                                                p-4
+                                                                                                                                transition
+                                                                                                                            ">
                                 📱 QRIS
                             </button>
 
@@ -521,29 +526,29 @@
                 {{-- Footer --}}
                 <div
                     class="
-                                                                                                                                                                p-6
-                                                                                                                                                                border-t
-                                                                                                                                                                flex gap-3
-                                                                                                                                                                justify-end
-                                                                                                                                                            ">
+                                                                                                                                                                    p-6
+                                                                                                                                                                    border-t
+                                                                                                                                                                    flex gap-3
+                                                                                                                                                                    justify-end
+                                                                                                                                                                ">
 
                     <button @click="closeDetail()"
                         class="
-                                                                                                                                                                    px-4 py-2
-                                                                                                                                                                    rounded-xl
-                                                                                                                                                                    bg-slate-200
-                                                                                                                                                                ">
+                                                                                                                                                                        px-4 py-2
+                                                                                                                                                                        rounded-xl
+                                                                                                                                                                        bg-slate-200
+                                                                                                                                                                    ">
 
                         Tutup
 
                     </button>
 
                     <button x-show="selectedOrder?.status === 'pending'" @click="processPayment()" class="
-                                                                                            px-4 py-2
-                                                                                            rounded-xl
-                                                                                            bg-blue-600
-                                                                                            text-white
-                                                                                        ">
+                                                                                                px-4 py-2
+                                                                                                rounded-xl
+                                                                                                bg-blue-600
+                                                                                                text-white
+                                                                                            ">
                         Proses Pembayaran
                     </button>
                 </div>
@@ -552,6 +557,7 @@
         </div>
 
     </div>
+    @include('components.cashier.order-modal')
     @push('scripts')
 
         <script>
@@ -684,8 +690,8 @@
 
                             console.error(error);
                         }
-                    }
-                            previousCount: @json(count($orders)),
+                    },
+                    previousCount: @json(count($orders)),
                     async processPayment() {
                         try {
 
